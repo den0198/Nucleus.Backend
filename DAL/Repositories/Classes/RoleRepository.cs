@@ -1,0 +1,39 @@
+﻿using System.Security.Claims;
+using DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Models.Entities;
+
+namespace DAL.Repositories.Classes;
+
+public class RoleRepository : IRoleRepository
+{
+    private readonly UserManager<UserAccount> userManager;
+    private readonly RoleManager<Role> roleManager;
+    
+    public RoleRepository(UserManager<UserAccount> userManager, RoleManager<Role> roleManager)
+    {
+        this.userManager = userManager;
+        this.roleManager = roleManager;
+    }
+
+    public async Task<Role> FindByName(string name)
+    {
+        return await roleManager.FindByNameAsync(name);
+    }
+
+    public async Task Add(Role role)
+    {
+        await roleManager.CreateAsync(role);
+        await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, role.Name));
+    }
+
+    public async Task<IEnumerable<string>> GetUserRolesNames(UserAccount userAccount)
+    {
+        return await userManager.GetRolesAsync(userAccount);
+    }
+
+    public async Task GiveUserRole(UserAccount account, string roleName)
+    {
+        await userManager.AddToRoleAsync(account, roleName);
+    }
+}
