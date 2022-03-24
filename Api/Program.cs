@@ -1,28 +1,35 @@
 using API.Extensions.Middlewares;
 using API.Extensions.Services;
-using API.Filters;
 using Common.MapperConfigurations;
 
-var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
-var configuration = builder.Configuration;
+namespace API;
 
-CoreMapperConfiguration.AddConfiguration();
+public class Program
+{
+    public static void Main(string [] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        var services = builder.Services;
+        var configuration = builder.Configuration;
 
-services.AddControllers();
-services.AddAuth(configuration);
-services.AddGraphQl();
-services.AddEntityFramework(configuration);
-services.AddUnitOfWork();
-services.AddAllOptions(configuration);
-services.AddInitialParams();
-services.AddBllServices();
-services.AddFilters();
+        CoreMapperConfiguration.AddConfiguration();
 
-var app = builder.Build();
+        services.AddControllers();
+        services.AddAuth(configuration);
+        services.AddGraphQl();
+        services.AddEntityFramework(configuration);
+        services.AddUnitOfWork();
+        services.AddAllOptions(configuration);
+        services.AddInitialParams();
+        services.AddBllServices();
+        services.AddFilters();
 
-app.MapGraphQL("/");
-app.UseAuth();
-app.UseInitializationDataBase();
+        var app = builder.Build();
 
-app.Run();
+        app.MapGraphQL("/");
+        app.UseAuth();
+        app.UseInitializationDataBase();
+
+        app.Run();
+    }
+}
