@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using BLL.Logic.Exceptions;
 using BLL.Logic.ServiceHelpers.Interfaces;
 using Common.Helpers;
 using Microsoft.IdentityModel.Tokens;
@@ -36,13 +35,13 @@ public class AuthServiceHelper : IAuthServiceHelper
     {
         var userInfo = getAccountInfoByOldToken(oldAccessToken);
 
-        return userInfo.Claims
+        return userInfo?.Claims
             .Where(_ => _.Type.Contains("userdata"))
             .Select(_ => _.Value)
             .FirstOrDefault();
     }
 
-    private ClaimsPrincipal getAccountInfoByOldToken(string oldAccessToken)
+    private ClaimsPrincipal? getAccountInfoByOldToken(string oldAccessToken)
     {
         var tokenValidationParameters = getTokenValidationParameters();
         var jwtHandler = new JwtSecurityTokenHandler();
@@ -51,7 +50,7 @@ public class AuthServiceHelper : IAuthServiceHelper
 
         return securityToken is JwtSecurityToken
             ? accountInfo
-            : throw new TokenIncorrectException(true, oldAccessToken);
+            : null;
     }
 
     private string getJwtToken(IEnumerable<Claim> claims)
