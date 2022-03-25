@@ -1,5 +1,5 @@
 ﻿using BLL.Logic.Exceptions;
-using BLL.Logic.Interfaces;
+using BLL.Logic.Services.Interfaces;
 using Common.Consts.Seed;
 using Models.Service.Parameters.User;
 

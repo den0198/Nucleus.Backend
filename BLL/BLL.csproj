@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Logic\Interfaces\" />
+    <Folder Include="Logic\ServiceHelpers\Classes\" />
+    <Folder Include="Logic\ServiceHelpers\Interfaces\" />
+    <Folder Include="Logic\Services\Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

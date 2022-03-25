@@ -1,4 +1,4 @@
-﻿using BLL.Logic.Interfaces;
+﻿using BLL.Logic.Services.Interfaces;
 using Mapster;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;

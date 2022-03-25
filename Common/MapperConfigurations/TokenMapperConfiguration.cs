@@ -10,7 +10,7 @@ public partial class CoreMapperConfiguration
 {
     private static void token()
     {
-        TypeAdapterConfig<NewTokenRequest, NewTokenParameters>.NewConfig()
+        TypeAdapterConfig<NewTokenRequest, NewTokenParameter>.NewConfig()
             .Map(dest => dest.AccessToken,  src => src.AccessToken)
             .Map(dest => dest.RefreshToken, src => src.RefreshToken);
 

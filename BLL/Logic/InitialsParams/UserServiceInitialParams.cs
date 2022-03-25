@@ -1,4 +1,4 @@
-﻿using BLL.Logic.Interfaces;
+﻿using BLL.Logic.Services.Interfaces;
 
 namespace BLL.Logic.InitialsParams;
 

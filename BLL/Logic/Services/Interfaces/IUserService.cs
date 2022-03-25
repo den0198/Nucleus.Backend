@@ -1,7 +1,7 @@
 ﻿using Models.Service.Parameters.User;
 using Models.Service.Results;
 
-namespace BLL.Logic.Interfaces;
+namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserService
 {

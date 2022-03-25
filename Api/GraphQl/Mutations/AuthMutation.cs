@@ -1,4 +1,4 @@
-﻿using BLL.Logic.Interfaces;
+﻿using BLL.Logic.Services.Interfaces;
 using Mapster;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
@@ -11,7 +11,7 @@ public sealed class AuthMutation : CoreMutation
 {
     public async Task<TokenResponse> NewToken(NewTokenRequest request, [Service] IAuthService service)
     {
-        var result = await service.NewToken(request.Adapt<NewTokenParameters>());
+        var result = await service.NewToken(request.Adapt<NewTokenParameter>());
 
         return result.Adapt<TokenResponse>();
     }

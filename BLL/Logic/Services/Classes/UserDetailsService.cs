@@ -1,9 +1,9 @@
 ﻿using BLL.Logic.InitialsParams;
-using BLL.Logic.Interfaces;
+using BLL.Logic.Services.Interfaces;
 using Models.Entities;
 using Models.Service.Parameters.User;
 
-namespace BLL.Logic.Services;
+namespace BLL.Logic.Services.Classes;
 
 public class UserDetailsService : IUserDetailService
 {

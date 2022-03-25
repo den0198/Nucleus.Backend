@@ -8,6 +8,7 @@ namespace Common.Helpers
         public static SigningCredentials GetSigningCredentials(string key) =>
             new(GetIssuerSigningKey(key),
                 SecurityAlgorithms.HmacSha256);
+
         public static SymmetricSecurityKey GetIssuerSigningKey(string key) =>
             new(Encoding
                 .UTF8

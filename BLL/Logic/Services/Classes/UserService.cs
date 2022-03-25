@@ -1,11 +1,11 @@
 ﻿using BLL.Logic.InitialsParams;
-using BLL.Logic.Interfaces;
+using BLL.Logic.Services.Interfaces;
 using Common.Consts.Seed;
 using Mapster;
 using Models.Service.Parameters.User;
 using Models.Service.Results;
 
-namespace BLL.Logic.Services;
+namespace BLL.Logic.Services.Classes;
 
 public sealed class UserService : IUserService
 {

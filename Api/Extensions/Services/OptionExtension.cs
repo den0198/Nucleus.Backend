@@ -1,4 +1,4 @@
-﻿using Models.Options;
+﻿using Models.Options.Classes;
 
 namespace API.Extensions.Services;
 

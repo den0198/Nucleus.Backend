@@ -26,6 +26,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj" />
+    <ProjectReference Include="..\TestsHelpers\TestsHelpers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestData\" />
   </ItemGroup>
 
 </Project>

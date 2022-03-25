@@ -1,6 +1,6 @@
 ﻿using Models.Entities;
 
-namespace BLL.Logic.Interfaces;
+namespace BLL.Logic.Services.Interfaces;
 
 public interface IRoleService
 {

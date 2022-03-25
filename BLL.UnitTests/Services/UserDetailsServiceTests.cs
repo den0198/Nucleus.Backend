@@ -1,8 +1,9 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using BLL.Logic.InitialsParams;
-using BLL.Logic.Interfaces;
 using BLL.Logic.Services;
+using BLL.Logic.Services.Classes;
+using BLL.Logic.Services.Interfaces;
 using Xunit;
 
 namespace BLL.UnitTests.Services;

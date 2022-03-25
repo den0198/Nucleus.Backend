@@ -1,9 +1,9 @@
 ﻿using BLL.Logic.Exceptions;
 using BLL.Logic.InitialsParams;
-using BLL.Logic.Interfaces;
+using BLL.Logic.Services.Interfaces;
 using Models.Entities;
 
-namespace BLL.Logic.Services;
+namespace BLL.Logic.Services.Classes;
 
 public class RoleService : IRoleService
 {

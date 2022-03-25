@@ -1,10 +1,10 @@
 ﻿using BLL.Logic.Exceptions;
 using BLL.Logic.InitialsParams;
-using BLL.Logic.Interfaces;
+using BLL.Logic.Services.Interfaces;
 using Models.Entities;
 using Models.Service.Parameters.User;
 
-namespace BLL.Logic.Services;
+namespace BLL.Logic.Services.Classes;
 
 public class UserAccountService : IUserAccountService
 {
@@ -31,6 +31,11 @@ public class UserAccountService : IUserAccountService
     {
         return await initialParams.Repository.FindByLogin(login)
                ?? throw new UserNotExistsException($"User with login {login} not found");
+    }
+
+    public async Task<UserAccount> FindByLogin(string login)
+    {
+        return await initialParams.Repository.FindByLogin(login);
     }
 
     public async Task<UserAccount> Add(UserAccountAddParameter parameter)

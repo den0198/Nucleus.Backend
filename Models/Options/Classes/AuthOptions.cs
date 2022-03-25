@@ -1,6 +1,8 @@
-﻿namespace Models.Options;
+﻿using Models.Options.Interfaces;
 
-public class AuthOptions
+namespace Models.Options.Classes;
+
+public class AuthOptions : IAuthOptions
 {
     public string Issuer { get; set; }
     public string Audience { get; set; }

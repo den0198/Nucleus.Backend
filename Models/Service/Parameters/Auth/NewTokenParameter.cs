@@ -2,6 +2,6 @@
 
 namespace Models.Service.Parameters.Auth;
 
-public sealed class NewTokenParameters : TokenData
+public sealed class NewTokenParameter : TokenData
 {
 }

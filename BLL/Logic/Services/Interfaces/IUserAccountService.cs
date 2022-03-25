@@ -1,7 +1,7 @@
 ﻿using Models.Entities;
 using Models.Service.Parameters.User;
 
-namespace BLL.Logic.Interfaces;
+namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserAccountService
 {
@@ -10,6 +10,8 @@ public interface IUserAccountService
     Task<UserAccount> GetByEmail(string email);
 
     Task<UserAccount> GetByLogin(string login);
+
+    Task<UserAccount> FindByLogin(string login);
 
     Task<UserAccount> Add(UserAccountAddParameter parameter);
 

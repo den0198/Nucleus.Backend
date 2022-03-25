@@ -1,4 +1,4 @@
-﻿using BLL.Logic.Interfaces;
+﻿using BLL.Logic.Services.Interfaces;
 using HotChocolate.AspNetCore.Authorization;
 using Mapster;
 using Models.DTOs.Responses;
