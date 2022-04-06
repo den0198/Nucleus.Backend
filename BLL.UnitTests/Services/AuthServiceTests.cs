@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
-using BLL.Logic.Exceptions;
+using BLL.Exceptions;
 using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Classes;
 using BLL.Logic.Services.Interfaces;

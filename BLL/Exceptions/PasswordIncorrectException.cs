@@ -1,6 +1,6 @@
 ﻿using Common.Consts.Exception;
 
-namespace BLL.Logic.Exceptions;
+namespace BLL.Exceptions;
 
 public class PasswordIncorrectException : CoreException
 {

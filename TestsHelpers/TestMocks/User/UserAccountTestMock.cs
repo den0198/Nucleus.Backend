@@ -14,7 +14,7 @@ public static class UserAccountTestMock
             PhoneNumber = phoneNumber ?? AnyValue.ShortString,
         };
 
-        var userDetail = UserDetailsTestMock.Get(result);
+        var userDetail = UserDetailTestMock.Get(result);
         result.UserDetail = userDetail;
         result.UserDetailId = userDetail.UserDetailId;
 

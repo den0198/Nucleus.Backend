@@ -1,4 +1,4 @@
-﻿using BLL.Logic.Exceptions;
+﻿using BLL.Exceptions;
 
 namespace API.Filters;
 

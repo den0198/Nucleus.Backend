@@ -17,13 +17,13 @@ public class UnitOfWork : IUnitOfWork
         this.userManager = userManager;
 
         UserAccountRepository = new UserAccountRepository(userManager);
-        UserDetailsRepository = new UserDetailsRepository(context);
+        UserDetailRepository = new UserDetailRepository(context);
         RoleRepository = new RoleRepository(userManager, roleManager);
         AuthRepository = new AuthRepository(userManager);
     }
 
     public IUserAccountRepository UserAccountRepository { get; }
-    public IUserDetailsRepository UserDetailsRepository { get; }
+    public IUserDetailRepository UserDetailRepository { get; }
     public IRoleRepository RoleRepository { get; }
     public IAuthRepository AuthRepository { get; }
 

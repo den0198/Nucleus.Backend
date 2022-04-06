@@ -1,4 +1,5 @@
-﻿using BLL.Logic.Exceptions;
+﻿using BLL.Exceptions;
+using BLL.Extensions;
 using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Models.Entities;
@@ -18,19 +19,19 @@ public class UserAccountService : IUserAccountService
     public async Task<UserAccount> GetById(long id)
     {
         return await initialParams.Repository.FindById(id)
-            ?? throw new UserNotExistsException($"User with id {id} not found");
+            ?? throw new UserNotFoundException($"id: {id}");
     }
 
     public async Task<UserAccount> GetByEmail(string email)
     {
         return await initialParams.Repository.FindByEmail(email) 
-            ?? throw new UserNotExistsException($"User with email {email} not found");
+            ?? throw new UserNotFoundException($"email: {email}");
     }
 
     public async Task<UserAccount> GetByLogin(string login)
     {
         return await initialParams.Repository.FindByLogin(login)
-               ?? throw new UserNotExistsException($"User with login {login} not found");
+               ?? throw new UserNotFoundException($"login: {login}");
     }
 
     public async Task<UserAccount> FindByLogin(string login)
@@ -41,7 +42,7 @@ public class UserAccountService : IUserAccountService
     public async Task<UserAccount> Add(UserAccountAddParameter parameter)
     {
         var userAccount = await initialParams.Repository.FindByEmail(parameter.Email);
-        if (userAccount != null)
+        if (userAccount.IsNotNull())
             throw new UserExistsException(parameter.Email);
 
         userAccount = new UserAccount()
@@ -51,11 +52,10 @@ public class UserAccountService : IUserAccountService
             PhoneNumber = parameter.PhoneNumber
         };
         var identityResult = await initialParams.Repository.Add(userAccount, parameter.Password);
-
         if (!identityResult.Succeeded)
             throw new RegistrationException(identityResult.Errors.Select(e => e.Description));
 
-        return await initialParams.Repository.FindByEmail(parameter.Email);
+        return await GetByLogin(parameter.Login);
     }
 
     public async Task Update(UserAccount userAccount)

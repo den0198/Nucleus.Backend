@@ -1,4 +1,5 @@
-﻿using BLL.Logic.Exceptions;
+﻿using BLL.Exceptions;
+using BLL.Extensions;
 using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Models.Entities;
@@ -20,8 +21,8 @@ public sealed class AuthService : IAuthService
     public async Task<TokenResult> SignIn(SignInParameter parameter)
     {
         var user = await initialParams.UserAccountService.FindByLogin(parameter.Login);
-        if (user == null)
-            throw new UserNotFoundException(parameter.Login);
+        if (user.IsNull())
+            throw new UserNotFoundException($"login: {parameter.Login}");
 
         var isCorrectPassword = await initialParams.Repository.CheckPassword(user, parameter.Password);
         if (!isCorrectPassword)
@@ -33,7 +34,7 @@ public sealed class AuthService : IAuthService
     public async Task<TokenResult> NewToken(NewTokenParameter parameter)
     {
         var userLogin = initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(parameter.AccessToken);
-        if (userLogin == null)
+        if (userLogin.IsNull())
             throw new TokenIncorrectException(true, parameter.AccessToken);
 
         var userAccount = await initialParams.UserAccountService.GetByLogin(userLogin);

@@ -11,7 +11,7 @@ public sealed class AppDbContext : IdentityDbContext<UserAccount, Role, long>
     {
     }
 
-    public DbSet<UserDetail> UserDetails { get; set; }
+    public DbSet<UserDetail> UserDetail { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

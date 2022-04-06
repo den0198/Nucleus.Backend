@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using DAL.EntityFramework;
+﻿using DAL.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
-using TestsHelpers.TestDataBase.MocksData;
 
 namespace API.IntegrationTests;
 

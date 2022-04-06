@@ -1,4 +1,5 @@
-﻿using BLL.Logic.Exceptions;
+﻿using BLL.Exceptions;
+using BLL.Extensions;
 using BLL.Logic.Services.Interfaces;
 using Common.Consts.Seed;
 using Models.Service.Parameters.User;
@@ -11,7 +12,7 @@ public static class Seeds
     {
         using var scope = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
 
-        if (scope == null)
+        if (scope.IsNull())
             throw new Exception("Seeds broke down");
 
         var userService = scope.ServiceProvider.GetRequiredService<IUserService>();

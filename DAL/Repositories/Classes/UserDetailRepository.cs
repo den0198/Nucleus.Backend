@@ -5,23 +5,23 @@ using Models.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public class UserDetailsRepository : IUserDetailsRepository
+public class UserDetailRepository : IUserDetailRepository
 {
     private readonly AppDbContext context;
 
-    public UserDetailsRepository(AppDbContext context)
+    public UserDetailRepository(AppDbContext context)
     {
         this.context = context;
     }
     public async Task Add(UserDetail userDetail)
     {
-        context.UserDetails.Add(userDetail);
+        context.UserDetail.Add(userDetail);
 
         await context.SaveChangesAsync();
     }
 
     public async Task<UserDetail> FindByUserAccountId(long userAccountId)
     {
-        return await context.UserDetails.FirstOrDefaultAsync(ud => ud.UserAccountId == userAccountId);
+        return await context.UserDetail.FirstOrDefaultAsync(ud => ud.UserAccountId == userAccountId);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace BLL.Logic.Exceptions;
+﻿namespace BLL.Exceptions;
 
 public class CoreException : Exception
 {

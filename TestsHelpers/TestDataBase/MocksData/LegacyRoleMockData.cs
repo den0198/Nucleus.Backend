@@ -2,7 +2,7 @@
 
 namespace TestsHelpers.TestDataBase.MocksData;
 
-public static class RoleMockData
+public static class LegacyRoleMockData
 {
     public static Role GetOne()
     {

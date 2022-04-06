@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using BLL.Extensions;
 using BLL.Logic.ServiceHelpers.Interfaces;
 using Common.Helpers;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +24,7 @@ public class AuthServiceHelper : IAuthServiceHelper
             .Where(_ => _.Type.Contains("userdata"))
             .Select(_ => _.Value)
             .FirstOrDefault();
-        if (userLogin == null)
+        if (userLogin.IsNull())
             claims.Add(new Claim(ClaimTypes.UserData, userAccount.UserName));
 
         claims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Name)));

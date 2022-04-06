@@ -12,4 +12,5 @@ public static class AnyValue
     public static int Int => Math.Max(1, fixture.Create<int>());
     public static short Short => Math.Max((short)1, fixture.Create<short>());
     public static string Email => $"{ShortString}@{ShortString}.com";
+    public static string Password => String + "123!@#";
 }

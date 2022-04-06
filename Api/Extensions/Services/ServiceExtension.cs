@@ -10,7 +10,7 @@ public static class ServiceExtension
     {
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IUserAccountService, UserAccountService>();
-        serviceCollection.AddScoped<IUserDetailService, UserDetailsService>();
+        serviceCollection.AddScoped<IUserDetailService, UserDetailService>();
         serviceCollection.AddScoped<IAuthService, AuthService>();
         serviceCollection.AddScoped<IRoleService, RoleService>();
     }

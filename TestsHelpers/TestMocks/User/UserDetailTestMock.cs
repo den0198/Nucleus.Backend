@@ -2,7 +2,7 @@
 
 namespace TestsHelpers.TestMocks.User;
 
-public static class UserDetailsTestMock
+public static class UserDetailTestMock
 {
     public static UserDetail Get(UserAccount? userAccount = default) =>
         new()

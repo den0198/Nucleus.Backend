@@ -1,4 +1,5 @@
-﻿using BLL.Logic.Exceptions;
+﻿using BLL.Exceptions;
+using BLL.Extensions;
 using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Models.Entities;
@@ -17,13 +18,13 @@ public class RoleService : IRoleService
     public async Task<Role> GetByName(string name)
     {
         return await initialParams.Repository.FindByName(name)
-               ?? throw new RoleNotExistsException(name);
+                ?? throw new RoleNotExistsException(name);
     }
 
     public async Task Add(string name)
     {
         var role = await initialParams.Repository.FindByName(name);
-        if (role != null)
+        if (role.IsNotNull())
             throw new RoleExistsException(name);
 
         await initialParams.Repository.Add(new Role() { Name = name });
@@ -44,7 +45,7 @@ public class RoleService : IRoleService
 
     public async Task GiveUserRole(UserAccount userAccount, string roleName)
     {
-        await GetByName(roleName);
-        await initialParams.Repository.GiveUserRole(userAccount, roleName);
+        var role = await GetByName(roleName);
+        await initialParams.Repository.GiveUserRole(userAccount, role.Name);
     }
 }
