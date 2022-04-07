@@ -61,7 +61,7 @@ public class UserServiceTests
                 && uaap.Password == testData.RegisterUserParameter.Password
                 && uaap.PhoneNumber == testData.RegisterUserParameter.PhoneNumber))
             .Returns(testData.UserAccount);
-        initialParams.UserDetailService.Received(1).AddAsync(Arg.Is<UserDetailAddParameter>(udap =>
+        initialParams.UserDetailService.AddAsync(Arg.Is<UserDetailAddParameter>(udap =>
                 udap.FirstName == testData.RegisterUserParameter.FirstName
                 && udap.LastName == testData.RegisterUserParameter.LastName
                 && udap.MiddleName == testData.RegisterUserParameter.MiddleName
