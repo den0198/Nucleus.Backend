@@ -5,6 +5,6 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserDetailService
 {
-    Task<UserDetail> GetByUserAccountId(long userAccountId);
-    Task<UserDetail> Add(UserDetailAddParameter parameter);
+    Task<UserDetail> GetByUserAccountIdAsync(long userAccountId);
+    Task<UserDetail> AddAsync(UserDetailAddParameter parameter);
 }

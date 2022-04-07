@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
-using Models.Options;
 using Models.Options.Classes;
 
 namespace API.Extensions.Services;

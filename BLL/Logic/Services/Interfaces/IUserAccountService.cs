@@ -5,15 +5,13 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserAccountService
 {
-    Task<UserAccount> GetById(long id);
+    Task<UserAccount> GetByIdAsync(long id);
 
-    Task<UserAccount> GetByEmail(string email);
+    Task<UserAccount> GetByEmailAsync(string email);
 
-    Task<UserAccount> GetByLogin(string login);
+    Task<UserAccount> GetByLoginAsync(string login);
 
-    Task<UserAccount> FindByLogin(string login);
+    Task<UserAccount> AddAsync(UserAccountAddParameter parameter);
 
-    Task<UserAccount> Add(UserAccountAddParameter parameter);
-
-    Task Update(UserAccount userAccount);
+    Task UpdateAsync(UserAccount userAccount);
 }

@@ -1,15 +1,17 @@
 ﻿using Models.Options.Classes;
 
-namespace TestsHelpers.TestMocks.Auth;
+namespace TestsHelpers.Builders.Auth;
 
-public static class AuthOptionTestMock
+public class AuthOptionBuilder : CoreBuilder<AuthOptions>
 {
-    public static AuthOptions Get() =>
-        new()
+    public AuthOptionBuilder()
+    {
+        Entity = new AuthOptions
         {
             Audience = AnyValue.String,
             Issuer = AnyValue.String,
             Key = AnyValue.String,
             Lifetime = AnyValue.Short
         };
+    }
 }

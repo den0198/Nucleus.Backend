@@ -17,7 +17,7 @@ namespace BLL.UnitTests.Services;
 
 public class RoleServiceTests
 {
-    private IRoleService getService(out RoleServiceInitialParams initialParams)
+    private static IRoleService getService(out RoleServiceInitialParams initialParams)
     {
         initialParams = new Fixture().Customize(new AutoNSubstituteCustomization()).Create<RoleServiceInitialParams>();
         return new RoleService(initialParams);
@@ -32,27 +32,24 @@ public class RoleServiceTests
         var testData = new RoleTestData();
         var role = testData.Roles.First();
 
-        initialParams.Repository.FindByName(role.Name).Returns(role);
+        initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
 
-        var result = await service.GetByName(role.Name);
+        var result = await service.GetByNameAsync(role.Name);
 
         Assert.Equal(role.Id, result.Id);
         Assert.Equal(role.Name, result.Name);
-        await initialParams.Repository.Received(1).FindByName(role.Name);
     }
 
     [Fact]
-    public async Task GetByName_RoleNotFound_RoleNotExistsException()
+    public async Task GetByName_RoleNotFound_RoleNotFoundException()
     {
         var service = getService(out var initialParams);
         var notExistsRoleName = AnyValue.ShortString;
 
-        initialParams.Repository.FindByName(notExistsRoleName).ReturnsNull();
+        initialParams.Repository.FindByNameAsync(notExistsRoleName).ReturnsNull();
 
-        await Assert.ThrowsAsync<RoleNotExistsException>(async () => 
-            await service.GetByName(notExistsRoleName));
-
-        await initialParams.Repository.Received(1).FindByName(notExistsRoleName);
+        await Assert.ThrowsAsync<RoleNotFoundException>(async () => 
+            await service.GetByNameAsync(notExistsRoleName));
     }
 
     #endregion
@@ -66,12 +63,12 @@ public class RoleServiceTests
         var testData = new RoleTestData();
         var newRole = testData.Roles.First();
 
-        initialParams.Repository.FindByName(newRole.Name).ReturnsNull();
-        initialParams.Repository.Add(newRole).Returns(testData.IdentityResultOk);
+        initialParams.Repository.FindByNameAsync(newRole.Name).ReturnsNull();
+        initialParams.Repository.AddAsync(newRole).Returns(testData.IdentityResultSuccess);
 
-        await service.Add(newRole.Name);
+        await service.AddAsync(newRole.Name);
 
-        await initialParams.Repository.Received(1).Add(Arg.Is<Role>(role => role.Name == newRole.Name));
+        await initialParams.Repository.Received(1).AddAsync(Arg.Is<Role>(role => role.Name == newRole.Name));
     }
 
     [Fact]
@@ -81,11 +78,11 @@ public class RoleServiceTests
         var testData = new RoleTestData();
         var newRole = testData.Roles.First();
 
-        initialParams.Repository.FindByName(newRole.Name).Returns(newRole);
+        initialParams.Repository.FindByNameAsync(newRole.Name).Returns(newRole);
 
-        await Assert.ThrowsAsync<RoleExistsException>(async () => await service.Add(newRole.Name));
+        await Assert.ThrowsAsync<RoleExistsException>(async () => await service.AddAsync(newRole.Name));
 
-        await initialParams.Repository.DidNotReceive().Add(Arg.Is<Role>(role => role.Name == newRole.Name));
+        await initialParams.Repository.DidNotReceive().AddAsync(Arg.Any<Role>());
     }
 
     #endregion
@@ -93,21 +90,20 @@ public class RoleServiceTests
     #region GetUserRoles
 
     [Fact]
-    public async Task GetUserRoles_UserRoleExists_Roles()
+    public async Task GetUserRoles_UserRoleFound_Roles()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
 
-        initialParams.Repository.GetUserRolesNames(testData.UserAccount).Returns(testData.Roles.Select(role => role.Name));
+        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(testData.Roles.Select(role => role.Name));
         foreach (var role in testData.Roles)
         {
-            initialParams.Repository.FindByName(role.Name).Returns(role);
+            initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
         }
 
-        var result = await service.GetUserRoles(testData.UserAccount);
+        var result = await service.GetUserRolesAsync(testData.UserAccount);
 
         Assert.False(testData.Roles.Select(role => role.Name).Except(result.Select(role => role.Name)).Any());
-        await initialParams.Repository.Received(1).GetUserRolesNames(testData.UserAccount);
     }
 
     #endregion
@@ -115,34 +111,18 @@ public class RoleServiceTests
     #region GiveUserRole
 
     [Fact]
-    public async Task GiveUserRole_RoleExists_Success()
+    public async Task GiveUserRole_GiveUserRole_Success()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
         var role = testData.Roles.First();
 
-        initialParams.Repository.FindByName(role.Name).Returns(role);
-        initialParams.Repository.GiveUserRole(testData.UserAccount, role.Name).Returns(testData.IdentityResultOk);
+        initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
+        initialParams.Repository.GiveUserRoleAsync(testData.UserAccount, role.Name).Returns(testData.IdentityResultSuccess);
 
-        await service.GiveUserRole(testData.UserAccount, role.Name);
+        await service.GiveUserRoleAsync(testData.UserAccount, role.Name);
 
-        await initialParams.Repository.Received(1).GiveUserRole(testData.UserAccount, role.Name);
-    }
-
-    [Fact]
-    public async Task GiveUserRole_RoleNotExists_Success()
-    {
-        var service = getService(out var initialParams);
-        var testData = new RoleTestData();
-        var role = testData.Roles.First();
-
-        initialParams.Repository.FindByName(role.Name).ReturnsNull();
-        initialParams.Repository.GiveUserRole(testData.UserAccount, role.Name).Returns(testData.IdentityResultOk);
-
-        await Assert.ThrowsAsync<RoleNotExistsException>(async () =>
-            await service.GiveUserRole(testData.UserAccount, role.Name));
-
-        await initialParams.Repository.DidNotReceive().GiveUserRole(testData.UserAccount, role.Name);
+        await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.UserAccount, role.Name);
     }
 
     #endregion

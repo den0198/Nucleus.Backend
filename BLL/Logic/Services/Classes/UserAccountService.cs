@@ -16,50 +16,45 @@ public class UserAccountService : IUserAccountService
         this.initialParams = initialParams;
     }
 
-    public async Task<UserAccount> GetById(long id)
+    public async Task<UserAccount> GetByIdAsync(long id)
     {
-        return await initialParams.Repository.FindById(id)
+        return await initialParams.Repository.FindByIdAsync(id)
             ?? throw new UserNotFoundException($"id: {id}");
     }
 
-    public async Task<UserAccount> GetByEmail(string email)
+    public async Task<UserAccount> GetByEmailAsync(string email)
     {
-        return await initialParams.Repository.FindByEmail(email) 
+        return await initialParams.Repository.FindByEmailAsync(email) 
             ?? throw new UserNotFoundException($"email: {email}");
     }
 
-    public async Task<UserAccount> GetByLogin(string login)
+    public async Task<UserAccount> GetByLoginAsync(string login)
     {
-        return await initialParams.Repository.FindByLogin(login)
+        return await initialParams.Repository.FindByLoginAsync(login)
                ?? throw new UserNotFoundException($"login: {login}");
     }
 
-    public async Task<UserAccount> FindByLogin(string login)
+    public async Task<UserAccount> AddAsync(UserAccountAddParameter parameter)
     {
-        return await initialParams.Repository.FindByLogin(login);
-    }
-
-    public async Task<UserAccount> Add(UserAccountAddParameter parameter)
-    {
-        var userAccount = await initialParams.Repository.FindByEmail(parameter.Email);
+        var userAccount = await initialParams.Repository.FindByEmailAsync(parameter.Email);
         if (userAccount.IsNotNull())
             throw new UserExistsException(parameter.Email);
 
-        userAccount = new UserAccount()
+        userAccount = new UserAccount
         {
             UserName = parameter.Login,
             Email = parameter.Email,
             PhoneNumber = parameter.PhoneNumber
         };
-        var identityResult = await initialParams.Repository.Add(userAccount, parameter.Password);
+        var identityResult = await initialParams.Repository.AddAsync(userAccount, parameter.Password);
         if (!identityResult.Succeeded)
             throw new RegistrationException(identityResult.Errors.Select(e => e.Description));
 
-        return await GetByLogin(parameter.Login);
+        return await GetByLoginAsync(parameter.Login);
     }
 
-    public async Task Update(UserAccount userAccount)
+    public async Task UpdateAsync(UserAccount userAccount)
     {
-        await initialParams.Repository.Update(userAccount);
+        await initialParams.Repository.UpdateAsync(userAccount);
     }
 }

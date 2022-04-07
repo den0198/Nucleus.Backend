@@ -1,6 +1,6 @@
 ﻿using Models.Entities;
 using Models.Service.Parameters.User;
-using TestsHelpers.TestMocks.User;
+using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;
 
@@ -8,11 +8,12 @@ internal class UserTestData
 {
     public UserTestData()
     {
-        UserAccount = UserAccountTestMock.Get();
-        RegisterUserParameter = RegisterUserParameterTestMock.Get(UserAccount);
+        UserAccount = Builder.UserAccount.Build();
+        RegisterUserParameter = Builder.RegisterUserParameter.Build();
     }
 
     public UserAccount UserAccount { get; }
-    public UserDetail UserDetail => UserAccount.UserDetail;
     public RegisterUserParameter RegisterUserParameter { get; }
+
+    public UserDetail UserDetail => UserAccount.UserDetail;
 }

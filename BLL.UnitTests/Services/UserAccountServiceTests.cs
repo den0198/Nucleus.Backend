@@ -15,13 +15,13 @@ namespace BLL.UnitTests.Services;
 
 public class UserAccountServiceTests
 {
-    private IUserAccountService getService(out UserAccountServiceInitialParams initialParams)
+    private static IUserAccountService getService(out UserAccountServiceInitialParams initialParams)
     {
         initialParams = new Fixture().Customize(new AutoNSubstituteCustomization()).Create<UserAccountServiceInitialParams>();
         return new UserAccountService(initialParams);
     }
 
-    private void userVerification(UserAccount expectedUserAccount, UserAccount actualUserAccount)
+    private static void userVerification(UserAccount expectedUserAccount, UserAccount actualUserAccount)
     {
         Assert.Equal(expectedUserAccount, actualUserAccount);
     }
@@ -34,13 +34,11 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindById(testData.UserAccount.Id)
-            .Returns(testData.UserAccount);
+        initialParams.Repository.FindByIdAsync(testData.UserAccount.Id).Returns(testData.UserAccount);
 
-        var result = await service.GetById(testData.UserAccount.Id);
+        var result = await service.GetByIdAsync(testData.UserAccount.Id);
 
         userVerification(testData.UserAccount, result);
-        await initialParams.Repository.Received(1).FindById(testData.UserAccount.Id);
     }
 
     [Fact]
@@ -49,13 +47,10 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindById(testData.UserAccount.Id)
-            .ReturnsNull();
+        initialParams.Repository.FindByIdAsync(testData.UserAccount.Id).ReturnsNull();
 
         await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetById(testData.UserAccount.Id));
-
-        await initialParams.Repository.Received(1).FindById(testData.UserAccount.Id);
+            await service.GetByIdAsync(testData.UserAccount.Id));
     }
 
     #endregion
@@ -68,13 +63,11 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByEmail(testData.UserAccount.Email)
-            .Returns(testData.UserAccount);
+        initialParams.Repository.FindByEmailAsync(testData.UserAccount.Email).Returns(testData.UserAccount);
 
-        var result = await service.GetByEmail(testData.UserAccount.Email);
+        var result = await service.GetByEmailAsync(testData.UserAccount.Email);
 
         userVerification(testData.UserAccount, result);
-        await initialParams.Repository.Received(1).FindByEmail(testData.UserAccount.Email);
     }
 
     [Fact]
@@ -83,13 +76,10 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByEmail(testData.UserAccount.Email)
-            .ReturnsNull();
+        initialParams.Repository.FindByEmailAsync(testData.UserAccount.Email).ReturnsNull();
 
         await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetByEmail(testData.UserAccount.Email));
-
-        await initialParams.Repository.Received(1).FindByEmail(testData.UserAccount.Email);
+            await service.GetByEmailAsync(testData.UserAccount.Email));
     }
 
     #endregion
@@ -102,13 +92,11 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByLogin(testData.UserAccount.UserName)
-            .Returns(testData.UserAccount);
+        initialParams.Repository.FindByLoginAsync(testData.UserAccount.UserName).Returns(testData.UserAccount);
 
-        var result = await service.GetByLogin(testData.UserAccount.UserName);
+        var result = await service.GetByLoginAsync(testData.UserAccount.UserName);
 
         userVerification(testData.UserAccount, result);
-        await initialParams.Repository.Received(1).FindByLogin(testData.UserAccount.UserName);
     }
 
     [Fact]
@@ -117,32 +105,10 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByLogin(testData.UserAccount.UserName)
-            .ReturnsNull();
+        initialParams.Repository.FindByLoginAsync(testData.UserAccount.UserName).ReturnsNull();
 
         await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetByLogin(testData.UserAccount.UserName));
-
-        await initialParams.Repository.Received(1).FindByLogin(testData.UserAccount.UserName);
-    }
-
-    #endregion
-
-    #region FindByLogin
-
-    [Fact]
-    public async Task FindByLogin_UserAccountFound_UserAccount()
-    {
-        var service = getService(out var initialParams);
-        var testData = new UserAccountTestData();
-
-        initialParams.Repository.FindByLogin(testData.UserAccount.UserName)
-            .Returns(testData.UserAccount);
-
-        var result = await service.GetByLogin(testData.UserAccount.UserName);
-
-        userVerification(testData.UserAccount, result);
-        await initialParams.Repository.Received(1).FindByLogin(testData.UserAccount.UserName);
+            await service.GetByLoginAsync(testData.UserAccount.UserName));
     }
 
     #endregion
@@ -155,26 +121,17 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByEmail(testData.UserAccountAddParameter.Email).ReturnsNull();
-        initialParams.Repository.Add(Arg.Is<UserAccount>(u => 
-            u.UserName == testData.UserAccountAddParameter.Login
-            && u.Email == testData.UserAccountAddParameter.Email
-            && u.PhoneNumber == testData.UserAccountAddParameter.PhoneNumber), 
-                testData.UserAccountAddParameter.Password)
-            .Returns(testData.IdentityResultOk);
-        initialParams.Repository.FindByLogin(testData.UserAccountAddParameter.Login)
-            .Returns(testData.UserAccount);
+        initialParams.Repository.FindByEmailAsync(testData.UserAccountAddParameter.Email).ReturnsNull();
+        initialParams.Repository.AddAsync(Arg.Is<UserAccount>(ua => 
+            ua.UserName == testData.UserAccountAddParameter.Login
+            && ua.Email == testData.UserAccountAddParameter.Email
+            && ua.PhoneNumber == testData.UserAccountAddParameter.PhoneNumber), 
+                testData.UserAccountAddParameter.Password).Returns(testData.IdentityResultSuccess);
+        initialParams.Repository.FindByLoginAsync(testData.UserAccountAddParameter.Login).Returns(testData.UserAccount);
 
-        var result = await service.Add(testData.UserAccountAddParameter);
+        var result = await service.AddAsync(testData.UserAccountAddParameter);
 
         userVerification(testData.UserAccount, result);
-        await initialParams.Repository.Received(1)
-            .Add(Arg.Is<UserAccount>(u => 
-                u.UserName == testData.UserAccountAddParameter.Login
-                && u.Email == testData.UserAccountAddParameter.Email
-                && u.PhoneNumber == testData.UserAccountAddParameter.PhoneNumber), 
-        testData.UserAccountAddParameter.Password);
-        await initialParams.Repository.Received(1).FindByLogin(testData.UserAccount.UserName);
     }
 
     [Fact]
@@ -183,15 +140,12 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByEmail(testData.UserAccountAddParameter.Email)
-            .Returns(testData.UserAccount);
+        initialParams.Repository.FindByEmailAsync(testData.UserAccountAddParameter.Email).Returns(testData.UserAccount);
 
         await Assert.ThrowsAsync<UserExistsException>(async () => 
-            await service.Add(testData.UserAccountAddParameter));
+            await service.AddAsync(testData.UserAccountAddParameter));
 
-        await initialParams.Repository.DidNotReceive().Add(Arg.Any<UserAccount>(), 
-            Arg.Any<string>());
-        await initialParams.Repository.DidNotReceive().FindByLogin(Arg.Any<string>());
+        await initialParams.Repository.DidNotReceive().AddAsync(Arg.Any<UserAccount>(), Arg.Any<string>());
     }
 
     [Fact]
@@ -200,8 +154,8 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.FindByEmail(testData.UserAccountAddParameter.Email).ReturnsNull();
-        initialParams.Repository.Add(Arg.Is<UserAccount>(u =>
+        initialParams.Repository.FindByEmailAsync(testData.UserAccountAddParameter.Email).ReturnsNull();
+        initialParams.Repository.AddAsync(Arg.Is<UserAccount>(u =>
                     u.UserName == testData.UserAccountAddParameter.Login
                     && u.Email == testData.UserAccountAddParameter.Email
                     && u.PhoneNumber == testData.UserAccountAddParameter.PhoneNumber),
@@ -209,9 +163,9 @@ public class UserAccountServiceTests
             .Returns(testData.IdentityResultFailed);
 
         await Assert.ThrowsAsync<RegistrationException>(async () =>
-            await service.Add(testData.UserAccountAddParameter));
+            await service.AddAsync(testData.UserAccountAddParameter));
 
-        await initialParams.Repository.DidNotReceive().FindByLogin(Arg.Any<string>());
+        await initialParams.Repository.DidNotReceive().FindByLoginAsync(Arg.Any<string>());
     }
 
     #endregion
@@ -224,12 +178,11 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.Update(testData.UserAccount)
-            .Returns(testData.IdentityResultOk);
+        initialParams.Repository.UpdateAsync(testData.UserAccount).Returns(testData.IdentityResultSuccess);
 
-        await service.Update(testData.UserAccount);
+        await service.UpdateAsync(testData.UserAccount);
 
-        await initialParams.Repository.Received(1).Update(testData.UserAccount);
+        await initialParams.Repository.Received(1).UpdateAsync(testData.UserAccount);
     }
 
     #endregion

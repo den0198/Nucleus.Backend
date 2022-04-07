@@ -9,6 +9,7 @@ using BLL.Logic.Services.Classes;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
 using Models.Entities;
+using Models.Service.Results;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using TestsHelpers;
@@ -24,70 +25,63 @@ public sealed class AuthServiceTests
         return new AuthService(initialParams);
     }
 
-    private static void preparingToReceiveTokens(AuthServiceInitialParams initialParams,
-        AuthTestData testData, string accessToken, string refreshToken)
+    private static void preparingToReceiveTokens(AuthServiceInitialParams initialParams, AuthTestData testData, string accessToken, 
+        string refreshToken)
     {
+        initialParams.RoleService.GetUserRolesAsync(testData.UserAccount).Returns(testData.Roles);
+        initialParams.Repository.GetUserClaimsAsync(testData.UserAccount).Returns(testData.Claims);
         initialParams.AuthOptions.Audience.Returns(testData.AuthOptions.Audience);
-        initialParams.Repository.GetUserClaims(testData.UserAccount).Returns(testData.Claims);
-        initialParams.RoleService.GetUserRoles(testData.UserAccount).Returns(testData.Roles);
-        initialParams.Repository.GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience)
-            .Returns(refreshToken);
-        initialParams.AuthServiceHelper.GetAccessToken(testData.UserAccount, Arg.Any<IEnumerable<Role>>(),
-            Arg.Any<List<Claim>>()).Returns(accessToken);
+        initialParams.AuthServiceHelper.GetAccessToken(testData.UserAccount, testData.Roles, testData.Claims).Returns(accessToken);
+        initialParams.Repository.GenerateRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience).Returns(refreshToken);
+    }
+
+    private static async Task checkCorrectToken(AuthServiceInitialParams initialParams, AuthTestData testData, TokenResult actualToken,
+        string expectedAccessToken, string expectedRefreshToken)
+    {
+        Assert.Equal(expectedAccessToken, actualToken.AccessToken);
+        Assert.Equal(expectedRefreshToken, actualToken.RefreshToken);
+        initialParams.AuthServiceHelper.Received(1).GetAccessToken(testData.UserAccount, testData.Roles, testData.Claims);
+        await initialParams.Repository.Received(1).GenerateRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience);
+    }
+
+    private static async Task checkIncorrectToken(AuthServiceInitialParams initialParams)
+    {
+        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(Arg.Any<UserAccount>(), Arg.Any<IEnumerable<Role>>(),
+            Arg.Any<IEnumerable<Claim>>());
+        await initialParams.Repository.DidNotReceive().GenerateRefreshTokenAsync(Arg.Any<UserAccount>(), Arg.Any<string>());
     }
 
     #region SignIn
 
     [Fact]
-    public async Task SignIn_CorrectLoginAndCorrectPassword_Tokens()
+    public async Task SignIn_CorrectPassword_Tokens()
     {
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
         var accessToken = AnyValue.String;
         var refreshToken = AnyValue.String;
 
-        initialParams.UserAccountService.FindByLogin(testData.SignInParameter.Login).Returns(testData.UserAccount);
-        initialParams.Repository.CheckPassword(testData.UserAccount, testData.SignInParameter.Password).Returns(true);
+        initialParams.UserAccountService.GetByLoginAsync(testData.SignInParameter.Login).Returns(testData.UserAccount);
+        initialParams.Repository.CheckPasswordAsync(testData.UserAccount, testData.SignInParameter.Password).Returns(true);
         preparingToReceiveTokens(initialParams, testData, accessToken, refreshToken);
 
-        var result = await service.SignIn(testData.SignInParameter);
+        var result = await service.SignInAsync(testData.SignInParameter);
 
-        Assert.NotNull(result);
-        Assert.Equal(accessToken, result.AccessToken);
-        Assert.Equal(refreshToken, result.RefreshToken);
-        initialParams.AuthServiceHelper.Received(1).GetAccessToken(testData.UserAccount,
-            Arg.Any<IEnumerable<Role>>(), Arg.Any<List<Claim>>());
-        await initialParams.Repository.Received(1).GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience);
+        await checkCorrectToken(initialParams, testData, result, accessToken, refreshToken);
     }
 
     [Fact]
-    public async Task SignIn_CorrectLoginAndIncorrectPassword_PasswordIncorrectException()
+    public async Task SignIn_IncorrectPassword_PasswordIncorrectException()
     {
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
 
-        initialParams.UserAccountService.FindByLogin(testData.SignInParameter.Login).Returns(testData.UserAccount);
-        initialParams.Repository.CheckPassword(testData.UserAccount, testData.SignInParameter.Password).Returns(false);
+        initialParams.UserAccountService.GetByLoginAsync(testData.SignInParameter.Login).Returns(testData.UserAccount);
+        initialParams.Repository.CheckPasswordAsync(testData.UserAccount, testData.SignInParameter.Password).Returns(false);
 
-        await Assert.ThrowsAsync<PasswordIncorrectException>(async () => await service.SignIn(testData.SignInParameter));
-        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(testData.UserAccount,
-            Arg.Any<IEnumerable<Role>>(), Arg.Any<List<Claim>>());
-        await initialParams.Repository.DidNotReceive().GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience);
-    }
+        await Assert.ThrowsAsync<PasswordIncorrectException>(async () => await service.SignInAsync(testData.SignInParameter));
 
-    [Fact]
-    public async Task SignIn_IncorrectLogin_UserNotFoundException()
-    {
-        var service = getService(out var initialParams);
-        var testData = new AuthTestData();
-
-        initialParams.UserAccountService.FindByLogin(testData.SignInParameter.Login).ReturnsNull();
-
-        await Assert.ThrowsAsync<UserNotFoundException>(async () => await service.SignIn(testData.SignInParameter));
-        await initialParams.Repository.DidNotReceive().CheckPassword(testData.UserAccount, testData.SignInParameter.Password);
-        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(testData.UserAccount,
-            Arg.Any<IEnumerable<Role>>(), Arg.Any<List<Claim>>());
-        await initialParams.Repository.DidNotReceive().GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience);
+        await checkIncorrectToken(initialParams);
     }
 
     #endregion
@@ -104,19 +98,14 @@ public sealed class AuthServiceTests
 
         initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(testData.NewTokenParameter.AccessToken)
             .Returns(testData.UserAccount.UserName);
-        initialParams.UserAccountService.GetByLogin(testData.UserAccount.UserName).Returns(testData.UserAccount);
-        initialParams.Repository.VerifyRefreshToken(testData.UserAccount, testData.AuthOptions.Audience,
+        initialParams.UserAccountService.GetByLoginAsync(testData.UserAccount.UserName).Returns(testData.UserAccount);
+        initialParams.Repository.VerifyRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience, 
             testData.NewTokenParameter.RefreshToken).Returns(true);
         preparingToReceiveTokens(initialParams, testData, newAccessToken, newRefreshToken);
 
-        var result = await service.NewToken(testData.NewTokenParameter);
+        var result = await service.NewTokenAsync(testData.NewTokenParameter);
 
-        Assert.NotNull(result);
-        Assert.Equal(newAccessToken, result.AccessToken);
-        Assert.Equal(newRefreshToken, result.RefreshToken);
-        initialParams.AuthServiceHelper.Received(1).GetAccessToken(testData.UserAccount,
-            Arg.Any<IEnumerable<Role>>(), Arg.Any<List<Claim>>());
-        await initialParams.Repository.Received(1).GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience);
+        await checkCorrectToken(initialParams, testData, result, newAccessToken, newRefreshToken);
     }
 
     [Fact]
@@ -128,31 +117,26 @@ public sealed class AuthServiceTests
         initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(testData.NewTokenParameter.AccessToken)
             .ReturnsNull();
 
-        await Assert.ThrowsAsync<TokenIncorrectException>(async () => await service.NewToken(testData.NewTokenParameter));
+        await Assert.ThrowsAsync<TokenIncorrectException>(async () => await service.NewTokenAsync(testData.NewTokenParameter));
 
-        await initialParams.UserAccountService.DidNotReceive().FindByLogin(testData.UserAccount.UserName);
-        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(testData.UserAccount,
-            Arg.Any<IEnumerable<Role>>(), Arg.Any<List<Claim>>());
-        await initialParams.Repository.DidNotReceive().GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience);
+        await checkIncorrectToken(initialParams);
     }
 
     [Fact]
-    public async Task NewToken_IncorrectRefreshToken_NewToken()
+    public async Task NewToken_IncorrectRefreshToken_TokenIncorrectException()
     {
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
 
         initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(testData.NewTokenParameter.AccessToken)
             .Returns(testData.UserAccount.UserName);
-        initialParams.UserAccountService.GetByLogin(testData.UserAccount.UserName).Returns(testData.UserAccount);
-        initialParams.Repository.VerifyRefreshToken(testData.UserAccount, testData.AuthOptions.Audience,
+        initialParams.UserAccountService.GetByLoginAsync(testData.UserAccount.UserName).Returns(testData.UserAccount);
+        initialParams.Repository.VerifyRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience,
             testData.NewTokenParameter.RefreshToken).Returns(false);
 
-        await Assert.ThrowsAsync<TokenIncorrectException>(async () => await service.NewToken(testData.NewTokenParameter));
+        await Assert.ThrowsAsync<TokenIncorrectException>(async () => await service.NewTokenAsync(testData.NewTokenParameter));
 
-        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(testData.UserAccount,
-            Arg.Any<IEnumerable<Role>>(), Arg.Any<List<Claim>>());
-        await initialParams.Repository.DidNotReceive().GenerateRefreshToken(testData.UserAccount, testData.AuthOptions.Audience);
+        await checkIncorrectToken(initialParams);
     }
 
     #endregion

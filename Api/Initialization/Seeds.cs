@@ -22,15 +22,15 @@ public static class Seeds
 
         try
         {
-            await roleService.Add(RoleConsts.ADMIN)!;
-            await roleService.Add(RoleConsts.USER)!;
+            await roleService.AddAsync(RoleConsts.ADMIN)!;
+            await roleService.AddAsync(RoleConsts.USER)!;
 
             foreach (var registerUserParameter in usersParameters)
             {
-                await userService.RegisterUser(registerUserParameter)!;
+                await userService.RegisterUserAsync(registerUserParameter)!;
             }
 
-            var user = await userService.GetByEmail(usersParameters.First().Email)!;
+            var user = await userService.GetByEmailAsync(usersParameters.First().Email)!;
 
             await userService.UpgrateToAdmin(user.UserAccountId)!;
         }

@@ -16,23 +16,23 @@ public class RoleRepository : IRoleRepository
         this.roleManager = roleManager;
     }
 
-    public async Task<Role> FindByName(string name)
+    public async Task<Role> FindByNameAsync(string name)
     {
         return await roleManager.FindByNameAsync(name);
     }
 
-    public async Task Add(Role role)
+    public async Task AddAsync(Role role)
     {
         await roleManager.CreateAsync(role);
         await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, role.Name));
     }
 
-    public async Task<IEnumerable<string>> GetUserRolesNames(UserAccount userAccount)
+    public async Task<IEnumerable<string>> GetUserRolesNamesAsync(UserAccount userAccount)
     {
         return await userManager.GetRolesAsync(userAccount);
     }
 
-    public async Task GiveUserRole(UserAccount account, string roleName)
+    public async Task GiveUserRoleAsync(UserAccount account, string roleName)
     {
         await userManager.AddToRoleAsync(account, roleName);
     }

@@ -15,7 +15,7 @@ namespace BLL.UnitTests.Services;
 
 public class UserDetailServiceTests
 {
-    private IUserDetailService getService(out UserDetailServiceInitialParams initialParams)
+    private static IUserDetailService getService(out UserDetailServiceInitialParams initialParams)
     {
         initialParams = new Fixture().Customize(new AutoNSubstituteCustomization()).Create<UserDetailServiceInitialParams>();
         return new UserDetailService(initialParams);
@@ -29,10 +29,9 @@ public class UserDetailServiceTests
         var service = getService(out var initialParams);
         var testData = new UserDetailTestData();
 
-        initialParams.Repository.FindByUserAccountId(testData.UserAccount.Id)
-            .Returns(testData.UserDetail);
+        initialParams.Repository.FindByUserAccountIdAsync(testData.UserAccount.Id).Returns(testData.UserDetail);
 
-        var result = await service.GetByUserAccountId(testData.UserAccount.Id);
+        var result = await service.GetByUserAccountIdAsync(testData.UserAccount.Id);
 
         Assert.Equal(testData.UserDetail, result);
     }
@@ -43,11 +42,10 @@ public class UserDetailServiceTests
         var service = getService(out var initialParams);
         var testData = new UserDetailTestData();
 
-        initialParams.Repository.FindByUserAccountId(testData.UserAccount.Id)
-            .ReturnsNull();
+        initialParams.Repository.FindByUserAccountIdAsync(testData.UserAccount.Id).ReturnsNull();
 
         await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetByUserAccountId(testData.UserAccount.Id));
+            await service.GetByUserAccountIdAsync(testData.UserAccount.Id));
     }
 
     #endregion
@@ -60,22 +58,22 @@ public class UserDetailServiceTests
         var service = getService(out var initialParams);
         var testData = new UserDetailTestData();
 
-        initialParams.Repository.Add(Arg.Is<UserDetail>(ud =>
+        initialParams.Repository.AddAsync(Arg.Is<UserDetail>(ud =>
                 ud.FirstName == testData.UserDetailAddParameter.FirstName
                 && ud.LastName == testData.UserDetailAddParameter.LastName
                 && ud.MiddleName == testData.UserDetailAddParameter.MiddleName
                 && ud.Age == testData.UserDetailAddParameter.Age
                 && ud.UserAccountId == testData.UserDetailAddParameter.UserAccountId))
-            .Returns(testData.IdentityResultOk);
+            .Returns(testData.IdentityResultSuccess);
 
-        var result = await service.Add(testData.UserDetailAddParameter);
+        var result = await service.AddAsync(testData.UserDetailAddParameter);
 
         Assert.NotNull(result);
-        Assert.Equal(testData.UserDetail.FirstName, result.FirstName);
-        Assert.Equal(testData.UserDetail.LastName, result.LastName);
-        Assert.Equal(testData.UserDetail.MiddleName, result.MiddleName);
-        Assert.Equal(testData.UserDetail.Age, result.Age);
-        Assert.Equal(testData.UserDetail.UserAccountId, result.UserAccountId);
+        Assert.Equal(testData.UserDetailAddParameter.FirstName, result.FirstName);
+        Assert.Equal(testData.UserDetailAddParameter.LastName, result.LastName);
+        Assert.Equal(testData.UserDetailAddParameter.MiddleName, result.MiddleName);
+        Assert.Equal(testData.UserDetailAddParameter.Age, result.Age);
+        Assert.Equal(testData.UserDetailAddParameter.UserAccountId, result.UserAccountId);
     }
 
     #endregion

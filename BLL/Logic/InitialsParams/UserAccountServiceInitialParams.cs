@@ -10,5 +10,5 @@ public sealed class UserAccountServiceInitialParams
         Repository = unitOfWork.UserAccountRepository;
     }
 
-    public IUserAccountRepository Repository { get; set; }
+    public IUserAccountRepository Repository { get; }
 }

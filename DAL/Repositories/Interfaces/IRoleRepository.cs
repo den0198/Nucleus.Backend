@@ -4,11 +4,11 @@ namespace DAL.Repositories.Interfaces;
 
 public interface IRoleRepository
 {
-    Task<Role> FindByName(string name);
+    Task<Role> FindByNameAsync(string name);
 
-    Task Add(Role role);
+    Task AddAsync(Role role);
 
-    Task<IEnumerable<string>> GetUserRolesNames(UserAccount account);
+    Task<IEnumerable<string>> GetUserRolesNamesAsync(UserAccount account);
 
-    Task GiveUserRole(UserAccount account, string roleName);
+    Task GiveUserRoleAsync(UserAccount account, string roleName);
 }

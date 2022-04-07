@@ -4,11 +4,11 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IRoleService
 {
-    Task<Role> GetByName(string name);
+    Task<Role> GetByNameAsync(string name);
 
-    Task Add(string name);
+    Task AddAsync(string name);
 
-    Task<IEnumerable<Role>> GetUserRoles(UserAccount userAccount);
+    Task<IEnumerable<Role>> GetUserRolesAsync(UserAccount userAccount);
 
-    Task GiveUserRole(UserAccount userAccount, string roleName);
+    Task GiveUserRoleAsync(UserAccount userAccount, string roleName);
 }
