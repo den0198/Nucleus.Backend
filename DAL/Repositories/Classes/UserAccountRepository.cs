@@ -13,27 +13,27 @@ public sealed class UserAccountRepository : IUserAccountRepository
         this.userManager = userManager;
     }
 
-    public async Task<UserAccount> FindById(long id)
+    public async Task<UserAccount> FindByIdAsync(long id)
     {
         return await userManager.FindByIdAsync(id.ToString());
     }
 
-    public async Task<UserAccount> FindByEmail(string email)
+    public async Task<UserAccount> FindByEmailAsync(string email)
     {
         return await userManager.FindByEmailAsync(email);
     }
 
-    public async Task<UserAccount> FindByLogin(string login)
+    public async Task<UserAccount> FindByLoginAsync(string login)
     {
         return await userManager.FindByNameAsync(login);
     }
 
-    public async Task<IdentityResult> Add(UserAccount userAccount, string password)
+    public async Task<IdentityResult> AddAsync(UserAccount userAccount, string password)
     {
         return await userManager.CreateAsync(userAccount, password);
     }
 
-    public async Task<IdentityResult> Update(UserAccount userAccount)
+    public async Task<IdentityResult> UpdateAsync(UserAccount userAccount)
     {
         return await userManager.UpdateAsync(userAccount);
     }

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Models.Entities;
 using Models.Service.Parameters.User;
-using TestsHelpers.TestMocks.User;
+using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;
 
@@ -10,14 +10,14 @@ internal class UserDetailTestData
 {
     public UserDetailTestData()
     {
-        IdentityResultOk = Task.FromResult(IdentityResult.Success);
-        UserAccount = UserAccountTestMock.Get();
-        UserDetailAddParameter = UserDetailAddParameterTestMock.Get(UserDetail.FirstName, 
-            UserDetail.LastName, UserDetail.MiddleName, UserDetail.Age, UserAccount.Id);
+        IdentityResultSuccess = Builder.IdentityResultSuccess.Build();
+        UserAccount = Builder.UserAccount.Build();
+        UserDetailAddParameter = Builder.UserDetailAddParameter.Build();
     }
 
-    public Task<IdentityResult> IdentityResultOk { get; }
+    public Task<IdentityResult> IdentityResultSuccess { get; }
     public UserAccount UserAccount { get; }
-    public UserDetail UserDetail => UserAccount.UserDetail;
     public UserDetailAddParameter UserDetailAddParameter { get; }
+
+    public UserDetail UserDetail => UserAccount.UserDetail;
 }

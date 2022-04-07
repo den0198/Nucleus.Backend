@@ -21,14 +21,12 @@ public sealed class AuthServiceInitialParams
         authServiceHelper = new Lazy<IAuthServiceHelper>(new AuthServiceHelper(AuthOptions));
 
         Repository = unitOfWork.AuthRepository;
-
         UserAccountService = userAccountService;
         RoleService = roleService;
 
     }
 
     public IAuthRepository Repository { get; }
-
     public IUserAccountService UserAccountService { get; }
     public IRoleService RoleService { get; }
 

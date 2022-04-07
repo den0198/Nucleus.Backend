@@ -4,6 +4,6 @@ namespace DAL.Repositories.Interfaces;
 
 public interface IUserDetailRepository
 {
-    Task Add(UserDetail userDetail);
-    Task<UserDetail> FindByUserAccountId(long userAccountId);
+    Task AddAsync(UserDetail userDetail);
+    Task<UserDetail> FindByUserAccountIdAsync(long userAccountId);
 }

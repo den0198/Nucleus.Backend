@@ -17,10 +17,10 @@ public sealed class UserService : IUserService
         this.initialParams = initialParams;
     }
 
-    public async Task<FullUserInfoResult> GetByEmail(string email)
+    public async Task<FullUserInfoResult> GetByEmailAsync(string email)
     {
-        var userAccount = await initialParams.UserAccountService.GetByEmail(email);
-        var userDetails = await initialParams.UserDetailService.GetByUserAccountId(userAccount.Id);
+        var userAccount = await initialParams.UserAccountService.GetByEmailAsync(email);
+        var userDetails = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
 
         return new FullUserInfoResult()
         {
@@ -36,20 +36,20 @@ public sealed class UserService : IUserService
         };
     }
 
-    public async Task RegisterUser(RegisterUserParameter parameter)
+    public async Task RegisterUserAsync(RegisterUserParameter parameter)
     {
-        var userAccount = await initialParams.UserAccountService.Add(parameter.Adapt<UserAccountAddParameter>());
+        var userAccount = await initialParams.UserAccountService.AddAsync(parameter.Adapt<UserAccountAddParameter>());
         var userDetailParameter = parameter.Adapt<UserDetailAddParameter>();
         userDetailParameter.UserAccountId = userAccount.Id;
-        var userDetail = await initialParams.UserDetailService.Add(userDetailParameter);
+        var userDetail = await initialParams.UserDetailService.AddAsync(userDetailParameter);
         userAccount.UserDetailId = userDetail.UserDetailId;
-        await initialParams.UserAccountService.Update(userAccount);
-        await initialParams.RoleService.GiveUserRole(userAccount, RoleConsts.USER);
+        await initialParams.UserAccountService.UpdateAsync(userAccount);
+        await initialParams.RoleService.GiveUserRoleAsync(userAccount, RoleConsts.USER);
     }
 
     public async Task UpgrateToAdmin(long userAccountId)
     {
-        var userAccount = await initialParams.UserAccountService.GetById(userAccountId);
-        await initialParams.RoleService.GiveUserRole(userAccount, RoleConsts.ADMIN);
+        var userAccount = await initialParams.UserAccountService.GetByIdAsync(userAccountId);
+        await initialParams.RoleService.GiveUserRoleAsync(userAccount, RoleConsts.ADMIN);
     }
 }

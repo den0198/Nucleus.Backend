@@ -11,7 +11,7 @@ public class UserQuery : CoreQuery
     [Authorize]
     public async Task<GetUserByEmailResponse> GetUserByEmail(string email, [Service]IUserService service)
     {
-        var result = await service.GetByEmail(email);
+        var result = await service.GetByEmailAsync(email);
 
         return result.Adapt<GetUserByEmailResponse>();
     }

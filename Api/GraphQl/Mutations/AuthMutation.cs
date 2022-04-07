@@ -11,7 +11,7 @@ public sealed class AuthMutation : CoreMutation
 {
     public async Task<TokenResponse> NewToken(NewTokenRequest request, [Service] IAuthService service)
     {
-        var result = await service.NewToken(request.Adapt<NewTokenParameter>());
+        var result = await service.NewTokenAsync(request.Adapt<NewTokenParameter>());
 
         return result.Adapt<TokenResponse>();
     }

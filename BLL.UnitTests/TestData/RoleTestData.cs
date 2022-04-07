@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Models.Entities;
-using TestsHelpers.TestMocks.Role;
-using TestsHelpers.TestMocks.User;
+using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;
 
@@ -11,17 +10,17 @@ internal class RoleTestData
 {
     public RoleTestData()
     {
-        UserAccount = UserAccountTestMock.Get();
-        IdentityResultOk = Task.FromResult(IdentityResult.Success);
-
+        IdentityResultSuccess = Builder.IdentityResultSuccess.Build();
+        UserAccount = Builder.UserAccount.Build();
         Roles = new[]
         {
-            RoleTestMock.Get(),
-            RoleTestMock.Get()
+            Builder.Role.Build(),
+            Builder.Role.Build(),
         };
     }
 
-    public IEnumerable<Role> Roles { get; }
+    public Task<IdentityResult> IdentityResultSuccess { get; }
     public UserAccount UserAccount { get; }
-    public Task<IdentityResult> IdentityResultOk  { get; }
+    public IEnumerable<Role> Roles { get; }
+
 }

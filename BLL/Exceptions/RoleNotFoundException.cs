@@ -2,9 +2,9 @@
 
 namespace BLL.Exceptions;
 
-public class RoleNotExistsException : CoreException
+public class RoleNotFoundException : CoreException
 {
-    public RoleNotExistsException(string name) 
+    public RoleNotFoundException(string name) 
         : base(ExceptionCodes.RoleNotExistsExceptionCode,
             $"Role with name {name} not found")
     {

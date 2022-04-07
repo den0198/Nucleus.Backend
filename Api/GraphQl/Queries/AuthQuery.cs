@@ -11,7 +11,7 @@ public sealed class AuthQuery : CoreQuery
 {
     public async Task<TokenResponse> SignIn(SignInRequest request, [Service] IAuthService service)
     {
-        var result = await service.SignIn(request.Adapt<SignInParameter>());
+        var result = await service.SignInAsync(request.Adapt<SignInParameter>());
 
         return result.Adapt<TokenResponse>();
     }

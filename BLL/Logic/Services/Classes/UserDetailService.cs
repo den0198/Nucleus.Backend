@@ -15,15 +15,15 @@ public class UserDetailService : IUserDetailService
         this.initialParams = initialParams;
     }
 
-    public async Task<UserDetail> GetByUserAccountId(long userAccountId)
+    public async Task<UserDetail> GetByUserAccountIdAsync(long userAccountId)
     {
-        return await initialParams.Repository.FindByUserAccountId(userAccountId)
+        return await initialParams.Repository.FindByUserAccountIdAsync(userAccountId)
                ?? throw new UserNotFoundException($"userAccountId : {userAccountId}");
     }
 
-    public async Task<UserDetail> Add(UserDetailAddParameter parameters)
+    public async Task<UserDetail> AddAsync(UserDetailAddParameter parameters)
     {
-        var userDetail = new UserDetail()
+        var userDetail = new UserDetail
         {
             FirstName = parameters.FirstName,
             LastName = parameters.LastName,
@@ -31,7 +31,7 @@ public class UserDetailService : IUserDetailService
             Age = parameters.Age,
             UserAccountId = parameters.UserAccountId
         };
-        await initialParams.Repository.Add(userDetail);
+        await initialParams.Repository.AddAsync(userDetail);
 
         return userDetail;
     }

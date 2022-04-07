@@ -9,7 +9,7 @@ using Models.Options.Interfaces;
 
 namespace BLL.Logic.ServiceHelpers.Classes;
 
-public class AuthServiceHelper : IAuthServiceHelper
+public sealed class AuthServiceHelper : IAuthServiceHelper
 {
     private readonly IAuthOptions authOptions;
 
@@ -18,18 +18,19 @@ public class AuthServiceHelper : IAuthServiceHelper
         this.authOptions = authOptions;
     }
 
-    public string GetAccessToken(UserAccount userAccount, IEnumerable<Role> userRoles, List<Claim> claims)
+    public string GetAccessToken(UserAccount userAccount, IEnumerable<Role> userRoles, IEnumerable<Claim> claims)
     {
-        var userLogin = claims
+        var claimsList = claims.ToList(); ;
+        var userLogin = claimsList
             .Where(_ => _.Type.Contains("userdata"))
             .Select(_ => _.Value)
             .FirstOrDefault();
         if (userLogin.IsNull())
-            claims.Add(new Claim(ClaimTypes.UserData, userAccount.UserName));
+            claimsList.Add(new Claim(ClaimTypes.UserData, userAccount.UserName));
 
-        claims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Name)));
+        claimsList.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Name)));
 
-        return getJwtToken(claims);
+        return getJwtToken(claimsList);
     }
 
     public string? FindUserLoginOutAccessToken(string oldAccessToken)

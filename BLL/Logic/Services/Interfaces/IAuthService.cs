@@ -5,7 +5,7 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IAuthService
 {
-    Task<TokenResult> SignIn(SignInParameter parameter);
+    Task<TokenResult> SignInAsync(SignInParameter parameter);
 
-    Task<TokenResult> NewToken(NewTokenParameter parameter);
+    Task<TokenResult> NewTokenAsync(NewTokenParameter parameter);
 }

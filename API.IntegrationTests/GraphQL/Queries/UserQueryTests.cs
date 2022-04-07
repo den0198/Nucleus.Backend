@@ -18,9 +18,6 @@ public class UserQueryTests : BaseIntegrationTests
 
         var context = getContext();
 
-        var user = context.Users.ToList();
-        var user1 = context.Users.ToList();
-
-        var response = await client.GetAsync("/");
+        await client.GetAsync("/");
     }
 }

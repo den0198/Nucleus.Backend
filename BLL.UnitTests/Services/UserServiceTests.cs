@@ -14,7 +14,7 @@ namespace BLL.UnitTests.Services;
 
 public class UserServiceTests
 {
-    private IUserService getService(out UserServiceInitialParams initialParams)
+    private static IUserService getService(out UserServiceInitialParams initialParams)
     {
         initialParams = new Fixture().Customize(new AutoNSubstituteCustomization()).Create<UserServiceInitialParams>();
         return new UserService(initialParams);
@@ -28,12 +28,10 @@ public class UserServiceTests
         var service = getService(out var initialParams);
         var testData = new UserTestData();
 
-        initialParams.UserAccountService.GetByEmail(testData.UserAccount.Email)
-            .Returns(testData.UserAccount);
-        initialParams.UserDetailService.GetByUserAccountId(testData.UserDetail.UserAccountId)
-            .Returns(testData.UserDetail);
+        initialParams.UserAccountService.GetByEmailAsync(testData.UserAccount.Email).Returns(testData.UserAccount);
+        initialParams.UserDetailService.GetByUserAccountIdAsync(testData.UserDetail.UserAccountId).Returns(testData.UserDetail);
 
-        var result = await service.GetByEmail(testData.UserAccount.Email);
+        var result = await service.GetByEmailAsync(testData.UserAccount.Email);
 
         Assert.NotNull(result);
         Assert.Equal(testData.UserAccount.Id, result.UserAccountId);
@@ -57,25 +55,23 @@ public class UserServiceTests
         var service = getService(out var initialParams);
         var testData = new UserTestData();
 
-        initialParams.UserAccountService.Add(Arg.Any<UserAccountAddParameter>())
+        initialParams.UserAccountService.AddAsync(Arg.Is<UserAccountAddParameter>(uaap =>
+                uaap.Login == testData.RegisterUserParameter.Login
+                && uaap.Email == testData.RegisterUserParameter.Email
+                && uaap.Password == testData.RegisterUserParameter.Password
+                && uaap.PhoneNumber == testData.RegisterUserParameter.PhoneNumber))
             .Returns(testData.UserAccount);
-        initialParams.UserDetailService.Add(Arg.Any<UserDetailAddParameter>())
+        initialParams.UserDetailService.AddAsync(Arg.Is<UserDetailAddParameter>(udap =>
+                udap.FirstName == testData.RegisterUserParameter.FirstName
+                && udap.LastName == testData.RegisterUserParameter.LastName
+                && udap.MiddleName == testData.RegisterUserParameter.MiddleName
+                && udap.Age == testData.RegisterUserParameter.Age))
             .Returns(testData.UserDetail);
 
-        await service.RegisterUser(testData.RegisterUserParameter);
+        await service.RegisterUserAsync(testData.RegisterUserParameter);
 
-        await initialParams.UserAccountService.Received(1).Add(Arg.Is<UserAccountAddParameter>(uaap => 
-            uaap.Login == testData.RegisterUserParameter.Login 
-            && uaap.Email == testData.RegisterUserParameter.Email
-            && uaap.Password == testData.RegisterUserParameter.Password
-            && uaap.PhoneNumber == testData.RegisterUserParameter.PhoneNumber));
-        await initialParams.UserDetailService.Received(1).Add(Arg.Is<UserDetailAddParameter>(udap =>
-            udap.FirstName == testData.RegisterUserParameter.FirstName
-            && udap.LastName == testData.RegisterUserParameter.LastName
-            && udap.MiddleName == testData.RegisterUserParameter.MiddleName
-            && udap.Age == testData.RegisterUserParameter.Age));
-        await initialParams.UserAccountService.Received(1).Update(testData.UserAccount);
-        await initialParams.RoleService.Received(1).GiveUserRole(testData.UserAccount, RoleConsts.USER);
+        await initialParams.UserAccountService.Received(1).UpdateAsync(testData.UserAccount);
+        await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.UserAccount, RoleConsts.USER);
     }
 
     #endregion
@@ -88,12 +84,11 @@ public class UserServiceTests
         var service = getService(out var initialParams);
         var testData = new UserTestData();
 
-        initialParams.UserAccountService.GetById(testData.UserAccount.Id)
-            .Returns(testData.UserAccount);
+        initialParams.UserAccountService.GetByIdAsync(testData.UserAccount.Id).Returns(testData.UserAccount);
 
         await service.UpgrateToAdmin(testData.UserAccount.Id);
 
-        await initialParams.RoleService.GiveUserRole(testData.UserAccount, RoleConsts.ADMIN);
+        await initialParams.RoleService.GiveUserRoleAsync(testData.UserAccount, RoleConsts.ADMIN);
     }
 
     #endregion

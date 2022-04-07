@@ -10,7 +10,7 @@ public sealed class UserMutation : CoreMutation
 {
     public async Task<string> Register(RegisterUserRequest request, [Service] IUserService service)
     {
-        await service.RegisterUser(request.Adapt<RegisterUserParameter>());
+        await service.RegisterUserAsync(request.Adapt<RegisterUserParameter>());
 
         return StatusCodes.Status200OK.ToString();
     }

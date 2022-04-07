@@ -5,7 +5,19 @@ namespace BLL.Logic.ServiceHelpers.Interfaces;
 
 public interface IAuthServiceHelper
 {
-    string GetAccessToken(UserAccount userAccount, IEnumerable<Role> userRoles, List<Claim> claims);
+    /// <summary>
+    /// Получает AccessToken
+    /// </summary>
+    /// <param name="userAccount">Акаунта пользователя</param>
+    /// <param name="userRoles">Роль</param>
+    /// <param name="claims">Дополнительная информация</param>
+    /// <returns>AccessToken</returns>
+    string GetAccessToken(UserAccount userAccount, IEnumerable<Role> userRoles, IEnumerable<Claim> claims);
 
+    /// <summary>
+    /// Ищет пользовательский логин
+    /// </summary>
+    /// <param name="oldAccessToken">Старый AccessToken</param>
+    /// <returns>Пользовательский логин</returns>
     string? FindUserLoginOutAccessToken(string oldAccessToken);
 }

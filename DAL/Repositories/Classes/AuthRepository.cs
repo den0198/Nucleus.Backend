@@ -15,17 +15,17 @@ public class AuthRepository : IAuthRepository
         this.userManager = userManager;
     }
 
-    public async Task<IEnumerable<Claim>> GetUserClaims(UserAccount userAccount)
+    public async Task<IEnumerable<Claim>> GetUserClaimsAsync(UserAccount userAccount)
     {
         return await userManager.GetClaimsAsync(userAccount);
     }
 
-    public async Task<bool> CheckPassword(UserAccount userAccount, string password)
+    public async Task<bool> CheckPasswordAsync(UserAccount userAccount, string password)
     {
         return await userManager.CheckPasswordAsync(userAccount, password);
     }
 
-    public async Task<string> GenerateRefreshToken(UserAccount userAccount, string tokenProvider)
+    public async Task<string> GenerateRefreshTokenAsync(UserAccount userAccount, string tokenProvider)
     {
         var result = await userManager.GenerateUserTokenAsync(userAccount, tokenProvider, RefreshToken);
 
@@ -35,7 +35,7 @@ public class AuthRepository : IAuthRepository
         return result;
     }
 
-    public async Task<bool> VerifyRefreshToken(UserAccount userAccount, string tokenProvider, string refreshToken)
+    public async Task<bool> VerifyRefreshTokenAsync(UserAccount userAccount, string tokenProvider, string refreshToken)
     {
         return await userManager.VerifyUserTokenAsync(userAccount,
             tokenProvider, RefreshToken, refreshToken);

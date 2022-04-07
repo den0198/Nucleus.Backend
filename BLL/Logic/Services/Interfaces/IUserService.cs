@@ -5,7 +5,7 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserService
 {
-    Task<FullUserInfoResult> GetByEmail(string email);
-    Task RegisterUser(RegisterUserParameter parameter);
+    Task<FullUserInfoResult> GetByEmailAsync(string email);
+    Task RegisterUserAsync(RegisterUserParameter parameter);
     Task UpgrateToAdmin(long userAccountId);
 }
