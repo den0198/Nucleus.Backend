@@ -1,6 +1,6 @@
 ﻿using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
-using Common.Consts.Seed;
+using Common.Consts.DataBase;
 using Mapster;
 using Models.Service.Parameters.User;
 using Models.Service.Results;
@@ -44,12 +44,12 @@ public sealed class UserService : IUserService
         var userDetail = await initialParams.UserDetailService.AddAsync(userDetailParameter);
         userAccount.UserDetailId = userDetail.UserDetailId;
         await initialParams.UserAccountService.UpdateAsync(userAccount);
-        await initialParams.RoleService.GiveUserRoleAsync(userAccount, RoleConsts.USER);
+        await initialParams.RoleService.GiveUserRoleAsync(userAccount, DefaultSeeds.USER);
     }
 
     public async Task UpgrateToAdmin(long userAccountId)
     {
         var userAccount = await initialParams.UserAccountService.GetByIdAsync(userAccountId);
-        await initialParams.RoleService.GiveUserRoleAsync(userAccount, RoleConsts.ADMIN);
+        await initialParams.RoleService.GiveUserRoleAsync(userAccount, DefaultSeeds.ADMIN);
     }
 }

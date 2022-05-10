@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using BLL.Extensions;
 using BLL.Logic.ServiceHelpers.Interfaces;
+using Common.Extensions;
 using Common.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Models.Entities;

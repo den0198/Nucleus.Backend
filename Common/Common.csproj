@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Consts\Seed\" />
     <Folder Include="Consts\Exception\" />
   </ItemGroup>
 

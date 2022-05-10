@@ -2,8 +2,13 @@
 
 namespace TestsHelpers.Builders;
 
-public abstract class CoreBuilder<TEntity>
+public abstract class CoreBuilder<TEntity> where TEntity : class, new()
 {
+    protected CoreBuilder()
+    {
+        Entity = new TEntity();
+    }
+
     protected TEntity Entity { get; set; }
 
     public TEntity Build() => Entity;
@@ -12,7 +17,7 @@ public abstract class CoreBuilder<TEntity>
     {
         var propertyName = this.propertyName(field);
         var property = Entity.GetType().GetProperty(propertyName);
-        property.SetValue(Entity, value);
+        property?.SetValue(Entity, value);
         return this;
     }
 

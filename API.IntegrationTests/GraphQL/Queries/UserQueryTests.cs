@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Models.DTOs.Requests;
+using Models.DTOs.Responses;
 using Xunit;
 
 namespace API.IntegrationTests.GraphQL.Queries;
@@ -12,12 +13,17 @@ public class UserQueryTests : BaseIntegrationTests
     }
 
     [Fact]
-    public async Task HelloWorldTest()
+    public async Task GetUserByEmail_UserExist_FullUserInfo()
     {
-        var client = getClient();
+        var authClient = await getAuthClient();
+        var request = new GetUserByEmailRequest
+        {
+            Email = "user@gmail.com"
+        };
 
-        var context = getContext();
+        var response = await sendQueryAsync<GetUserByEmailRequest, GetUserByEmailResponse>(authClient,"userByEmail", request);
 
-        await client.GetAsync("/");
+        Assert.NotNull(response);
     }
+
 }

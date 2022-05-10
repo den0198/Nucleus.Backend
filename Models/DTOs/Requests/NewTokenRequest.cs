@@ -2,7 +2,7 @@
 
 namespace Models.DTOs.Requests;
 
-public class NewTokenRequest
+public sealed class NewTokenRequest
 {
     [Required]
     public string AccessToken { get; set; }

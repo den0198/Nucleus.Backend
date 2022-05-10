@@ -5,7 +5,7 @@ using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Classes;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
-using Common.Consts.Seed;
+using Common.Consts.DataBase;
 using Models.Service.Parameters.User;
 using NSubstitute;
 using Xunit;
@@ -71,7 +71,7 @@ public class UserServiceTests
         await service.RegisterUserAsync(testData.RegisterUserParameter);
 
         await initialParams.UserAccountService.Received(1).UpdateAsync(testData.UserAccount);
-        await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.UserAccount, RoleConsts.USER);
+        await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.UserAccount, DefaultSeeds.USER);
     }
 
     #endregion
@@ -88,7 +88,7 @@ public class UserServiceTests
 
         await service.UpgrateToAdmin(testData.UserAccount.Id);
 
-        await initialParams.RoleService.GiveUserRoleAsync(testData.UserAccount, RoleConsts.ADMIN);
+        await initialParams.RoleService.GiveUserRoleAsync(testData.UserAccount, DefaultSeeds.ADMIN);
     }
 
     #endregion
