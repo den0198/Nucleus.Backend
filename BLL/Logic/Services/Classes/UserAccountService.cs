@@ -34,6 +34,7 @@ public class UserAccountService : IUserAccountService
                ?? throw new UserNotFoundException($"login: {login}");
     }
 
+    //TODO Переделать сдесь логику (метод Add не должен возврошать нечего)
     public async Task<UserAccount> AddAsync(UserAccountAddParameter parameter)
     {
         var userAccount = await initialParams.Repository.FindByEmailAsync(parameter.Email);

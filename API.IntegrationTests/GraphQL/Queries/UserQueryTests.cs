@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading.Tasks;
 using Common.Consts.Exception;
-using Common.Exception;
+using Common.GraphQl;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
 using TestsHelpers;
@@ -51,7 +52,7 @@ public class UserQueryTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
             await sendQueryAsync<GetUserByEmailRequest, GetUserByEmailResponse>(authClient, "userByEmail", request));
 
-        Assert.Equal(ExceptionCodes.UserNotFoundExceptionCode, exception.Error.Code);
+        Assert.Equal(ExceptionCodes.UserNotFoundExceptionCode, exception.Code);
     }
 
     #endregion

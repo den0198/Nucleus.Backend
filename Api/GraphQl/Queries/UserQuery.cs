@@ -9,7 +9,6 @@ namespace API.GraphQl.Queries;
 [ExtendObjectType(typeof(CoreQuery))]
 public class UserQuery : CoreQuery
 {
-
     [Authorize]
     public async Task<GetUserByEmailResponse> GetUserByEmail(GetUserByEmailRequest request, [Service]IUserService service)
     {

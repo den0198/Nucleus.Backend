@@ -5,10 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Common.Consts.DataBase;
-using Common.Exception;
 using Common.Extensions;
+using Common.GraphQl;
 using DAL.EntityFramework;
 using GraphQL;
 using GraphQL.Client.Abstractions;
@@ -20,7 +21,6 @@ using Models.DTOs.Requests;
 using Models.DTOs.Responses;
 using Models.Entities;
 using Models.GraphQl;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace API.IntegrationTests;
@@ -114,12 +114,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
             if (responseDictionary.IsNull())
                 throw new Exception("Response is null!");
 
-            return JsonConvert.DeserializeObject<TResponse>(responseDictionary.ToString()!);
+            return JsonSerializer.Deserialize<TResponse>(responseDictionary.ToString()!)!;
         }
         catch (GraphQLHttpRequestException e)
         {
-            var errorResponseGraphQl = JsonConvert.DeserializeObject<ErrorResponseGraphQl>(e.Content!);
-            throw new GraphQlException(errorResponseGraphQl);
+            var errorResponseGraphQl = JsonSerializer.Deserialize<ErrorResponseGraphQl>(e.Content!);
+            throw new GraphQlException(errorResponseGraphQl!);
         }
     }
 
@@ -129,7 +129,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
 
         var graphQlStringRequest = new StringBuilder("request:{");
         graphQlStringRequest.Append(string.Join(',', requestModelProperties.Select(property =>
-            property.Name.FirstLetterToLower() + ": \"" + property.GetValue(request) + "\"")));
+            property.Name.FirstLetterToLower() + ": " + JsonSerializer.Serialize(property.GetValue(request)))));
         graphQlStringRequest.Append('}');
 
         return graphQlStringRequest.ToString();
@@ -159,5 +159,5 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return await getContext().Users
             .Include(u => u.UserDetail)
             .FirstAsync(u => u.UserName == login);
-    } 
+    }
 }

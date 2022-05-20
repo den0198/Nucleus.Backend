@@ -1,16 +1,21 @@
-﻿namespace Models.GraphQl;
+﻿using System.Text.Json.Serialization;
+
+namespace Models.GraphQl;
 
 public sealed class ErrorResponseGraphQl
 {
+    [JsonPropertyName("errors")]
     public IEnumerable<GraphQlError> Errors { get; set; }
 
     public sealed class GraphQlError
     {
-        public Extensions Error { get; set; }
+        [JsonPropertyName("extensions")]
+        public GraphQlExtensions Errors { get; set; }
 
-        public sealed class Extensions
+        public sealed class GraphQlExtensions
         {
-            public int Code { get; set; }
+            [JsonPropertyName("code")]
+            public string Code { get; set; }
         }
     }
 }
