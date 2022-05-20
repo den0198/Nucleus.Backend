@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Common.Consts.Exception;
 using Common.GraphQl;
 using Models.DTOs.Requests;
