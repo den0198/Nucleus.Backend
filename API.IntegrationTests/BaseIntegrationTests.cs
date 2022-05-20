@@ -7,15 +7,19 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Consts.DataBase;
+using Common.Exception;
 using Common.Extensions;
 using DAL.EntityFramework;
 using GraphQL;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
+using Models.Entities;
+using Models.GraphQl;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -38,29 +42,14 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         GC.SuppressFinalize(this);
     }
 
-    protected AppDbContext getContext()
-    {
-        var serviceCollection = factory.Services;
-        var scope = serviceCollection.CreateScope();
-        context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-        return context;
-    }
-
-    protected GraphQLHttpClient getClient()
-    {
-        var (httpClient, options) = getClientAndOptions();
-
-        return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
-    }
-
     protected async Task<GraphQLHttpClient> getAuthClient()
     {
         var (httpClient, options) = getClientAndOptions();
         var client = getClient();
+        var user = await getFullUser();
         var request = new SignInRequest
         {
-            Login = DefaultSeeds.USER_USER_LOGIN,
+            Login = user.UserName,
             Password = DefaultSeeds.USER_USER_PASSWORD
         };
         var response = await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request);
@@ -77,6 +66,26 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     protected async Task<TResponse> sendMutationAsync<TRequest, TResponse>(GraphQLHttpClient client, string nameMethod, TRequest request)
     {
         return await sendAsync<TRequest, TResponse>(client, "mutation", nameMethod, request);
+    }
+
+    protected async Task<UserAccount> getFullUser() => await getFullUserAccount(DefaultSeeds.USER_USER_LOGIN);
+    
+    protected async Task<UserAccount> getFullAdmin() => await getFullUserAccount(DefaultSeeds.USER_ADMIN_LOGIN);
+
+    protected AppDbContext getContext()
+    {
+        var serviceCollection = factory.Services;
+        var scope = serviceCollection.CreateScope();
+        context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        return context;
+    }
+
+    protected GraphQLHttpClient getClient()
+    {
+        var (httpClient, options) = getClientAndOptions();
+
+        return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
     }
 
     private (HttpClient, GraphQLHttpClientOptions) getClientAndOptions()
@@ -97,13 +106,21 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         var graphQlStringResponse = getGraphQlStringResponse<TResponse>(nameQuery, nameMethod, graphQlStringRequest);
 
         var graphQlRequest = new GraphQLRequest {Query = graphQlStringResponse};
-        var response = await client.SendQueryAsync(graphQlRequest, () => new ExpandoObject());
-        var responseDictionary = ((IDictionary<string, object>)response.Data!)[nameMethod];
+        try
+        {
+            var response = await client.SendQueryAsync(graphQlRequest, () => new ExpandoObject());
+            var responseDictionary = ((IDictionary<string, object>)response.Data!)[nameMethod];
 
-        if (responseDictionary.IsNull())
-            throw new Exception("Response is null!");
+            if (responseDictionary.IsNull())
+                throw new Exception("Response is null!");
 
-        return JsonConvert.DeserializeObject<TResponse>(responseDictionary.ToString()!);
+            return JsonConvert.DeserializeObject<TResponse>(responseDictionary.ToString()!);
+        }
+        catch (GraphQLHttpRequestException e)
+        {
+            var errorResponseGraphQl = JsonConvert.DeserializeObject<ErrorResponseGraphQl>(e.Content!);
+            throw new GraphQlException(errorResponseGraphQl);
+        }
     }
 
     private static string getGraphQlStringRequest<TRequest>(TRequest request)
@@ -136,4 +153,11 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
 
         return graphQlStringResponse.ToString();
     }
+
+    private async Task<UserAccount> getFullUserAccount(string login)
+    {
+        return await getContext().Users
+            .Include(u => u.UserDetail)
+            .FirstAsync(u => u.UserName == login);
+    } 
 }
