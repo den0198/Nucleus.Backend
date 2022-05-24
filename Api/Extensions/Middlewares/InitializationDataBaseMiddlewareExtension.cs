@@ -1,4 +1,4 @@
-﻿using Seeds = API.Initialization.Seeds;
+﻿using API.Initialization;
 
 namespace API.Extensions.Middlewares;
 

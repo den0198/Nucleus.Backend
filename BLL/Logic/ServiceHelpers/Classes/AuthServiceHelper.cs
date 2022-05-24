@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using BLL.Extensions;
 using BLL.Logic.ServiceHelpers.Interfaces;
+using Common.Extensions;
 using Common.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Models.Entities;
@@ -20,7 +20,7 @@ public sealed class AuthServiceHelper : IAuthServiceHelper
 
     public string GetAccessToken(UserAccount userAccount, IEnumerable<Role> userRoles, IEnumerable<Claim> claims)
     {
-        var claimsList = claims.ToList(); ;
+        var claimsList = claims.ToList();
         var userLogin = claimsList
             .Where(_ => _.Type.Contains("userdata"))
             .Select(_ => _.Value)
@@ -35,12 +35,19 @@ public sealed class AuthServiceHelper : IAuthServiceHelper
 
     public string? FindUserLoginOutAccessToken(string oldAccessToken)
     {
-        var userInfo = getAccountInfoByOldToken(oldAccessToken);
+        try
+        {
+            var userInfo = getAccountInfoByOldToken(oldAccessToken);
 
-        return userInfo?.Claims
-            .Where(_ => _.Type.Contains("userdata"))
-            .Select(_ => _.Value)
-            .FirstOrDefault();
+            return userInfo?.Claims
+                .Where(_ => _.Type.Contains("userdata"))
+                .Select(_ => _.Value)
+                .FirstOrDefault();
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private ClaimsPrincipal? getAccountInfoByOldToken(string oldAccessToken)

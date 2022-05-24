@@ -13,18 +13,22 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         builder.ConfigureServices(serviceCollection =>
         {
-            var descriptor = serviceCollection.SingleOrDefault(
-                d => d.ServiceType ==
-                     typeof(DbContextOptions<AppDbContext>));
+            var descriptor = serviceCollection.Single(d =>
+                d.ServiceType == typeof(DbContextOptions<AppDbContext>));
+            serviceCollection.Remove(descriptor);
 
-            serviceCollection.Remove(descriptor!);
+            var serviceProvider = new ServiceCollection()
+                .AddEntityFrameworkInMemoryDatabase()
+                .BuildServiceProvider();
 
             serviceCollection.AddDbContext<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("InMemoryDbForTesting");
+                options.UseInternalServiceProvider(serviceProvider);
             });
-
             SeedForTest.InitialSeeds(serviceCollection);
         });
     }
+
+    
 }

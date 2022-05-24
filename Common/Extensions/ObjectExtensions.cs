@@ -1,6 +1,6 @@
-﻿namespace BLL.Extensions;
+﻿namespace Common.Extensions;
 
-public static class ObjectExtension
+public static class ObjectExtensions
 {
     public static bool IsNull(this object? value)
     {

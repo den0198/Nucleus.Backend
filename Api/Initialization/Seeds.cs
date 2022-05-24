@@ -1,7 +1,7 @@
 ﻿using BLL.Exceptions;
-using BLL.Extensions;
 using BLL.Logic.Services.Interfaces;
-using Common.Consts.Seed;
+using Common.Consts.DataBase;
+using Common.Extensions;
 using Models.Service.Parameters.User;
 
 namespace API.Initialization;
@@ -13,31 +13,36 @@ public static class Seeds
         using var scope = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
 
         if (scope.IsNull())
-            throw new Exception("Seeds broke down");
+            throw new Exception("DefaultSeeds broke down");
 
-        var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+        var userService = scope!.ServiceProvider.GetRequiredService<IUserService>();
         var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
 
         var usersParameters = getUsersParameters().ToList();
 
         try
         {
-            await roleService.AddAsync(RoleConsts.ADMIN)!;
-            await roleService.AddAsync(RoleConsts.USER)!;
+            await roleService.AddAsync(DefaultSeeds.ADMIN);
+            await roleService.AddAsync(DefaultSeeds.USER);
 
             foreach (var registerUserParameter in usersParameters)
             {
-                await userService.RegisterUserAsync(registerUserParameter)!;
+                await userService.RegisterUserAsync(registerUserParameter);
             }
 
-            var user = await userService.GetByEmailAsync(usersParameters.First().Email)!;
+            var user = await userService.GetByEmailAsync(usersParameters.First().Email);
 
-            await userService.UpgrateToAdmin(user.UserAccountId)!;
+            await userService.UpgrateToAdmin(user.UserAccountId);
         }
         catch (RoleExistsException)
-        { }
-        catch(UserExistsException)
-        { }
+        {
+        }
+        catch (UserExistsException)
+        {
+        }
+        catch (Exception e)
+        {
+        }
     }
 
     private static IEnumerable<RegisterUserParameter> getUsersParameters()
@@ -46,9 +51,9 @@ public static class Seeds
         {
             new()
             {
-                Login = "Admin",
-                Password = "1",
-                Email = "Admin@gmail.com",
+                Login = DefaultSeeds.USER_ADMIN_LOGIN,
+                Password = DefaultSeeds.USER_ADMIN_PASSWORD,
+                Email = DefaultSeeds.USER_ADMIN_EMAIL,
                 PhoneNumber = "12345",
                 FirstName = "Admin",
                 LastName = "Admin",
@@ -57,9 +62,9 @@ public static class Seeds
             },
             new() 
             {
-                Login = "User",
-                Password = "1",
-                Email = "User@gmail.com",
+                Login = DefaultSeeds.USER_USER_LOGIN,
+                Password = DefaultSeeds.USER_USER_PASSWORD,
+                Email = DefaultSeeds.USER_USER_EMAIL,
                 PhoneNumber = "12345",
                 FirstName = "User",
                 LastName = "User",

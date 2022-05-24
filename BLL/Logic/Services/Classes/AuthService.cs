@@ -1,7 +1,7 @@
 ﻿using BLL.Exceptions;
-using BLL.Extensions;
 using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
+using Common.Extensions;
 using Models.Entities;
 using Models.Service.Parameters.Auth;
 using Models.Service.Results;
@@ -35,7 +35,7 @@ public sealed class AuthService : IAuthService
         if (userLogin.IsNull()) 
             throw new TokenIncorrectException(true, parameter.AccessToken);
 
-        var userAccount = await initialParams.UserAccountService.GetByLoginAsync(userLogin);
+        var userAccount = await initialParams.UserAccountService.GetByLoginAsync(userLogin!);
         var tokenProvider = initialParams.AuthOptions.Audience;
 
         var isRefreshTokenValid = await initialParams.Repository.VerifyRefreshTokenAsync(userAccount,

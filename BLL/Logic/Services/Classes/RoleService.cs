@@ -1,7 +1,7 @@
 ﻿using BLL.Exceptions;
-using BLL.Extensions;
 using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
+using Common.Extensions;
 using Models.Entities;
 
 namespace BLL.Logic.Services.Classes;
@@ -46,6 +46,9 @@ public class RoleService : IRoleService
     public async Task GiveUserRoleAsync(UserAccount userAccount, string roleName)
     {
         var role = await GetByNameAsync(roleName);
-        await initialParams.Repository.GiveUserRoleAsync(userAccount, role.Name);
+        var userRoles = await initialParams.Repository.GetUserRolesNamesAsync(userAccount);
+
+        if(userRoles.All(ur => ur.IsNotEqual(role.Name)))
+            await initialParams.Repository.GiveUserRoleAsync(userAccount, role.Name);
     }
 }
