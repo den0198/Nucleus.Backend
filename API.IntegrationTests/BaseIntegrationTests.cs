@@ -15,45 +15,44 @@ using GraphQL;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
-using Models.Entities;
 using Models.GraphQl;
 using Xunit;
 
 namespace API.IntegrationTests;
 
-public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationFactory>, IDisposable
+public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly CustomWebApplicationFactory factory;
-    private AppDbContext context;
 
     protected BaseIntegrationTests(CustomWebApplicationFactory factory)
     {
         this.factory = factory;
-        context = default!;
+        Context = getContext();
     }
 
-    public void Dispose()
-    {
-        context?.Dispose();
-        GC.SuppressFinalize(this);
-    }
+    protected AppDbContext Context { get; }
 
-    protected async Task<GraphQLHttpClient> getAuthClient()
+    protected async Task<GraphQLHttpClient> getAuthClientAsync()
     {
-        var (httpClient, options) = getClientAndOptions();
         var client = getClient();
-        var user = await getFullUser();
         var request = new SignInRequest
         {
-            Login = user.UserName,
+            Login = DefaultSeeds.USER_USER_LOGIN,
             Password = DefaultSeeds.USER_USER_PASSWORD
         };
         var response = await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request);
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", response.AccessToken);
+
+        return getAuthClient(response.AccessToken);
+    }
+
+    protected GraphQLHttpClient getAuthClient(string accessToken)
+    {
+        var (httpClient, options) = getClientAndOptions();
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
         return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
     }
@@ -68,24 +67,19 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return await sendAsync<TRequest, TResponse>(client, "mutation", nameMethod, request);
     }
 
-    protected async Task<UserAccount> getFullUser() => await getFullUserAccount(DefaultSeeds.USER_USER_LOGIN);
-    
-    protected async Task<UserAccount> getFullAdmin() => await getFullUserAccount(DefaultSeeds.USER_ADMIN_LOGIN);
-
-    protected AppDbContext getContext()
-    {
-        var serviceCollection = factory.Services;
-        var scope = serviceCollection.CreateScope();
-        context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-        return context;
-    }
-
     protected GraphQLHttpClient getClient()
     {
         var (httpClient, options) = getClientAndOptions();
 
         return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
+    }
+
+    private AppDbContext getContext()
+    {
+        var serviceCollection = factory.Services;
+        var scope = serviceCollection.CreateAsyncScope();
+
+        return scope.ServiceProvider.GetRequiredService<AppDbContext>();
     }
 
     private (HttpClient, GraphQLHttpClientOptions) getClientAndOptions()
@@ -152,12 +146,5 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         graphQlStringResponse.Append('}');
 
         return graphQlStringResponse.ToString();
-    }
-
-    private async Task<UserAccount> getFullUserAccount(string login)
-    {
-        return await getContext().Users
-            .Include(u => u.UserDetail)
-            .FirstAsync(u => u.UserName == login);
     }
 }

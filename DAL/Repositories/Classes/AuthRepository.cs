@@ -8,7 +8,7 @@ namespace DAL.Repositories.Classes;
 public class AuthRepository : IAuthRepository
 {
     private readonly UserManager<UserAccount> userManager;
-    private const string RefreshToken = "RefreshToken";
+    private const string refresh_token = "RefreshToken";
 
     public AuthRepository(UserManager<UserAccount> userManager)
     {
@@ -27,10 +27,10 @@ public class AuthRepository : IAuthRepository
 
     public async Task<string> GenerateRefreshTokenAsync(UserAccount userAccount, string tokenProvider)
     {
-        var result = await userManager.GenerateUserTokenAsync(userAccount, tokenProvider, RefreshToken);
+        var result = await userManager.GenerateUserTokenAsync(userAccount, tokenProvider, refresh_token);
 
-        await userManager.RemoveAuthenticationTokenAsync(userAccount, tokenProvider, RefreshToken);
-        await userManager.SetAuthenticationTokenAsync(userAccount, tokenProvider, RefreshToken, result);
+        await userManager.RemoveAuthenticationTokenAsync(userAccount, tokenProvider, refresh_token);
+        await userManager.SetAuthenticationTokenAsync(userAccount, tokenProvider, refresh_token, result);
 
         return result;
     }
@@ -38,6 +38,6 @@ public class AuthRepository : IAuthRepository
     public async Task<bool> VerifyRefreshTokenAsync(UserAccount userAccount, string tokenProvider, string refreshToken)
     {
         return await userManager.VerifyUserTokenAsync(userAccount,
-            tokenProvider, RefreshToken, refreshToken);
+            tokenProvider, refresh_token, refreshToken);
     }
 }

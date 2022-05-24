@@ -26,9 +26,9 @@ public class Program
 
         var app = builder.Build();
 
+        app.UseInitializationDataBase();
         app.MapGraphQL("/");
         app.UseAuth();
-        app.UseInitializationDataBase();
 
         app.Run();
     }

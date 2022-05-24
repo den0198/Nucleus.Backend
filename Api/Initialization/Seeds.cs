@@ -16,28 +16,33 @@ public static class Seeds
             throw new Exception("DefaultSeeds broke down");
 
         var userService = scope!.ServiceProvider.GetRequiredService<IUserService>();
-        var roleService = scope!.ServiceProvider.GetRequiredService<IRoleService>();
+        var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
 
         var usersParameters = getUsersParameters().ToList();
 
         try
         {
-            await roleService.AddAsync(DefaultSeeds.ADMIN)!;
-            await roleService.AddAsync(DefaultSeeds.USER)!;
+            await roleService.AddAsync(DefaultSeeds.ADMIN);
+            await roleService.AddAsync(DefaultSeeds.USER);
 
             foreach (var registerUserParameter in usersParameters)
             {
-                await userService.RegisterUserAsync(registerUserParameter)!;
+                await userService.RegisterUserAsync(registerUserParameter);
             }
 
-            var user = await userService.GetByEmailAsync(usersParameters.First().Email)!;
+            var user = await userService.GetByEmailAsync(usersParameters.First().Email);
 
-            await userService.UpgrateToAdmin(user.UserAccountId)!;
+            await userService.UpgrateToAdmin(user.UserAccountId);
         }
         catch (RoleExistsException)
-        { }
-        catch(UserExistsException)
-        { }
+        {
+        }
+        catch (UserExistsException)
+        {
+        }
+        catch (Exception e)
+        {
+        }
     }
 
     private static IEnumerable<RegisterUserParameter> getUsersParameters()

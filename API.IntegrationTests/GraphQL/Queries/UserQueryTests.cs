@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Common.Consts.Exception;
 using Common.GraphQl;
+using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
 using TestsHelpers;
@@ -20,8 +21,10 @@ public class UserQueryTests : BaseIntegrationTests
     [Fact]
     public async Task GetUserByEmail_UserExist_FullUserInfo()
     {
-        var authClient = await getAuthClient();
-        var userAccount = await getFullUser();
+        var authClient = await getAuthClientAsync();
+        var userAccount = await Context.Users
+            .Include(u => u.UserDetail)
+            .FirstAsync();
         var request = new GetUserByEmailRequest
         {
             Email = userAccount.Email
@@ -42,7 +45,7 @@ public class UserQueryTests : BaseIntegrationTests
     [Fact]
     public async Task GetUserByEmail_UserNotFound_UserNotFoundException()
     {
-        var authClient = await getAuthClient();
+        var authClient = await getAuthClientAsync();
         var request = new GetUserByEmailRequest
         {
             Email = AnyValue.Email

@@ -38,9 +38,9 @@ public sealed class UserMutationTests : BaseIntegrationTests
         var response = await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request);
 
         var okResponse = new OkResponse();
-        var user = getContext().Users
+        var user = await Context.Users
             .Include(u => u.UserDetail)
-            .FirstOrDefault(u => u.Email == request.Email);
+            .FirstAsync(u => u.Email == request.Email);
         Assert.Equal(okResponse.Ok, response.Ok);
         Assert.NotNull(user);
         Assert.Equal(user!.UserName, request.Login);
@@ -56,7 +56,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
     public async Task Register_UserWithEmailExist_ErrorResponseWithCodeUserExist()
     {
         var client = getClient();
-        var user = await getFullUser();
+        var user = await Context.Users.FirstAsync();
         var request = new RegisterUserRequest
         {
             Login = AnyValue.ShortString,
@@ -73,6 +73,33 @@ public sealed class UserMutationTests : BaseIntegrationTests
             await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
 
         Assert.Equal(ExceptionCodes.UserExistsExceptionCode, exception.Code);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("1")]
+    [InlineData("b")]
+    [InlineData("@")]
+    public async Task Register_IncorrectPassword_ErrorResponseWithCodeRegisterException(string incorrectPassword)
+    {
+        var client = getClient();
+        var request = new RegisterUserRequest
+        {
+            Login = AnyValue.ShortString,
+            Password = incorrectPassword,
+            Email = AnyValue.Email,
+            PhoneNumber = AnyValue.String,
+            FirstName = AnyValue.String,
+            LastName = AnyValue.String,
+            MiddleName = AnyValue.String,
+            Age = AnyValue.Short
+        };
+
+        var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
+            await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
+
+        Assert.Equal(ExceptionCodes.RegistrationExceptionCode, exception.Code);
     }
 
     #endregion

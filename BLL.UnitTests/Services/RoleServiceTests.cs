@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
@@ -118,6 +119,7 @@ public class RoleServiceTests
         var role = testData.Roles.First();
 
         initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
+        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(new List<string>());
         initialParams.Repository.GiveUserRoleAsync(testData.UserAccount, role.Name).Returns(testData.IdentityResultSuccess);
 
         await service.GiveUserRoleAsync(testData.UserAccount, role.Name);
