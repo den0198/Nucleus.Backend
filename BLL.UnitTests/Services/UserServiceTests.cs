@@ -55,21 +55,16 @@ public class UserServiceTests
         var service = getService(out var initialParams);
         var testData = new UserTestData();
 
-        initialParams.UserAccountService.AddAsync(Arg.Is<UserAccountAddParameter>(uaap =>
-                uaap.Login == testData.RegisterUserParameter.Login
-                && uaap.Email == testData.RegisterUserParameter.Email
-                && uaap.Password == testData.RegisterUserParameter.Password
-                && uaap.PhoneNumber == testData.RegisterUserParameter.PhoneNumber))
-            .Returns(testData.UserAccount);
-        initialParams.UserDetailService.AddAsync(Arg.Is<UserDetailAddParameter>(udap =>
-                udap.FirstName == testData.RegisterUserParameter.FirstName
-                && udap.LastName == testData.RegisterUserParameter.LastName
-                && udap.MiddleName == testData.RegisterUserParameter.MiddleName
-                && udap.Age == testData.RegisterUserParameter.Age))
-            .Returns(testData.UserDetail);
+        initialParams.UserAccountService.GetByLoginAsync(testData.RegisterUserParameter.Login).Returns(testData.UserAccount);
+        initialParams.UserDetailService.GetByUserAccountIdAsync(testData.UserAccount.Id).Returns(testData.UserDetail);
 
         await service.RegisterUserAsync(testData.RegisterUserParameter);
 
+        await initialParams.UserDetailService.Received(1).AddAsync(Arg.Is<UserDetailAddParameter>(udap =>
+            udap.FirstName == testData.RegisterUserParameter.FirstName
+            && udap.LastName == testData.RegisterUserParameter.LastName
+            && udap.MiddleName == testData.RegisterUserParameter.MiddleName
+            && udap.Age == testData.RegisterUserParameter.Age));
         await initialParams.UserAccountService.Received(1).UpdateAsync(testData.UserAccount);
         await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.UserAccount, DefaultSeeds.USER);
     }
@@ -88,7 +83,7 @@ public class UserServiceTests
 
         await service.UpgrateToAdmin(testData.UserAccount.Id);
 
-        await initialParams.RoleService.GiveUserRoleAsync(testData.UserAccount, DefaultSeeds.ADMIN);
+        await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.UserAccount, DefaultSeeds.ADMIN);
     }
 
     #endregion

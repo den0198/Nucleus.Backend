@@ -34,10 +34,9 @@ public class UserAccountService : IUserAccountService
                ?? throw new UserNotFoundException($"login: {login}");
     }
 
-    //TODO Переделать сдесь логику (метод Add не должен возврошать нечего)
-    public async Task<UserAccount> AddAsync(UserAccountAddParameter parameter)
+    public async Task AddAsync(UserAccountAddParameter parameter)
     {
-        var userAccount = await initialParams.Repository.FindByEmailAsync(parameter.Email);
+        var userAccount = await initialParams.Repository.FindByLoginAsync(parameter.Login);
         if (userAccount.IsNotNull())
             throw new UserExistsException(parameter.Email);
 
@@ -50,8 +49,6 @@ public class UserAccountService : IUserAccountService
         var identityResult = await initialParams.Repository.AddAsync(userAccount, parameter.Password);
         if (!identityResult.Succeeded)
             throw new RegistrationException(identityResult.Errors.Select(e => e.Description));
-
-        return await GetByLoginAsync(parameter.Login);
     }
 
     public async Task UpdateAsync(UserAccount userAccount)

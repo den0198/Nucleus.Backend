@@ -59,9 +59,9 @@ public sealed class UserMutationTests : BaseIntegrationTests
         var user = await Context.Users.FirstAsync();
         var request = new RegisterUserRequest
         {
-            Login = AnyValue.ShortString,
+            Login = user.UserName,
             Password = AnyValue.Password,
-            Email = user.Email,
+            Email = AnyValue.String,
             PhoneNumber = AnyValue.String,
             FirstName = AnyValue.String,
             LastName = AnyValue.String,

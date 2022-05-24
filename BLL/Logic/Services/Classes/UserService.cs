@@ -38,11 +38,15 @@ public sealed class UserService : IUserService
 
     public async Task RegisterUserAsync(RegisterUserParameter parameter)
     {
-        var userAccount = await initialParams.UserAccountService.AddAsync(parameter.Adapt<UserAccountAddParameter>());
+        await initialParams.UserAccountService.AddAsync(parameter.Adapt<UserAccountAddParameter>());
+
         var userDetailParameter = parameter.Adapt<UserDetailAddParameter>();
+        var userAccount = await initialParams.UserAccountService.GetByLoginAsync(parameter.Login);
         userDetailParameter.UserAccountId = userAccount.Id;
-        var userDetail = await initialParams.UserDetailService.AddAsync(userDetailParameter);
+        await initialParams.UserDetailService.AddAsync(userDetailParameter);
+        var userDetail = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
         userAccount.UserDetailId = userDetail.UserDetailId;
+
         await initialParams.UserAccountService.UpdateAsync(userAccount);
         await initialParams.RoleService.GiveUserRoleAsync(userAccount, DefaultSeeds.USER);
     }

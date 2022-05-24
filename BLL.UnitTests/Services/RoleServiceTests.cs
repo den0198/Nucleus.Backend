@@ -95,8 +95,9 @@ public class RoleServiceTests
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
+        var rolesNames = testData.Roles.Select(role => role.Name);
 
-        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(testData.Roles.Select(role => role.Name));
+        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(rolesNames);
         foreach (var role in testData.Roles)
         {
             initialParams.Repository.FindByNameAsync(role.Name).Returns(role);

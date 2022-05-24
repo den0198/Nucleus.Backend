@@ -11,7 +11,7 @@ public interface IUserAccountService
 
     Task<UserAccount> GetByLoginAsync(string login);
 
-    Task<UserAccount> AddAsync(UserAccountAddParameter parameter);
+    Task AddAsync(UserAccountAddParameter parameter);
 
     Task UpdateAsync(UserAccount userAccount);
 }
