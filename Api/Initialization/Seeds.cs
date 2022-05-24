@@ -40,9 +40,6 @@ public static class Seeds
         catch (UserExistsException)
         {
         }
-        catch (Exception e)
-        {
-        }
     }
 
     private static IEnumerable<RegisterUserParameter> getUsersParameters()
