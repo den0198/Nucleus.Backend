@@ -1,11 +1,13 @@
-﻿namespace BLL.Exceptions;
+﻿using Common.Enums;
+
+namespace BLL.Exceptions;
 
 public class CoreException : Exception
 {
-    public CoreException(int code, string? message = default) 
+    public CoreException(ExceptionCodesEnum codeEnum, string? message = default) 
         : base(message)
     {
-        Code = code;
+        Code = (int)codeEnum;
     }
 
     public int Code { get;}

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Common.Consts.Exception;
+using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
@@ -54,7 +54,7 @@ public class UserQueryTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
             await sendQueryAsync<GetUserByEmailRequest, GetUserByEmailResponse>(authClient, "userByEmail", request));
 
-        Assert.Equal(ExceptionCodes.UserNotFoundExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
     }
 
     #endregion

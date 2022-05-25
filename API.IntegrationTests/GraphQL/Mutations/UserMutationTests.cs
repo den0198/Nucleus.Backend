@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Common.Consts.Exception;
+using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
@@ -72,7 +72,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
 
-        Assert.Equal(ExceptionCodes.UserExistsExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.UserExistsExceptionCode, exception.Code);
     }
 
     [Theory]
@@ -99,7 +99,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
 
-        Assert.Equal(ExceptionCodes.RegistrationExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.RegistrationExceptionCode, exception.Code);
     }
 
     #endregion

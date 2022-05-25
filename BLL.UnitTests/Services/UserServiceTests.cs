@@ -58,7 +58,7 @@ public class UserServiceTests
         initialParams.UserAccountService.GetByLoginAsync(testData.RegisterUserParameter.Login).Returns(testData.UserAccount);
         initialParams.UserDetailService.GetByUserAccountIdAsync(testData.UserAccount.Id).Returns(testData.UserDetail);
 
-        await service.RegisterUserAsync(testData.RegisterUserParameter);
+        await service.AddUserAsync(testData.RegisterUserParameter);
 
         await initialParams.UserDetailService.Received(1).AddAsync(Arg.Is<UserDetailAddParameter>(udap =>
             udap.FirstName == testData.RegisterUserParameter.FirstName

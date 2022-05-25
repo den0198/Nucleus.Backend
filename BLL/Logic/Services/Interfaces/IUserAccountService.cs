@@ -5,13 +5,36 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserAccountService
 {
-    Task<UserAccount> GetByIdAsync(long id);
+    /// <summary>
+    /// Получает акаунт пользователя по идентификатору
+    /// </summary>
+    /// <param name="userAccountId">Идентификатор акаунта пользователя</param>
+    /// <returns>Акаунт пользователя</returns>
+    Task<UserAccount> GetByIdAsync(long userAccountId);
 
-    Task<UserAccount> GetByEmailAsync(string email);
-
+    /// <summary>
+    /// Получает акаунт пользователя по логину
+    /// </summary>
+    /// <param name="login">Логин пользователя</param>
+    /// <returns>Акаунт пользователя</returns>
     Task<UserAccount> GetByLoginAsync(string login);
 
+    /// <summary>
+    /// Получает акаунт пользователя по email
+    /// </summary>
+    /// <param name="email">Email пользователя</param>
+    /// <returns>Акаунт пользователя</returns>
+    Task<UserAccount> GetByEmailAsync(string email);
+
+    /// <summary>
+    /// Добовляет акаунт пользователя
+    /// </summary>
+    /// <param name="parameter">Параметры добовляемого акаунта</param>
     Task AddAsync(UserAccountAddParameter parameter);
 
+    /// <summary>
+    /// Обновляет акаует пользователя
+    /// </summary>
+    /// <param name="userAccount">Акаунт пользователя</param>
     Task UpdateAsync(UserAccount userAccount);
 }

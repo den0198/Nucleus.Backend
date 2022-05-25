@@ -1,11 +1,11 @@
-﻿using Common.Consts.Exception;
+﻿using Common.Enums;
 
 namespace BLL.Exceptions;
 
 public class PasswordIncorrectException : CoreException
 {
     public PasswordIncorrectException(string password) 
-        : base(ExceptionCodes.PasswordIncorrectExceptionCode,
+        : base(ExceptionCodesEnum.PasswordIncorrectExceptionCode,
             $"Password '{password}' incorrect!")
     {
     }

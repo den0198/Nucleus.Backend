@@ -13,14 +13,9 @@ public sealed class UserAccountRepository : IUserAccountRepository
         this.userManager = userManager;
     }
 
-    public async Task<UserAccount> FindByIdAsync(long id)
+    public async Task<UserAccount> FindByIdAsync(long userAccountId)
     {
-        return await userManager.FindByIdAsync(id.ToString());
-    }
-
-    public async Task<UserAccount> FindByEmailAsync(string email)
-    {
-        return await userManager.FindByEmailAsync(email);
+        return await userManager.FindByIdAsync(userAccountId.ToString());
     }
 
     public async Task<UserAccount> FindByLoginAsync(string login)
@@ -28,13 +23,19 @@ public sealed class UserAccountRepository : IUserAccountRepository
         return await userManager.FindByNameAsync(login);
     }
 
+    //TODO : переделать чтобы возврошал Task<IEnumerable<UserAccount>>
+    public async Task<UserAccount> FindByEmailAsync(string email)
+    {
+        return await userManager.FindByEmailAsync(email);
+    }
+
     public async Task<IdentityResult> AddAsync(UserAccount userAccount, string password)
     {
         return await userManager.CreateAsync(userAccount, password);
     }
 
-    public async Task<IdentityResult> UpdateAsync(UserAccount userAccount)
+    public async Task UpdateAsync(UserAccount userAccount)
     {
-        return await userManager.UpdateAsync(userAccount);
+        await userManager.UpdateAsync(userAccount);
     }
 }

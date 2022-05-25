@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Common.Consts.DataBase;
+using Common.Enums;
 using Common.Extensions;
 using Common.GraphQl;
 using DAL.EntityFramework;
@@ -15,7 +16,6 @@ using GraphQL;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
@@ -72,6 +72,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         var (httpClient, options) = getClientAndOptions();
 
         return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
+    }
+
+    protected void AssertExceptionCode(ExceptionCodesEnum expectedCodeEnum, int actualCode)
+    {
+        var intExpectedCode = (int) expectedCodeEnum;
+        Assert.Equal(intExpectedCode, actualCode);
     }
 
     private AppDbContext getContext()

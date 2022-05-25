@@ -5,13 +5,39 @@ namespace DAL.Repositories.Interfaces;
 
 public interface IUserAccountRepository
 {
-    Task<UserAccount> FindByIdAsync(long id);
+    /// <summary>
+    /// Ишет акаунт пользователя по идентификатору
+    /// </summary>
+    ///<param name ="userAccountId">Идентификатор акаунта пользователя</param>
+    /// <returns>Акаунт пользователя</returns>
+    Task<UserAccount> FindByIdAsync(long userAccountId);
 
-    Task<UserAccount> FindByEmailAsync(string email);
-
+    /// <summary>
+    /// Ишет акаует пользователя по логину
+    /// </summary>
+    /// <param name="login">Логин пользователя</param>
+    /// <returns>Акаунт пользователя</returns>
     Task<UserAccount> FindByLoginAsync(string login);
 
+    /// <summary>
+    /// Ишет акаунт пользователя по email
+    /// </summary>
+    /// <param name="email">Email</param>
+    /// <returns>Акаунт пользователя</returns>
+    Task<UserAccount> FindByEmailAsync(string email);
+
+
+    /// <summary>
+    /// Добовляет акаунт пользователя
+    /// </summary>
+    /// <param name="userAccount">Акаунт пользователя</param>
+    /// <param name="password">Пароль пользователя</param>
+    /// <returns>Резултат добовления акаунта пользователя</returns>
     Task<IdentityResult> AddAsync(UserAccount userAccount, string password);
 
-    Task<IdentityResult> UpdateAsync(UserAccount userAccount);
+    /// <summary>
+    /// Обновляет акаунт пользователя
+    /// </summary>
+    /// <param name="userAccount">Акаунт пользователя</param>
+    Task UpdateAsync(UserAccount userAccount);
 }

@@ -27,7 +27,7 @@ public static class Seeds
 
             foreach (var registerUserParameter in usersParameters)
             {
-                await userService.RegisterUserAsync(registerUserParameter);
+                await userService.AddUserAsync(registerUserParameter);
             }
 
             var user = await userService.GetByEmailAsync(usersParameters.First().Email);

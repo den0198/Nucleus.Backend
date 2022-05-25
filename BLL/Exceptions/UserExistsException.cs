@@ -1,11 +1,11 @@
-﻿using Common.Consts.Exception;
+﻿using Common.Enums;
 
 namespace BLL.Exceptions;
 
 public class UserExistsException : CoreException
 {
     public UserExistsException(string login) 
-        : base(ExceptionCodes.UserExistsExceptionCode, $"User with login {login}, already exists!")
+        : base(ExceptionCodesEnum.UserExistsExceptionCode, $"User with login {login}, already exists!")
     {
     }
 }

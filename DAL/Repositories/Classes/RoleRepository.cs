@@ -16,6 +16,11 @@ public class RoleRepository : IRoleRepository
         this.roleManager = roleManager;
     }
 
+    public async Task<IEnumerable<string>> GetUserRolesNamesAsync(UserAccount userAccount)
+    {
+        return await userManager.GetRolesAsync(userAccount);
+    }
+
     public async Task<Role> FindByNameAsync(string name)
     {
         return await roleManager.FindByNameAsync(name);
@@ -27,13 +32,8 @@ public class RoleRepository : IRoleRepository
         await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, role.Name));
     }
 
-    public async Task<IEnumerable<string>> GetUserRolesNamesAsync(UserAccount userAccount)
+    public async Task GiveUserRoleAsync(UserAccount userAccount, string name)
     {
-        return await userManager.GetRolesAsync(userAccount);
-    }
-
-    public async Task GiveUserRoleAsync(UserAccount account, string roleName)
-    {
-        await userManager.AddToRoleAsync(account, roleName);
+        await userManager.AddToRoleAsync(userAccount, name);
     }
 }

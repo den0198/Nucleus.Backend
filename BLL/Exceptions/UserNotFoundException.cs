@@ -1,11 +1,11 @@
-﻿using Common.Consts.Exception;
+﻿using Common.Enums;
 
 namespace BLL.Exceptions;
 
 public class UserNotFoundException : CoreException
 {
     public UserNotFoundException(string parameter) 
-        : base(ExceptionCodes.UserNotFoundExceptionCode, $"User '{parameter}' not found!")
+        : base(ExceptionCodesEnum.UserNotFoundExceptionCode, $"User '{parameter}' not found!")
     {
     }
 }

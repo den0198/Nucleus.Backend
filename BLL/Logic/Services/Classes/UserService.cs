@@ -36,7 +36,7 @@ public sealed class UserService : IUserService
         };
     }
 
-    public async Task RegisterUserAsync(RegisterUserParameter parameter)
+    public async Task AddUserAsync(RegisterUserParameter parameter)
     {
         await initialParams.UserAccountService.AddAsync(parameter.Adapt<UserAccountAddParameter>());
 

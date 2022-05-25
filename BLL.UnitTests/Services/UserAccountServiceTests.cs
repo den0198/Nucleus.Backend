@@ -178,8 +178,6 @@ public class UserAccountServiceTests
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
 
-        initialParams.Repository.UpdateAsync(testData.UserAccount).Returns(testData.IdentityResultSuccess);
-
         await service.UpdateAsync(testData.UserAccount);
 
         await initialParams.Repository.Received(1).UpdateAsync(testData.UserAccount);

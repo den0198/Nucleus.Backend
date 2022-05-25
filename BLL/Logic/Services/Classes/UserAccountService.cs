@@ -16,22 +16,22 @@ public class UserAccountService : IUserAccountService
         this.initialParams = initialParams;
     }
 
-    public async Task<UserAccount> GetByIdAsync(long id)
+    public async Task<UserAccount> GetByIdAsync(long userAccountId)
     {
-        return await initialParams.Repository.FindByIdAsync(id)
-            ?? throw new UserNotFoundException($"id: {id}");
-    }
-
-    public async Task<UserAccount> GetByEmailAsync(string email)
-    {
-        return await initialParams.Repository.FindByEmailAsync(email) 
-            ?? throw new UserNotFoundException($"email: {email}");
+        return await initialParams.Repository.FindByIdAsync(userAccountId)
+            ?? throw new UserNotFoundException($"userAccountId: {userAccountId}");
     }
 
     public async Task<UserAccount> GetByLoginAsync(string login)
     {
         return await initialParams.Repository.FindByLoginAsync(login)
                ?? throw new UserNotFoundException($"login: {login}");
+    }
+
+    public async Task<UserAccount> GetByEmailAsync(string email)
+    {
+        return await initialParams.Repository.FindByEmailAsync(email)
+               ?? throw new UserNotFoundException($"email: {email}");
     }
 
     public async Task AddAsync(UserAccountAddParameter parameter)
