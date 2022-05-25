@@ -8,7 +8,7 @@ public interface IUserDetailService
     /// <summary>
     /// Получает детали пользователя по идентификатору акаунта пользователя
     /// </summary>
-    ///<param name ="userAccountId">Идентификатор акаунта пользователя</param>
+    /// <param name ="userAccountId">Идентификатор акаунта пользователя</param>
     /// <returns>Детали пользователя</returns>
     Task<UserDetail> GetByUserAccountIdAsync(long userAccountId);
 

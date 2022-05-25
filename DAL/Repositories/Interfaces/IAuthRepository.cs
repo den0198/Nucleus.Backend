@@ -29,7 +29,7 @@ public interface IAuthRepository
     Task<string> GenerateRefreshTokenAsync(UserAccount userAccount, string tokenProvider);
 
     /// <summary>
-    /// 
+    /// Проверяет правильность refresh token(a)
     /// </summary>
     /// <param name="userAccount">Акаунт пользователя</param>
     /// <param name="tokenProvider">Token provider</param>

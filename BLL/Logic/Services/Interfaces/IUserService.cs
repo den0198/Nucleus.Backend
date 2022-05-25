@@ -21,6 +21,6 @@ public interface IUserService
     /// <summary>
     /// Даёт админ роль пользователю
     /// </summary>
-    ///<param name ="userAccountId">Идентификатор акаунта пользователя</param>
+    /// <param name ="userAccountId">Идентификатор акаунта пользователя</param>
     Task UpgrateToAdmin(long userAccountId);
 }

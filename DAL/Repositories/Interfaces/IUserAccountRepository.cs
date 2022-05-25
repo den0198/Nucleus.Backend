@@ -8,7 +8,7 @@ public interface IUserAccountRepository
     /// <summary>
     /// Ишет акаунт пользователя по идентификатору
     /// </summary>
-    ///<param name ="userAccountId">Идентификатор акаунта пользователя</param>
+    /// <param name ="userAccountId">Идентификатор акаунта пользователя</param>
     /// <returns>Акаунт пользователя</returns>
     Task<UserAccount> FindByIdAsync(long userAccountId);
 
