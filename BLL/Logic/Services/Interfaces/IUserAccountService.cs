@@ -20,11 +20,11 @@ public interface IUserAccountService
     Task<UserAccount> GetByLoginAsync(string login);
 
     /// <summary>
-    /// Получает акаунт пользователя по email
+    /// Ишет акаунты пользователей по email
     /// </summary>
-    /// <param name="email">Email пользователя</param>
-    /// <returns>Акаунт пользователя</returns>
-    Task<UserAccount> GetByEmailAsync(string email);
+    /// <param name="email">Email</param>
+    /// <returns>Акаунты пользователей</returns>
+    Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email);
 
     /// <summary>
     /// Добовляет акаунт пользователя

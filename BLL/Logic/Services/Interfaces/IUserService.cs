@@ -6,11 +6,11 @@ namespace BLL.Logic.Services.Interfaces;
 public interface IUserService
 {
     /// <summary>
-    /// Получает пользователя
+    /// Получает пользователей по email
     /// </summary>
-    /// <param name="email">Email пользователя</param>
-    /// <returns></returns>
-    Task<FullUserInfoResult> GetByEmailAsync(string email);
+    /// <param name="email">Email</param>
+    /// <returns>Список пользователей</returns>
+    Task<UsersInfoResult> FindUsersInfoByEmailAsync(string email);
 
     /// <summary>
     /// Добовляет пользователя

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using BLL.Logic.InitialsParams;
@@ -6,6 +8,7 @@ using BLL.Logic.Services.Classes;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
 using Common.Consts.DataBase;
+using Models.Entities;
 using Models.Service.Parameters.User;
 using NSubstitute;
 using Xunit;
@@ -20,29 +23,31 @@ public class UserServiceTests
         return new UserService(initialParams);
     }
 
-    #region GetByEmail
+    #region FindAllByEmailAsync
 
     [Fact]
-    public async Task GetByEmail_UserFound_FullUserInfo()
+    public async Task FindAllByEmailAsync_UserFound_ListWithUserInfo()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
+        var userAccounts = new List<UserAccount>() {testData.UserAccount};
 
-        initialParams.UserAccountService.GetByEmailAsync(testData.UserAccount.Email).Returns(testData.UserAccount);
+        initialParams.UserAccountService.FindAllByEmailAsync(testData.UserAccount.Email).Returns(userAccounts);
         initialParams.UserDetailService.GetByUserAccountIdAsync(testData.UserDetail.UserAccountId).Returns(testData.UserDetail);
 
-        var result = await service.GetByEmailAsync(testData.UserAccount.Email);
+        var result = await service.FindUsersInfoByEmailAsync(testData.UserAccount.Email);
 
+        var userAccount = result.Users.First();
         Assert.NotNull(result);
-        Assert.Equal(testData.UserAccount.Id, result.UserAccountId);
-        Assert.Equal(testData.UserAccount.UserName, result.Login);
-        Assert.Equal(testData.UserAccount.Email, result.Email);
-        Assert.Equal(testData.UserAccount.PhoneNumber, result.PhoneNumber);
-        Assert.Equal(testData.UserDetail.UserDetailId, result.UserDetailId);
-        Assert.Equal(testData.UserDetail.FirstName, result.FirstName);
-        Assert.Equal(testData.UserDetail.LastName, result.LastName);
-        Assert.Equal(testData.UserDetail.MiddleName, result.MiddleName);
-        Assert.Equal(testData.UserDetail.Age, result.Age);
+        Assert.Equal(testData.UserAccount.Id, userAccount.UserAccountId);
+        Assert.Equal(testData.UserAccount.UserName, userAccount.Login);
+        Assert.Equal(testData.UserAccount.Email, userAccount.Email);
+        Assert.Equal(testData.UserAccount.PhoneNumber, userAccount.PhoneNumber);
+        Assert.Equal(testData.UserDetail.UserDetailId, userAccount.UserDetailId);
+        Assert.Equal(testData.UserDetail.FirstName, userAccount.FirstName);
+        Assert.Equal(testData.UserDetail.LastName, userAccount.LastName);
+        Assert.Equal(testData.UserDetail.MiddleName, userAccount.MiddleName);
+        Assert.Equal(testData.UserDetail.Age, userAccount.Age);
     }
 
     #endregion

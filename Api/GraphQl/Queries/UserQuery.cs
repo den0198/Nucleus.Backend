@@ -10,10 +10,10 @@ namespace API.GraphQl.Queries;
 public class UserQuery : CoreQuery
 {
     [Authorize]
-    public async Task<GetUserByEmailResponse> GetUserByEmail(GetUserByEmailRequest request, [Service]IUserService service)
+    public async Task<FindUsersByEmailResponse> FindUsersByEmail(GetUserByEmailRequest request, [Service]IUserService service)
     {
-        var result = await service.GetByEmailAsync(request.Email);
+        var result = await service.FindUsersInfoByEmailAsync(request.Email);
 
-        return result.Adapt<GetUserByEmailResponse>();
+        return result.Adapt<FindUsersByEmailResponse>();
     }
 }

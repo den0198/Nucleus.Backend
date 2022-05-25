@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using BLL.Exceptions;
@@ -55,31 +57,20 @@ public class UserAccountServiceTests
 
     #endregion
 
-    #region GetByEmail
+    #region FindAllByEmail
 
     [Fact]
-    public async Task GetByEmail_UserAccountFound_UserAccount()
+    public async Task FindAllByEmail_UserAccountFound_UserAccount()
     {
         var service = getService(out var initialParams);
         var testData = new UserAccountTestData();
+        var resultListUserAccounts = new List<UserAccount>() {testData.UserAccount};
 
-        initialParams.Repository.FindByEmailAsync(testData.UserAccount.Email).Returns(testData.UserAccount);
+        initialParams.Repository.FindAllByEmailAsync(testData.UserAccount.Email).Returns(resultListUserAccounts);
 
-        var result = await service.GetByEmailAsync(testData.UserAccount.Email);
+        var result = await service.FindAllByEmailAsync(testData.UserAccount.Email);
 
-        userVerification(testData.UserAccount, result);
-    }
-
-    [Fact]
-    public async Task GetByEmail_UserAccountNotFound_UserNotFoundException()
-    {
-        var service = getService(out var initialParams);
-        var testData = new UserAccountTestData();
-
-        initialParams.Repository.FindByEmailAsync(testData.UserAccount.Email).ReturnsNull();
-
-        await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetByEmailAsync(testData.UserAccount.Email));
+        userVerification(testData.UserAccount, result.First());
     }
 
     #endregion

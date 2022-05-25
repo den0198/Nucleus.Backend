@@ -1,5 +1,8 @@
-﻿using DAL.Repositories.Interfaces;
+﻿using Common.Extensions;
+using DAL.EntityFramework;
+using DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
 namespace DAL.Repositories.Classes;
@@ -7,10 +10,12 @@ namespace DAL.Repositories.Classes;
 public sealed class UserAccountRepository : IUserAccountRepository
 {
     private readonly UserManager<UserAccount> userManager;
+    private readonly AppDbContext context;
 
-    public UserAccountRepository(UserManager<UserAccount> userManager)
+    public UserAccountRepository(UserManager<UserAccount> userManager, AppDbContext context)
     {
         this.userManager = userManager;
+        this.context = context;
     }
 
     public async Task<UserAccount> FindByIdAsync(long userAccountId)
@@ -23,10 +28,9 @@ public sealed class UserAccountRepository : IUserAccountRepository
         return await userManager.FindByNameAsync(login);
     }
 
-    //TODO : переделать чтобы возврошал Task<IEnumerable<UserAccount>>
-    public async Task<UserAccount> FindByEmailAsync(string email)
+    public async Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email)
     {
-        return await userManager.FindByEmailAsync(email);
+        return await context.Users.Where(u => u.Email.IsEqual(email)).ToListAsync();
     }
 
     public async Task<IdentityResult> AddAsync(UserAccount userAccount, string password)

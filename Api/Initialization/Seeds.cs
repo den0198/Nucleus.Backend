@@ -30,9 +30,9 @@ public static class Seeds
                 await userService.AddUserAsync(registerUserParameter);
             }
 
-            var user = await userService.GetByEmailAsync(usersParameters.First().Email);
+            /*var user = await userService.Async(usersParameters.First().Login);
 
-            await userService.UpgrateToAdmin(user.UserAccountId);
+            await userService.UpgrateToAdmin(user.UserAccountId);*/
         }
         catch (RoleExistsException)
         {

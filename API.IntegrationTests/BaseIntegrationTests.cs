@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -99,17 +101,17 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return (httpClient, option);
     }
 
-    private static async Task<TResponse> sendAsync<TRequest, TResponse>(IGraphQLClient client, string nameQuery, 
+    private static async Task<TResponse> sendAsync<TRequest, TResponse>(IGraphQLClient client, string nameQuery,
         string nameMethod, TRequest request)
     {
-        var graphQlStringRequest = getGraphQlStringRequest(request);
-        var graphQlStringResponse = getGraphQlStringResponse<TResponse>(nameQuery, nameMethod, graphQlStringRequest);
+        var graphQlRequestType = getGraphQlStringRequest(request);
+        var graphQlFullRequest = getGraphQlFullRequest<TResponse>(nameQuery, nameMethod, graphQlRequestType);
 
-        var graphQlRequest = new GraphQLRequest {Query = graphQlStringResponse};
+        var graphQlRequest = new GraphQLRequest {Query = graphQlFullRequest};
         try
         {
             var response = await client.SendQueryAsync(graphQlRequest, () => new ExpandoObject());
-            var responseDictionary = ((IDictionary<string, object>)response.Data!)[nameMethod];
+            var responseDictionary = ((IDictionary<string, object>) response.Data!)[nameMethod];
 
             if (responseDictionary.IsNull())
                 throw new Exception("Response is null!");
@@ -135,22 +137,45 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return graphQlStringRequest.ToString();
     }
 
-    private static string getGraphQlStringResponse<TResponse>(string nameQuery, string nameMethod, string graphQlStringRequest)
+    private static string getGraphQlFullRequest<TResponse>(string nameQuery, string nameMethod, string graphQlRequestType)
     {
         var responseModelProperties = typeof(TResponse).GetProperties();
-        var responseModelString = string.Join(',', responseModelProperties.Select(property => property.Name.FirstLetterToLower()));
+        var graphQlResponseType = getGraphQlResponseType(responseModelProperties);
 
-        var graphQlStringResponse = new StringBuilder(nameQuery);
-        graphQlStringResponse.Append('{');
-        graphQlStringResponse.Append(nameMethod);
-        graphQlStringResponse.Append('(');
-        graphQlStringResponse.Append(graphQlStringRequest);
-        graphQlStringResponse.Append(')');
-        graphQlStringResponse.Append('{');
-        graphQlStringResponse.Append(responseModelString);
-        graphQlStringResponse.Append('}');
-        graphQlStringResponse.Append('}');
+        var graphQlFullRequest = new StringBuilder(nameQuery);
+        graphQlFullRequest.Append('{');
+        graphQlFullRequest.Append(nameMethod);
+        graphQlFullRequest.Append('(');
+        graphQlFullRequest.Append(graphQlRequestType);
+        graphQlFullRequest.Append(')');
+        graphQlFullRequest.Append('{');
+        graphQlFullRequest.Append(graphQlResponseType);
+        graphQlFullRequest.Append('}');
+        graphQlFullRequest.Append('}');
 
-        return graphQlStringResponse.ToString();
+        return graphQlFullRequest.ToString();
+    }
+
+    private static string getGraphQlResponseType(IEnumerable<PropertyInfo> propertyInfos, string result = "")
+    {
+        foreach (var propertyInfo in propertyInfos)
+        {
+            var propertyType = propertyInfo.PropertyType;
+            if (propertyType == typeof(string) || propertyType.IsPrimitive)
+            {
+                result += propertyInfo.Name.FirstLetterToLower() + " ";
+            }
+            else
+            {
+                if (typeof(IEnumerable).IsAssignableFrom(propertyType))
+                    propertyType = propertyType.GetGenericArguments().First();
+
+                result += propertyInfo.Name.FirstLetterToLower() + " { ";
+                result = getGraphQlResponseType(propertyType.GetProperties(), result);
+                result += "} ";
+            }
+        }
+
+        return result;
     }
 }

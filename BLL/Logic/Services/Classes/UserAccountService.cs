@@ -28,10 +28,9 @@ public class UserAccountService : IUserAccountService
                ?? throw new UserNotFoundException($"login: {login}");
     }
 
-    public async Task<UserAccount> GetByEmailAsync(string email)
+    public async Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email)
     {
-        return await initialParams.Repository.FindByEmailAsync(email)
-               ?? throw new UserNotFoundException($"email: {email}");
+        return await initialParams.Repository.FindAllByEmailAsync(email);
     }
 
     public async Task AddAsync(UserAccountAddParameter parameter)

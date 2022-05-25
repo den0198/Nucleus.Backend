@@ -2,7 +2,7 @@
 
 namespace Models.Data;
 
-public class FullUserInfoData
+public class UserInfoData
 {
     [JsonPropertyName("userAccountId")]
     public long UserAccountId { get; set; }

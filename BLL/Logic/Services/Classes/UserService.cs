@@ -2,6 +2,7 @@
 using BLL.Logic.Services.Interfaces;
 using Common.Consts.DataBase;
 using Mapster;
+using Models.Data;
 using Models.Service.Parameters.User;
 using Models.Service.Results;
 
@@ -17,23 +18,31 @@ public sealed class UserService : IUserService
         this.initialParams = initialParams;
     }
 
-    public async Task<FullUserInfoResult> GetByEmailAsync(string email)
+    public async Task<UsersInfoResult> FindUsersInfoByEmailAsync(string email)
     {
-        var userAccount = await initialParams.UserAccountService.GetByEmailAsync(email);
-        var userDetails = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
+        var userAccounts = await initialParams.UserAccountService.FindAllByEmailAsync(email);
+        var result = new List<UserInfoData>();
 
-        return new FullUserInfoResult()
+        foreach (var userAccount in userAccounts)
         {
-            UserAccountId = userAccount.Id,
-            UserDetailId = userDetails.UserDetailId,
-            Login = userAccount.UserName,
-            Email = userAccount.Email,
-            PhoneNumber = userAccount.PhoneNumber,
-            FirstName = userDetails.FirstName,
-            LastName = userDetails.LastName,
-            MiddleName = userDetails.MiddleName,
-            Age = userDetails.Age
-        };
+            var userDetails = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
+            var userInfo = new UserInfoData
+            {
+                UserAccountId = userAccount.Id,
+                UserDetailId = userDetails.UserDetailId,
+                Login = userAccount.UserName,
+                Email = userAccount.Email,
+                PhoneNumber = userAccount.PhoneNumber,
+                FirstName = userDetails.FirstName,
+                LastName = userDetails.LastName,
+                MiddleName = userDetails.MiddleName,
+                Age = userDetails.Age
+            };
+
+            result.Add(userInfo);
+        }
+
+        return new UsersInfoResult {Users = result};
     }
 
     public async Task AddUserAsync(RegisterUserParameter parameter)
