@@ -7,6 +7,7 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <AssemblyName>API</AssemblyName>
         <RootNamespace>API</RootNamespace>
+        <UserSecretsId>e90b660a-932a-4cf1-a666-3f8b0dcde244</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     </ItemGroup>
 
     <ItemGroup>
