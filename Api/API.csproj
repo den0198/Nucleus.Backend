@@ -8,6 +8,7 @@
         <AssemblyName>API</AssemblyName>
         <RootNamespace>API</RootNamespace>
         <UserSecretsId>e90b660a-932a-4cf1-a666-3f8b0dcde244</UserSecretsId>
+        <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     </PropertyGroup>
 
     <ItemGroup>
