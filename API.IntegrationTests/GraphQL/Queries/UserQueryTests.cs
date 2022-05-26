@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Common.Consts.Exception;
-using Common.GraphQl;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
@@ -16,45 +16,47 @@ public class UserQueryTests : BaseIntegrationTests
     {
     }
 
-    #region userByEmail
+    #region FindUsersByEmail
 
     [Fact]
-    public async Task GetUserByEmail_UserExist_FullUserInfo()
+    public async Task FindUsersByEmail_UserFound_ListWithUserInfo()
     {
         var authClient = await getAuthClientAsync();
         var userAccount = await Context.Users
             .Include(u => u.UserDetail)
             .FirstAsync();
-        var request = new GetUserByEmailRequest
+        var request = new FindUsersByEmailRequest
         {
             Email = userAccount.Email
         };
 
-        var response = await sendQueryAsync<GetUserByEmailRequest, GetUserByEmailResponse>(authClient, "userByEmail", request);
+        var response = await sendQueryAsync<FindUsersByEmailRequest, IEnumerable<FullUserResponse>>(authClient,
+            "findUsersByEmail", request);
 
-        Assert.Equal(userAccount.Id, response.UserAccountId);
-        Assert.Equal(userAccount.UserName, response.Login);
-        Assert.Equal(userAccount.Email, response.Email);
-        Assert.Equal(userAccount.UserDetailId, response.UserDetailId);
-        Assert.Equal(userAccount.UserDetail.FirstName, response.FirstName);
-        Assert.Equal(userAccount.UserDetail.LastName, response.LastName);
-        Assert.Equal(userAccount.UserDetail.MiddleName, response.MiddleName);
-        Assert.Equal(userAccount.UserDetail.Age, response.Age);
+        var user = response.First();
+        Assert.Equal(userAccount.Id, user.UserAccountId);
+        Assert.Equal(userAccount.UserName, user.Login);
+        Assert.Equal(userAccount.Email, user.Email);
+        Assert.Equal(userAccount.UserDetailId, user.UserDetailId);
+        Assert.Equal(userAccount.UserDetail.FirstName, user.FirstName);
+        Assert.Equal(userAccount.UserDetail.LastName, user.LastName);
+        Assert.Equal(userAccount.UserDetail.MiddleName, user.MiddleName);
+        Assert.Equal(userAccount.UserDetail.Age, user.Age);
     }
 
     [Fact]
-    public async Task GetUserByEmail_UserNotFound_UserNotFoundException()
+    public async Task FindUsersByEmail_UserNotFound_EmptyUserList()
     {
         var authClient = await getAuthClientAsync();
-        var request = new GetUserByEmailRequest
+        var request = new FindUsersByEmailRequest
         {
             Email = AnyValue.Email
         };
 
-        var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
-            await sendQueryAsync<GetUserByEmailRequest, GetUserByEmailResponse>(authClient, "userByEmail", request));
+        var response = await sendQueryAsync<FindUsersByEmailRequest, IEnumerable<FullUserResponse>>(authClient,
+            "findUsersByEmail", request);
 
-        Assert.Equal(ExceptionCodes.UserNotFoundExceptionCode, exception.Code);
+        Assert.False(response.Any());
     }
 
     #endregion

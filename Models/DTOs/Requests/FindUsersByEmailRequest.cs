@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Models.DTOs.Requests;
 
-public sealed class GetUserByEmailRequest
+public sealed class FindUsersByEmailRequest
 {
     [JsonPropertyName("email")]
     [Required]

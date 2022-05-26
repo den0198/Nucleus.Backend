@@ -6,9 +6,9 @@ namespace Common.MapperConfigurations;
 
 public partial class CoreMapperConfiguration
 {
-    private static void fullUserInfo()
+    private static void UsersInfo()
     {
-        TypeAdapterConfig<FullUserInfoResult, GetUserByEmailResponse>.NewConfig()
+        TypeAdapterConfig<FullUserResult, FullUserResponse>.NewConfig()
             .Map(dest => dest.UserAccountId, src => src.UserAccountId)
             .Map(dest => dest.UserDetailId,  src => src.UserDetailId)
             .Map(dest => dest.Login,         src => src.Login)

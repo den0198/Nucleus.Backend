@@ -21,7 +21,7 @@ public class UserDetailService : IUserDetailService
                ?? throw new UserNotFoundException($"userAccountId : {userAccountId}");
     }
 
-    public async Task<UserDetail> AddAsync(UserDetailAddParameter parameters)
+    public async Task AddAsync(UserDetailAddParameter parameters)
     {
         var userDetail = new UserDetail
         {
@@ -32,7 +32,5 @@ public class UserDetailService : IUserDetailService
             UserAccountId = parameters.UserAccountId
         };
         await initialParams.Repository.AddAsync(userDetail);
-
-        return userDetail;
     }
 }

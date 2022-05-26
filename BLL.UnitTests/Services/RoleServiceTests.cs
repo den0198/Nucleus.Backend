@@ -8,6 +8,7 @@ using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Classes;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
+using Common.Extensions;
 using Models.Entities;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
@@ -55,6 +56,28 @@ public class RoleServiceTests
 
     #endregion
 
+    #region GetUserRoles
+
+    [Fact]
+    public async Task GetUserRoles_UserRoleFound_Roles()
+    {
+        var service = getService(out var initialParams);
+        var testData = new RoleTestData();
+        var rolesNames = testData.Roles.Select(role => role.Name).ToList();
+
+        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(rolesNames);
+        foreach (var role in testData.Roles)
+        {
+            initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
+        }
+
+        var result = await service.GetUserRolesAsync(testData.UserAccount);
+
+        Assert.False(rolesNames.Except(result.Select(role => role.Name)).Any());
+    }
+
+    #endregion
+
     #region Add
 
     [Fact]
@@ -88,27 +111,6 @@ public class RoleServiceTests
 
     #endregion
 
-    #region GetUserRoles
-
-    [Fact]
-    public async Task GetUserRoles_UserRoleFound_Roles()
-    {
-        var service = getService(out var initialParams);
-        var testData = new RoleTestData();
-
-        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(testData.Roles.Select(role => role.Name));
-        foreach (var role in testData.Roles)
-        {
-            initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
-        }
-
-        var result = await service.GetUserRolesAsync(testData.UserAccount);
-
-        Assert.False(testData.Roles.Select(role => role.Name).Except(result.Select(role => role.Name)).Any());
-    }
-
-    #endregion
-
     #region GiveUserRole
 
     [Fact]
@@ -127,6 +129,22 @@ public class RoleServiceTests
         await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.UserAccount, role.Name);
     }
 
-    #endregion
+    [Fact]
+    public async Task GiveUserRole__UserAlreadyHasThisRole_UserAlreadyHasThisRoleException()
+    {
+        var service = getService(out var initialParams);
+        var testData = new RoleTestData();
+        var rolesNames = testData.Roles.Select(role => role.Name).ToList();
+        var roleName = rolesNames.First();
 
+        initialParams.Repository.FindByNameAsync(roleName).Returns(testData.Roles.First(r => r.Name.IsEqual(roleName)));
+        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(rolesNames);
+
+        await Assert.ThrowsAsync<UserAlreadyHasThisRoleException>(async () =>
+            await service.GiveUserRoleAsync(testData.UserAccount, roleName));
+
+        await initialParams.Repository.DidNotReceive().GiveUserRoleAsync(Arg.Any<UserAccount>(), Arg.Any<string>());
+    }
+
+    #endregion
 }

@@ -5,6 +5,16 @@ namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserDetailService
 {
+    /// <summary>
+    /// Получает детали пользователя по идентификатору акаунта
+    /// </summary>
+    /// <param name ="userAccountId">Идентификатор акаунта</param>
+    /// <returns>Детали пользователя</returns>
     Task<UserDetail> GetByUserAccountIdAsync(long userAccountId);
-    Task<UserDetail> AddAsync(UserDetailAddParameter parameter);
+
+    /// <summary>
+    /// Добовляет детали пользователя
+    /// </summary>
+    /// <param name="parameter">Параметры с деталями пользователя</param>
+    Task AddAsync(UserDetailAddParameter parameter);
 }

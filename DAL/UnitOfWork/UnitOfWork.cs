@@ -16,7 +16,7 @@ public class UnitOfWork : IUnitOfWork
         this.context = context;
         this.userManager = userManager;
 
-        UserAccountRepository = new UserAccountRepository(userManager);
+        UserAccountRepository = new UserAccountRepository(userManager, context);
         UserDetailRepository = new UserDetailRepository(context);
         RoleRepository = new RoleRepository(userManager, roleManager);
         AuthRepository = new AuthRepository(userManager);

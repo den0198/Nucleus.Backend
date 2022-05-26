@@ -53,27 +53,21 @@ public class UserDetailServiceTests
     #region Add
 
     [Fact]
-    public async Task Add_Add_UserDetail()
+    public async Task Add_CorrectParameter_UserDetail()
     {
         var service = getService(out var initialParams);
         var testData = new UserDetailTestData();
 
-        initialParams.Repository.AddAsync(Arg.Is<UserDetail>(ud =>
-                ud.FirstName == testData.UserDetailAddParameter.FirstName
-                && ud.LastName == testData.UserDetailAddParameter.LastName
-                && ud.MiddleName == testData.UserDetailAddParameter.MiddleName
-                && ud.Age == testData.UserDetailAddParameter.Age
-                && ud.UserAccountId == testData.UserDetailAddParameter.UserAccountId))
-            .Returns(testData.IdentityResultSuccess);
+        initialParams.Repository.AddAsync(Arg.Any<UserDetail>()).Returns(testData.IdentityResultSuccess);
 
-        var result = await service.AddAsync(testData.UserDetailAddParameter);
+        await service.AddAsync(testData.UserDetailAddParameter);
 
-        Assert.NotNull(result);
-        Assert.Equal(testData.UserDetailAddParameter.FirstName, result.FirstName);
-        Assert.Equal(testData.UserDetailAddParameter.LastName, result.LastName);
-        Assert.Equal(testData.UserDetailAddParameter.MiddleName, result.MiddleName);
-        Assert.Equal(testData.UserDetailAddParameter.Age, result.Age);
-        Assert.Equal(testData.UserDetailAddParameter.UserAccountId, result.UserAccountId);
+        await initialParams.Repository.Received(1).AddAsync(Arg.Is<UserDetail>(ud =>
+            ud.FirstName == testData.UserDetailAddParameter.FirstName
+            && ud.LastName == testData.UserDetailAddParameter.LastName
+            && ud.MiddleName == testData.UserDetailAddParameter.MiddleName
+            && ud.Age == testData.UserDetailAddParameter.Age
+            && ud.UserAccountId == testData.UserDetailAddParameter.UserAccountId));
     }
 
     #endregion

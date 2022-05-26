@@ -1,11 +1,11 @@
-﻿using Common.Consts.Exception;
+﻿using Common.Enums;
 
 namespace BLL.Exceptions;
 
 public class RoleNotFoundException : CoreException
 {
     public RoleNotFoundException(string name) 
-        : base(ExceptionCodes.RoleNotExistsExceptionCode,
+        : base(ExceptionCodesEnum.RoleNotExistsExceptionCode,
             $"Role with name {name} not found")
     {
     }

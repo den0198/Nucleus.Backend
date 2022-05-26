@@ -7,6 +7,6 @@ public partial class CoreMapperConfiguration
         registerUser();
         token();
         signIn();
-        fullUserInfo();
+        UsersInfo();
     }
 }

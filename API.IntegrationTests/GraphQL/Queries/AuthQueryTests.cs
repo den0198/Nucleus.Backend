@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Common.Consts.DataBase;
-using Common.Consts.Exception;
+using Common.Enums;
 using Common.GraphQl;
-using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
 using TestsHelpers;
@@ -51,7 +50,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request));
 
-        Assert.Equal(ExceptionCodes.UserNotFoundExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
     }
 
     [Fact]
@@ -67,7 +66,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request));
 
-        Assert.Equal(ExceptionCodes.PasswordIncorrectExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.PasswordIncorrectExceptionCode, exception.Code);
     }
 
     #endregion

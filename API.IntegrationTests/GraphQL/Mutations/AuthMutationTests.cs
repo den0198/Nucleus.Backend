@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Common.Consts.DataBase;
-using Common.Consts.Exception;
+using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
@@ -56,8 +56,8 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendMutationAsync<NewTokenRequest, TokenResponse>(authClient, "newToken", request));
-        
-        Assert.Equal(ExceptionCodes.AccessTokenIncorrectExceptionCode, exception.Code);
+
+        AssertExceptionCode(ExceptionCodesEnum.AccessTokenIncorrectExceptionCode, exception.Code);
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendMutationAsync<NewTokenRequest, TokenResponse>(authClient, "newToken", request));
 
-        Assert.Equal(ExceptionCodes.RefreshTokenIncorrectExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.RefreshTokenIncorrectExceptionCode, exception.Code);
     }
 
     private async Task<TokenResponse> getOldTokenAsync()

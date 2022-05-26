@@ -16,16 +16,10 @@ public class UserAccountService : IUserAccountService
         this.initialParams = initialParams;
     }
 
-    public async Task<UserAccount> GetByIdAsync(long id)
+    public async Task<UserAccount> GetByIdAsync(long userAccountId)
     {
-        return await initialParams.Repository.FindByIdAsync(id)
-            ?? throw new UserNotFoundException($"id: {id}");
-    }
-
-    public async Task<UserAccount> GetByEmailAsync(string email)
-    {
-        return await initialParams.Repository.FindByEmailAsync(email) 
-            ?? throw new UserNotFoundException($"email: {email}");
+        return await initialParams.Repository.FindByIdAsync(userAccountId)
+            ?? throw new UserNotFoundException($"userAccountId: {userAccountId}");
     }
 
     public async Task<UserAccount> GetByLoginAsync(string login)
@@ -34,10 +28,14 @@ public class UserAccountService : IUserAccountService
                ?? throw new UserNotFoundException($"login: {login}");
     }
 
-    //TODO Переделать сдесь логику (метод Add не должен возврошать нечего)
-    public async Task<UserAccount> AddAsync(UserAccountAddParameter parameter)
+    public async Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email)
     {
-        var userAccount = await initialParams.Repository.FindByEmailAsync(parameter.Email);
+        return await initialParams.Repository.FindAllByEmailAsync(email);
+    }
+
+    public async Task AddAsync(UserAccountAddParameter parameter)
+    {
+        var userAccount = await initialParams.Repository.FindByLoginAsync(parameter.Login);
         if (userAccount.IsNotNull())
             throw new UserExistsException(parameter.Email);
 
@@ -50,8 +48,6 @@ public class UserAccountService : IUserAccountService
         var identityResult = await initialParams.Repository.AddAsync(userAccount, parameter.Password);
         if (!identityResult.Succeeded)
             throw new RegistrationException(identityResult.Errors.Select(e => e.Description));
-
-        return await GetByLoginAsync(parameter.Login);
     }
 
     public async Task UpdateAsync(UserAccount userAccount)

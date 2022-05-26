@@ -4,8 +4,7 @@ namespace BLL.Logic.InitialsParams;
 
 public sealed class UserServiceInitialParams
 {
-    public UserServiceInitialParams(IUserAccountService userAccountService, IUserDetailService userDetailService,
-        IRoleService roleService)
+    public UserServiceInitialParams(IUserAccountService userAccountService, IUserDetailService userDetailService, IRoleService roleService)
     {
         UserAccountService = userAccountService;
         UserDetailService = userDetailService;

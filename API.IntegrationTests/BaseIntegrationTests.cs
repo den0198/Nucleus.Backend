@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Common.Consts.DataBase;
+using Common.Enums;
 using Common.Extensions;
 using Common.GraphQl;
 using DAL.EntityFramework;
@@ -15,7 +18,6 @@ using GraphQL;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
@@ -74,6 +76,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
     }
 
+    protected void AssertExceptionCode(ExceptionCodesEnum expectedCodeEnum, int actualCode)
+    {
+        var intExpectedCode = (int) expectedCodeEnum;
+        Assert.Equal(intExpectedCode, actualCode);
+    }
+
     private AppDbContext getContext()
     {
         var serviceCollection = factory.Services;
@@ -93,17 +101,17 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return (httpClient, option);
     }
 
-    private static async Task<TResponse> sendAsync<TRequest, TResponse>(IGraphQLClient client, string nameQuery, 
+    private static async Task<TResponse> sendAsync<TRequest, TResponse>(IGraphQLClient client, string nameQuery,
         string nameMethod, TRequest request)
     {
-        var graphQlStringRequest = getGraphQlStringRequest(request);
-        var graphQlStringResponse = getGraphQlStringResponse<TResponse>(nameQuery, nameMethod, graphQlStringRequest);
+        var graphQlRequestType = getGraphQlStringRequest(request);
+        var graphQlFullRequest = getGraphQlFullRequest<TResponse>(nameQuery, nameMethod, graphQlRequestType);
 
-        var graphQlRequest = new GraphQLRequest {Query = graphQlStringResponse};
+        var graphQlRequest = new GraphQLRequest {Query = graphQlFullRequest};
         try
         {
             var response = await client.SendQueryAsync(graphQlRequest, () => new ExpandoObject());
-            var responseDictionary = ((IDictionary<string, object>)response.Data!)[nameMethod];
+            var responseDictionary = ((IDictionary<string, object>) response.Data!)[nameMethod];
 
             if (responseDictionary.IsNull())
                 throw new Exception("Response is null!");
@@ -129,22 +137,47 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return graphQlStringRequest.ToString();
     }
 
-    private static string getGraphQlStringResponse<TResponse>(string nameQuery, string nameMethod, string graphQlStringRequest)
+    private static string getGraphQlFullRequest<TResponse>(string nameQuery, string nameMethod, string graphQlRequestType)
     {
-        var responseModelProperties = typeof(TResponse).GetProperties();
-        var responseModelString = string.Join(',', responseModelProperties.Select(property => property.Name.FirstLetterToLower()));
+        var responseModelProperties = typeof(IEnumerable).IsAssignableFrom(typeof(TResponse)) 
+            ? typeof(TResponse).GetGenericArguments().First().GetProperties() 
+            : typeof(TResponse).GetProperties();
+        var graphQlResponseType = getGraphQlResponseType(responseModelProperties);
+        var graphQlFullRequest = new StringBuilder(nameQuery);
 
-        var graphQlStringResponse = new StringBuilder(nameQuery);
-        graphQlStringResponse.Append('{');
-        graphQlStringResponse.Append(nameMethod);
-        graphQlStringResponse.Append('(');
-        graphQlStringResponse.Append(graphQlStringRequest);
-        graphQlStringResponse.Append(')');
-        graphQlStringResponse.Append('{');
-        graphQlStringResponse.Append(responseModelString);
-        graphQlStringResponse.Append('}');
-        graphQlStringResponse.Append('}');
+        graphQlFullRequest.Append('{');
+        graphQlFullRequest.Append(nameMethod);
+        graphQlFullRequest.Append('(');
+        graphQlFullRequest.Append(graphQlRequestType);
+        graphQlFullRequest.Append(')');
+        graphQlFullRequest.Append('{');
+        graphQlFullRequest.Append(graphQlResponseType);
+        graphQlFullRequest.Append('}');
+        graphQlFullRequest.Append('}');
 
-        return graphQlStringResponse.ToString();
+        return graphQlFullRequest.ToString();
+    }
+
+    private static string getGraphQlResponseType(IEnumerable<PropertyInfo> propertyInfos, string result = "")
+    {
+        foreach (var propertyInfo in propertyInfos)
+        {
+            var propertyType = propertyInfo.PropertyType;
+            if (propertyType == typeof(string) || propertyType.IsPrimitive)
+            {
+                result += propertyInfo.Name.FirstLetterToLower() + " ";
+            }
+            else
+            {
+                if (typeof(IEnumerable).IsAssignableFrom(propertyType))
+                    propertyType = propertyType.GetGenericArguments().First();
+
+                result += propertyInfo.Name.FirstLetterToLower() + " { ";
+                result = getGraphQlResponseType(propertyType.GetProperties(), result);
+                result += "} ";
+            }
+        }
+
+        return result;
     }
 }

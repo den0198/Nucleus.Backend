@@ -17,17 +17,8 @@ public class RoleService : IRoleService
 
     public async Task<Role> GetByNameAsync(string name)
     {
-        return await initialParams.Repository.FindByNameAsync(name) 
+        return await initialParams.Repository.FindByNameAsync(name)
                ?? throw new RoleNotFoundException(name);
-    }
-
-    public async Task AddAsync(string name)
-    {
-        var role = await initialParams.Repository.FindByNameAsync(name);
-        if (role.IsNotNull())
-            throw new RoleExistsException(name);
-
-        await initialParams.Repository.AddAsync(new Role { Name = name });
     }
 
     public async Task<IEnumerable<Role>> GetUserRolesAsync(UserAccount userAccount)
@@ -43,12 +34,23 @@ public class RoleService : IRoleService
         return userRoles;
     }
 
-    public async Task GiveUserRoleAsync(UserAccount userAccount, string roleName)
+    public async Task AddAsync(string name)
     {
-        var role = await GetByNameAsync(roleName);
+        var role = await initialParams.Repository.FindByNameAsync(name);
+        if (role.IsNotNull())
+            throw new RoleExistsException(name);
+
+        await initialParams.Repository.AddAsync(new Role { Name = name });
+    }
+
+    public async Task GiveUserRoleAsync(UserAccount userAccount, string name)
+    {
+        var role = await GetByNameAsync(name);
         var userRoles = await initialParams.Repository.GetUserRolesNamesAsync(userAccount);
 
-        if(userRoles.All(ur => ur.IsNotEqual(role.Name)))
-            await initialParams.Repository.GiveUserRoleAsync(userAccount, role.Name);
+        if (!userRoles.All(ur => ur.IsNotEqual(role.Name)))
+            throw new UserAlreadyHasThisRoleException();
+        
+        await initialParams.Repository.GiveUserRoleAsync(userAccount, role.Name);
     }
 }

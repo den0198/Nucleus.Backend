@@ -1,11 +1,11 @@
-﻿using Common.Consts.Exception;
+﻿using Common.Enums;
 
 namespace BLL.Exceptions;
 
 public class RegistrationException : CoreException
 {
     public RegistrationException(IEnumerable<string> errors) 
-        : base(ExceptionCodes.RegistrationExceptionCode,
+        : base(ExceptionCodesEnum.RegistrationExceptionCode,
             $"Registration errors : { string.Join(" ",errors) }")
     {
     }

@@ -13,15 +13,16 @@ public class UserDetailRepository : IUserDetailRepository
     {
         this.context = context;
     }
-    public async Task AddAsync(UserDetail userDetail)
-    {
-        context.UserDetail.Add(userDetail);
-
-        await context.SaveChangesAsync();
-    }
 
     public async Task<UserDetail> FindByUserAccountIdAsync(long userAccountId)
     {
         return await context.UserDetail.FirstOrDefaultAsync(ud => ud.UserAccountId == userAccountId);
     }
+
+    public async Task AddAsync(UserDetail userDetail)
+    {
+        context.UserDetail.Add(userDetail);
+        await context.SaveChangesAsync();
+    }
+
 }
