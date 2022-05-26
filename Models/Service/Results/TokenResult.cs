@@ -1,7 +1,7 @@
-﻿using Models.Data;
+﻿namespace Models.Service.Results;
 
-namespace Models.Service.Results;
-
-public class TokenResult : TokenData
+public sealed class TokenResult
 {
+    public string AccessToken { get; set; }
+    public string RefreshToken { get; set; }
 }

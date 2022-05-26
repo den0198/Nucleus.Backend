@@ -7,14 +7,14 @@ public interface IRoleRepository
     /// <summary>
     /// Получает все роли пользователя
     /// </summary>
-    /// <param name="userAccount">Акаунт пользователя</param>
+    /// <param name="userAccount">Акаунт</param>
     /// <returns>Cписок ролей</returns>
     Task<IEnumerable<string>> GetUserRolesNamesAsync(UserAccount userAccount);
 
     /// <summary>
     /// Ишет роль по названию 
     /// </summary>
-    /// <param name="name">Названия роли</param>
+    /// <param name="name">Названия</param>
     /// <returns>Роль</returns>
     Task<Role> FindByNameAsync(string name);
 
@@ -25,9 +25,9 @@ public interface IRoleRepository
     Task AddAsync(Role role);
 
     /// <summary>
-    /// Назначает роль пользователю
+    /// Назначает роль
     /// </summary>
-    /// <param name="userAccount">Акаунт пользователя</param>
-    /// <param name="name">Названия роли</param>
+    /// <param name="userAccount">Акаунт</param>
+    /// <param name="name">Названия</param>
     Task GiveUserRoleAsync(UserAccount userAccount, string name);
 }

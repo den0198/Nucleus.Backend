@@ -2,7 +2,7 @@
 using BLL.Logic.Services.Interfaces;
 using Common.Consts.DataBase;
 using Mapster;
-using Models.Data;
+using Models.Entities;
 using Models.Service.Parameters.User;
 using Models.Service.Results;
 
@@ -18,31 +18,25 @@ public sealed class UserService : IUserService
         this.initialParams = initialParams;
     }
 
-    public async Task<UsersInfoResult> FindUsersInfoByEmailAsync(string email)
+    public async Task<FullUserResult> GetByLoginAsync(string login)
+    {
+        var userAccounts = await initialParams.UserAccountService.GetByLoginAsync(login);
+        
+        return await getFullUserAsync(userAccounts);
+    }
+
+    public async Task<IEnumerable<FullUserResult>> FindAllByEmailAsync(string email)
     {
         var userAccounts = await initialParams.UserAccountService.FindAllByEmailAsync(email);
-        var result = new List<UserInfoData>();
+        var users = new List<FullUserResult>();
 
         foreach (var userAccount in userAccounts)
         {
-            var userDetails = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
-            var userInfo = new UserInfoData
-            {
-                UserAccountId = userAccount.Id,
-                UserDetailId = userDetails.UserDetailId,
-                Login = userAccount.UserName,
-                Email = userAccount.Email,
-                PhoneNumber = userAccount.PhoneNumber,
-                FirstName = userDetails.FirstName,
-                LastName = userDetails.LastName,
-                MiddleName = userDetails.MiddleName,
-                Age = userDetails.Age
-            };
-
-            result.Add(userInfo);
+            var fullUser = await getFullUserAsync(userAccount);
+            users.Add(fullUser);
         }
 
-        return new UsersInfoResult {Users = result};
+        return users;
     }
 
     public async Task AddUserAsync(RegisterUserParameter parameter)
@@ -65,4 +59,23 @@ public sealed class UserService : IUserService
         var userAccount = await initialParams.UserAccountService.GetByIdAsync(userAccountId);
         await initialParams.RoleService.GiveUserRoleAsync(userAccount, DefaultSeeds.ADMIN);
     }
+
+    private async Task<FullUserResult> getFullUserAsync(UserAccount userAccount)
+    {
+        var userDetail = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
+        
+        return new FullUserResult
+        {
+            UserAccountId = userAccount.Id,
+            UserDetailId = userDetail.UserDetailId,
+            Login = userAccount.UserName,
+            Email = userAccount.Email,
+            PhoneNumber = userAccount.PhoneNumber,
+            FirstName = userDetail.FirstName,
+            LastName = userDetail.LastName,
+            MiddleName = userDetail.MiddleName,
+            Age = userDetail.Age
+        };
+    }
+
 }

@@ -23,22 +23,47 @@ public class UserServiceTests
         return new UserService(initialParams);
     }
 
-    #region FindAllByEmailAsync
+    #region GetByLogin
 
     [Fact]
-    public async Task FindAllByEmailAsync_UserFound_ListWithUserInfo()
+    public async Task GetByLogin_UserFound_User()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
-        var userAccounts = new List<UserAccount>() {testData.UserAccount};
 
-        initialParams.UserAccountService.FindAllByEmailAsync(testData.UserAccount.Email).Returns(userAccounts);
+        initialParams.UserAccountService.GetByLoginAsync(testData.UserAccount.UserName).Returns(testData.UserAccount);
         initialParams.UserDetailService.GetByUserAccountIdAsync(testData.UserDetail.UserAccountId).Returns(testData.UserDetail);
 
-        var result = await service.FindUsersInfoByEmailAsync(testData.UserAccount.Email);
+        var result = await service.GetByLoginAsync(testData.UserAccount.UserName);
 
-        var userAccount = result.Users.First();
-        Assert.NotNull(result);
+        Assert.Equal(testData.UserAccount.Id, result.UserAccountId);
+        Assert.Equal(testData.UserAccount.UserName, result.Login);
+        Assert.Equal(testData.UserAccount.Email, result.Email);
+        Assert.Equal(testData.UserAccount.PhoneNumber, result.PhoneNumber);
+        Assert.Equal(testData.UserDetail.UserDetailId, result.UserDetailId);
+        Assert.Equal(testData.UserDetail.FirstName, result.FirstName);
+        Assert.Equal(testData.UserDetail.LastName, result.LastName);
+        Assert.Equal(testData.UserDetail.MiddleName, result.MiddleName);
+        Assert.Equal(testData.UserDetail.Age, result.Age);
+    }
+
+    #endregion
+
+    #region FindAllByEmail
+
+    [Fact]
+    public async Task FindAllByEmail_UserFound_ListWithUser()
+    {
+        var service = getService(out var initialParams);
+        var testData = new UserTestData();
+        var usersAccounts = new List<UserAccount> {testData.UserAccount};
+
+        initialParams.UserAccountService.FindAllByEmailAsync(testData.UserAccount.Email).Returns(usersAccounts);
+        initialParams.UserDetailService.GetByUserAccountIdAsync(testData.UserDetail.UserAccountId).Returns(testData.UserDetail);
+
+        var result = await service.FindAllByEmailAsync(testData.UserAccount.Email);
+
+        var userAccount = result.First();
         Assert.Equal(testData.UserAccount.Id, userAccount.UserAccountId);
         Assert.Equal(testData.UserAccount.UserName, userAccount.Login);
         Assert.Equal(testData.UserAccount.Email, userAccount.Email);

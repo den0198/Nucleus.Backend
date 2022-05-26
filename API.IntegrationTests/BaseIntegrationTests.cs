@@ -139,10 +139,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
 
     private static string getGraphQlFullRequest<TResponse>(string nameQuery, string nameMethod, string graphQlRequestType)
     {
-        var responseModelProperties = typeof(TResponse).GetProperties();
+        var responseModelProperties = typeof(IEnumerable).IsAssignableFrom(typeof(TResponse)) 
+            ? typeof(TResponse).GetGenericArguments().First().GetProperties() 
+            : typeof(TResponse).GetProperties();
         var graphQlResponseType = getGraphQlResponseType(responseModelProperties);
-
         var graphQlFullRequest = new StringBuilder(nameQuery);
+
         graphQlFullRequest.Append('{');
         graphQlFullRequest.Append(nameMethod);
         graphQlFullRequest.Append('(');

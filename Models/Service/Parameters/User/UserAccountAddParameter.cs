@@ -1,6 +1,6 @@
 ﻿namespace Models.Service.Parameters.User;
 
-public class UserAccountAddParameter
+public sealed class UserAccountAddParameter
 {
     public string Login { get; set; }
     public string Email { get; set; }

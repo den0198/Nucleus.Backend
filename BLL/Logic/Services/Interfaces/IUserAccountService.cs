@@ -6,35 +6,35 @@ namespace BLL.Logic.Services.Interfaces;
 public interface IUserAccountService
 {
     /// <summary>
-    /// Получает акаунт пользователя по идентификатору
+    /// Получает акаунт по идентификатору
     /// </summary>
-    /// <param name="userAccountId">Идентификатор акаунта пользователя</param>
-    /// <returns>Акаунт пользователя</returns>
+    /// <param name="userAccountId">Идентификатор акаунта</param>
+    /// <returns>Акаунт</returns>
     Task<UserAccount> GetByIdAsync(long userAccountId);
 
     /// <summary>
-    /// Получает акаунт пользователя по логину
+    /// Получает акаунт по логину
     /// </summary>
-    /// <param name="login">Логин пользователя</param>
-    /// <returns>Акаунт пользователя</returns>
+    /// <param name="login">Логин</param>
+    /// <returns>Акаунт</returns>
     Task<UserAccount> GetByLoginAsync(string login);
 
     /// <summary>
-    /// Ишет акаунты пользователей по email
+    /// Ишет акаунты по email
     /// </summary>
     /// <param name="email">Email</param>
-    /// <returns>Акаунты пользователей</returns>
+    /// <returns>Акаунты</returns>
     Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email);
 
     /// <summary>
-    /// Добовляет акаунт пользователя
+    /// Добовляет акаунт
     /// </summary>
     /// <param name="parameter">Параметры добовляемого акаунта</param>
     Task AddAsync(UserAccountAddParameter parameter);
 
     /// <summary>
-    /// Обновляет акаует пользователя
+    /// Обновляет акаует
     /// </summary>
-    /// <param name="userAccount">Акаунт пользователя</param>
+    /// <param name="userAccount">Акаунт</param>
     Task UpdateAsync(UserAccount userAccount);
 }

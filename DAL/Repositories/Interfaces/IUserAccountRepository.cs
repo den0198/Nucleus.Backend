@@ -6,38 +6,38 @@ namespace DAL.Repositories.Interfaces;
 public interface IUserAccountRepository
 {
     /// <summary>
-    /// Ишет акаунт пользователя по идентификатору
+    /// Ишет акаунт по идентификатору
     /// </summary>
-    /// <param name ="userAccountId">Идентификатор акаунта пользователя</param>
-    /// <returns>Акаунт пользователя</returns>
+    /// <param name ="userAccountId">Идентификатор акаунта</param>
+    /// <returns>Акаунт</returns>
     Task<UserAccount> FindByIdAsync(long userAccountId);
 
     /// <summary>
     /// Ишет акаует пользователя по логину
     /// </summary>
-    /// <param name="login">Логин пользователя</param>
-    /// <returns>Акаунт пользователя</returns>
+    /// <param name="login">Логин</param>
+    /// <returns>Акаунт</returns>
     Task<UserAccount> FindByLoginAsync(string login);
 
     /// <summary>
-    /// Ишет акаунты пользователей по email
+    /// Ишет акаунты  по email
     /// </summary>
     /// <param name="email">Email</param>
-    /// <returns>Список акаунтов пользователей</returns>
+    /// <returns>Список акаунтов</returns>
     Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email);
 
 
     /// <summary>
-    /// Добовляет акаунт пользователя
+    /// Добовляет акаунт
     /// </summary>
-    /// <param name="userAccount">Акаунт пользователя</param>
-    /// <param name="password">Пароль пользователя</param>
-    /// <returns>Резултат добовления акаунта пользователя</returns>
+    /// <param name="userAccount">Акаунт</param>
+    /// <param name="password">Пароль</param>
+    /// <returns>Резултат добовления акаунта</returns>
     Task<IdentityResult> AddAsync(UserAccount userAccount, string password);
 
     /// <summary>
-    /// Обновляет акаунт пользователя
+    /// Обновляет акаунт
     /// </summary>
-    /// <param name="userAccount">Акаунт пользователя</param>
+    /// <param name="userAccount">Акаунт</param>
     Task UpdateAsync(UserAccount userAccount);
 }

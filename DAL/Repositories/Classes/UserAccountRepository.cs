@@ -30,7 +30,7 @@ public sealed class UserAccountRepository : IUserAccountRepository
 
     public async Task<IEnumerable<UserAccount>> FindAllByEmailAsync(string email)
     {
-        return await context.Users.Where(u => u.Email.IsEqual(email)).ToListAsync();
+        return await context.Users.Where(u => u.Email == email).ToListAsync();
     }
 
     public async Task<IdentityResult> AddAsync(UserAccount userAccount, string password)

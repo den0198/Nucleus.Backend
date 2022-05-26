@@ -2,7 +2,7 @@
 
 namespace Models.Options.Classes;
 
-public class AuthOptions : IAuthOptions
+public sealed class AuthOptions : IAuthOptions
 {
     public string Issuer { get; set; }
     public string Audience { get; set; }

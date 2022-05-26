@@ -13,7 +13,7 @@ public static class Seeds
         using var scope = applicationBuilder.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
 
         if (scope.IsNull())
-            throw new Exception("DefaultSeeds broke down");
+            throw new Exception("Default seeds broke down");
 
         var userService = scope!.ServiceProvider.GetRequiredService<IUserService>();
         var roleService = scope.ServiceProvider.GetRequiredService<IRoleService>();
@@ -30,9 +30,8 @@ public static class Seeds
                 await userService.AddUserAsync(registerUserParameter);
             }
 
-            /*var user = await userService.Async(usersParameters.First().Login);
-
-            await userService.UpgrateToAdmin(user.UserAccountId);*/
+            var user = await userService.GetByLoginAsync(usersParameters.First().Login);
+            await userService.UpgrateToAdmin(user.UserAccountId);
         }
         catch (RoleExistsException)
         {

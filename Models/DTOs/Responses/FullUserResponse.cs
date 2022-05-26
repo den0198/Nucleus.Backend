@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Models.Data;
+namespace Models.DTOs.Responses;
 
-public class UserInfoData
+public sealed class FullUserResponse
 {
     [JsonPropertyName("userAccountId")]
     public long UserAccountId { get; set; }

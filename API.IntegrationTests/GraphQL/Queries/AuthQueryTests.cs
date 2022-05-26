@@ -2,7 +2,6 @@
 using Common.Consts.DataBase;
 using Common.Enums;
 using Common.GraphQl;
-using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
 using TestsHelpers;

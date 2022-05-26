@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs.Requests;
@@ -24,14 +25,15 @@ public class UserQueryTests : BaseIntegrationTests
         var userAccount = await Context.Users
             .Include(u => u.UserDetail)
             .FirstAsync();
-        var request = new GetUserByEmailRequest
+        var request = new FindUsersByEmailRequest
         {
             Email = userAccount.Email
         };
 
-        var response = await sendQueryAsync<GetUserByEmailRequest, FindUsersByEmailResponse>(authClient, "findUsersByEmail", request);
+        var response = await sendQueryAsync<FindUsersByEmailRequest, IEnumerable<FullUserResponse>>(authClient,
+            "findUsersByEmail", request);
 
-        var user = response.Users.First();
+        var user = response.First();
         Assert.Equal(userAccount.Id, user.UserAccountId);
         Assert.Equal(userAccount.UserName, user.Login);
         Assert.Equal(userAccount.Email, user.Email);
@@ -46,14 +48,15 @@ public class UserQueryTests : BaseIntegrationTests
     public async Task FindUsersByEmail_UserNotFound_EmptyUserList()
     {
         var authClient = await getAuthClientAsync();
-        var request = new GetUserByEmailRequest
+        var request = new FindUsersByEmailRequest
         {
             Email = AnyValue.Email
         };
 
-        var response = await sendQueryAsync<GetUserByEmailRequest, FindUsersByEmailResponse>(authClient, "findUsersByEmail", request);
+        var response = await sendQueryAsync<FindUsersByEmailRequest, IEnumerable<FullUserResponse>>(authClient,
+            "findUsersByEmail", request);
 
-        Assert.False(response.Users.Any());
+        Assert.False(response.Any());
     }
 
     #endregion

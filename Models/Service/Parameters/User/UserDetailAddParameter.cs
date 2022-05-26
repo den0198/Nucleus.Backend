@@ -1,6 +1,6 @@
 ﻿namespace Models.Service.Parameters.User;
 
-public class UserDetailAddParameter
+public sealed class UserDetailAddParameter
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

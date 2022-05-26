@@ -52,7 +52,7 @@ public sealed class AuthService : IAuthService
         var claims = await initialParams.Repository.GetUserClaimsAsync(userAccount);
         var tokenProvider = initialParams.AuthOptions.Audience;
 
-        return new TokenResult()
+        return new TokenResult
         {
             AccessToken = initialParams.AuthServiceHelper.GetAccessToken(userAccount, userRoles, claims),
             RefreshToken = await initialParams.Repository.GenerateRefreshTokenAsync(userAccount, tokenProvider)
