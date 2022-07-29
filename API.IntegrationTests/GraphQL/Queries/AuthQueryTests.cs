@@ -19,14 +19,13 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     #region SignIn
 
     [Fact]
-    public async Task SignIn_CorrectLoginAndCorrectPassword_TokenResponse()
+    public async Task SignIn_CorrectUserNameAndCorrectPassword_TokenResponse()
     {
         var client = getClient();
-        var userLogin = DefaultSeeds.USER_USER_LOGIN;
         var request = new SignInRequest
         {
-            Login = userLogin,
-            Password = DefaultSeeds.USER_USER_PASSWORD
+            UserName = DefaultSeeds.USER_SELLER_USERNAME,
+            Password = DefaultSeeds.USER_SELLER_PASSWORD
         };
 
         var response = await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request);
@@ -38,13 +37,13 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public async Task SignIn_IncorrectLoginAndAnyPassword_ResponseWithExceptionCodeUserNotFound(bool correctPassword)
+    public async Task SignIn_IncorrectUserNameAndAnyPassword_ResponseWithExceptionCodeUserNotFound(bool correctPassword)
     {
         var client = getClient();
         var request = new SignInRequest
         {
-            Login = AnyValue.ShortString,
-            Password = correctPassword ? DefaultSeeds.USER_USER_PASSWORD : AnyValue.Password
+            UserName = AnyValue.ShortString,
+            Password = correctPassword ? DefaultSeeds.USER_SELLER_PASSWORD : AnyValue.Password
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
@@ -54,12 +53,12 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     }
 
     [Fact]
-    public async Task SignIn_CorrectLoginAndIncorrectPassword_ResponseWithExceptionCodePasswordIncorrect()
+    public async Task SignIn_CorrectUserNameAndIncorrectPassword_ResponseWithExceptionCodePasswordIncorrect()
     {
         var client = getClient();
         var request = new SignInRequest
         {
-            Login = DefaultSeeds.USER_USER_LOGIN,
+            UserName = DefaultSeeds.USER_SELLER_USERNAME,
             Password = AnyValue.Password
         };
 

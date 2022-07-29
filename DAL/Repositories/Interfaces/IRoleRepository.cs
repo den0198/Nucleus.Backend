@@ -1,4 +1,5 @@
-﻿using Models.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using Models.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
@@ -7,9 +8,9 @@ public interface IRoleRepository
     /// <summary>
     /// Получает все роли пользователя
     /// </summary>
-    /// <param name="userAccount">Акаунт</param>
+    /// <param name="user">Акаунт</param>
     /// <returns>Cписок ролей</returns>
-    Task<IEnumerable<string>> GetUserRolesNamesAsync(UserAccount userAccount);
+    Task<IEnumerable<string>> GetUserRolesNamesAsync(User user);
 
     /// <summary>
     /// Ишет роль по названию 
@@ -22,12 +23,13 @@ public interface IRoleRepository
     ///  /// Добовляет роль
     /// </summary>
     /// <param name="role">Роль</param>
-    Task AddAsync(Role role);
+    ///<returns>Резултат добовления роли</returns>
+    Task<IdentityResult> AddAsync(Role role);
 
     /// <summary>
     /// Назначает роль
     /// </summary>
-    /// <param name="userAccount">Акаунт</param>
+    /// <param name="user">Акаунт</param>
     /// <param name="name">Названия</param>
-    Task GiveUserRoleAsync(UserAccount userAccount, string name);
+    Task GiveUserRoleAsync(User user, string name);
 }

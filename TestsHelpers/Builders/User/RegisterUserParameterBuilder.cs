@@ -8,14 +8,13 @@ public class RegisterUserParameterBuilder : CoreBuilder<RegisterUserParameter>
     {
         Entity = new RegisterUserParameter
         {
-            Login = AnyValue.String,
+            UserName = AnyValue.String,
             Email = AnyValue.Email,
             Password = AnyValue.Password,
             PhoneNumber = AnyValue.String,
             FirstName = AnyValue.String,
             LastName = AnyValue.String,
             MiddleName = AnyValue.String,
-            Age = AnyValue.Short
         };
     }
 }

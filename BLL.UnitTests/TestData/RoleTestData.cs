@@ -6,12 +6,13 @@ using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;
 
-internal class RoleTestData
+internal sealed class RoleTestData
 {
     public RoleTestData()
     {
         IdentityResultSuccess = Builder.IdentityResultSuccess.Build();
-        UserAccount = Builder.UserAccount.Build();
+        IdentityResultFailed = Builder.IdentityResultFailed.Build();
+        User = Builder.User.Build();
         Roles = new[]
         {
             Builder.Role.Build(),
@@ -20,7 +21,8 @@ internal class RoleTestData
     }
 
     public Task<IdentityResult> IdentityResultSuccess { get; }
-    public UserAccount UserAccount { get; }
+    public Task<IdentityResult> IdentityResultFailed { get; }
+    public User User { get; }
     public IEnumerable<Role> Roles { get; }
 
 }

@@ -12,15 +12,15 @@ public sealed class UserTokensConfiguration : IEntityTypeConfiguration<IdentityU
         builder.ToTable(TablesNames.USER_TOKENS);
 
         builder.Property(ut => ut.LoginProvider)
-            .HasColumnName(ColumnsNames.LOGIN_PROVIDER);
+            .HasColumnName(ColumnNames.LOGIN_PROVIDER);
 
         builder.Property(ut => ut.UserId)
-            .HasColumnName(ColumnsNames.USER_ACCOUNT_ID);
+            .HasColumnName(ColumnNames.USER_ID);
 
         builder.Property(ut => ut.Name)
-            .HasColumnName(ColumnsNames.NAME);
+            .HasColumnName(ColumnNames.NAME);
 
         builder.Property(ut => ut.Value)
-            .HasColumnName(ColumnsNames.VALUE);
+            .HasColumnName(ColumnNames.VALUE);
     }
 }

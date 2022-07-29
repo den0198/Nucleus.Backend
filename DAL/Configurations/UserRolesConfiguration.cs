@@ -12,9 +12,9 @@ public sealed class UserRolesConfiguration : IEntityTypeConfiguration<IdentityUs
         builder.ToTable(TablesNames.USER_ROLES);
 
         builder.Property(ur => ur.RoleId)
-            .HasColumnName(ColumnsNames.ROLE_ID);
+            .HasColumnName(ColumnNames.ROLE_ID);
 
         builder.Property(ur => ur.UserId)
-            .HasColumnName(ColumnsNames.USER_ACCOUNT_ID);
+            .HasColumnName(ColumnNames.USER_ID);
     }
 }

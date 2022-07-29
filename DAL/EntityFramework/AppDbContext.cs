@@ -4,15 +4,20 @@ using Models.Entities;
 
 namespace DAL.EntityFramework;
 
-public sealed class AppDbContext : IdentityDbContext<UserAccount, Role, long>
+public sealed class AppDbContext : IdentityDbContext<User, Role, long>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
 
-    public DbSet<UserDetail> UserDetail { get; set; }
-
+    public DbSet<Store> Stores { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<SubProduct> SubProducts { get; set; }
+    public DbSet<Property> Properties { get; set; }
+    public DbSet<Option> Options { get; set; }
+    public DbSet<SubProductPropertyOption> SubProductsPropertiesOptions { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

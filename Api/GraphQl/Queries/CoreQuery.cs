@@ -1,4 +1,4 @@
 ﻿namespace API.GraphQl.Queries;
 
-public class CoreQuery
+public abstract class CoreQuery
 { }

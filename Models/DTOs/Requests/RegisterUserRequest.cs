@@ -5,9 +5,9 @@ namespace Models.DTOs.Requests;
 
 public sealed class RegisterUserRequest
 {
-    [JsonPropertyName("login")]
+    [JsonPropertyName("userName")]
     [Required]
-    public string Login { get; set; }
+    public string UserName { get; set; }
 
     [JsonPropertyName("password")]
     [Required]
@@ -30,7 +30,4 @@ public sealed class RegisterUserRequest
 
     [JsonPropertyName("middleName")]
     public string MiddleName { get; set; }
-
-    [JsonPropertyName("age")]
-    public short Age { get; set; }
 }

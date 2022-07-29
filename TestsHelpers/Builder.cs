@@ -25,11 +25,8 @@ public static class Builder
 
     #region User
 
-    public static UserAccountBuilder UserAccount => new();
-    public static UserDetailBuilder UserDetail => new();
+    public static UserBuilder User => new();
     public static RegisterUserParameterBuilder RegisterUserParameter => new ();
-    public static UserAccountAddParameterBuilder UserAccountAddParameter => new();
-    public static UserDetailAddParameterBuilder UserDetailAddParameter => new();
 
     #endregion
 }

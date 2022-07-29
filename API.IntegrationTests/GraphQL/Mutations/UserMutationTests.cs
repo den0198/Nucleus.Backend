@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
@@ -20,59 +19,57 @@ public sealed class UserMutationTests : BaseIntegrationTests
     #region Register
 
     [Fact]
-    public async Task Register_CorrectRequest_Success()
+    public async Task Register_CorrectRequest_UserAdded()
     {
         var client = getClient();
         var request = new RegisterUserRequest
         {
-            Login = AnyValue.ShortString,
+            UserName = AnyValue.ShortString,
             Password = AnyValue.Password,
             Email = AnyValue.Email,
             PhoneNumber = AnyValue.String,
             FirstName = AnyValue.String,
             LastName = AnyValue.String,
-            MiddleName = AnyValue.String,
-            Age = AnyValue.Short
+            MiddleName = AnyValue.String
         };
 
         var response = await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request);
 
         var okResponse = new OkResponse();
         var user = await Context.Users
-            .Include(u => u.UserDetail)
             .FirstAsync(u => u.Email == request.Email);
         Assert.Equal(okResponse.Ok, response.Ok);
-        Assert.NotNull(user);
-        Assert.Equal(user!.UserName, request.Login);
+        Assert.Equal(user.UserName, request.UserName);
         Assert.Equal(user.Email, request.Email);
         Assert.Equal(user.PhoneNumber, request.PhoneNumber);
-        Assert.Equal(user.UserDetail.FirstName, request.FirstName);
-        Assert.Equal(user.UserDetail.LastName, request.LastName);
-        Assert.Equal(user.UserDetail.MiddleName, request.MiddleName);
-        Assert.Equal(user.UserDetail.Age, request.Age);
+        Assert.Equal(user.FirstName, request.FirstName);
+        Assert.Equal(user.LastName, request.LastName);
+        Assert.Equal(user.MiddleName, request.MiddleName);
     }
 
-    [Fact]
-    public async Task Register_UserWithEmailExist_ErrorResponseWithCodeUserExist()
+    [Theory]
+    [InlineData(true, true)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public async Task Register_UserExist_ErrorResponseRegistrationExceptionCode(bool isExistUserName, bool isExistEmail)
     {
         var client = getClient();
         var user = await Context.Users.FirstAsync();
         var request = new RegisterUserRequest
         {
-            Login = user.UserName,
+            UserName = isExistUserName ? user.UserName : AnyValue.ShortString,
             Password = AnyValue.Password,
-            Email = AnyValue.String,
+            Email = isExistEmail ? user.Email : AnyValue.Email,
             PhoneNumber = AnyValue.String,
             FirstName = AnyValue.String,
             LastName = AnyValue.String,
-            MiddleName = AnyValue.String,
-            Age = AnyValue.Short
+            MiddleName = AnyValue.String
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
 
-        AssertExceptionCode(ExceptionCodesEnum.UserExistsExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
 
     [Theory]
@@ -86,20 +83,19 @@ public sealed class UserMutationTests : BaseIntegrationTests
         var client = getClient();
         var request = new RegisterUserRequest
         {
-            Login = AnyValue.ShortString,
+            UserName = AnyValue.ShortString,
             Password = incorrectPassword,
             Email = AnyValue.Email,
             PhoneNumber = AnyValue.String,
             FirstName = AnyValue.String,
             LastName = AnyValue.String,
-            MiddleName = AnyValue.String,
-            Age = AnyValue.Short
+            MiddleName = AnyValue.String
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
 
-        AssertExceptionCode(ExceptionCodesEnum.RegistrationExceptionCode, exception.Code);
+        AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
 
     #endregion

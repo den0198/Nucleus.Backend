@@ -1,17 +1,17 @@
 ﻿using BLL.Logic.Services.Interfaces;
+using DAL.Repositories.Interfaces;
+using DAL.UnitOfWork;
 
 namespace BLL.Logic.InitialsParams;
 
 public sealed class UserServiceInitialParams
 {
-    public UserServiceInitialParams(IUserAccountService userAccountService, IUserDetailService userDetailService, IRoleService roleService)
+    public UserServiceInitialParams(IUnitOfWork unitOfWork, IRoleService roleService)
     {
-        UserAccountService = userAccountService;
-        UserDetailService = userDetailService;
+        Repository = unitOfWork.UserRepository;
         RoleService = roleService;
     }
 
-    public IUserAccountService UserAccountService { get; set; }
-    public IUserDetailService UserDetailService { get; set; }
-    public IRoleService RoleService { get; set; }
+    public IUserRepository Repository { get; }
+    public IRoleService RoleService { get;}
 }

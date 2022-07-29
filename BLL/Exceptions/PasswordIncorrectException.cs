@@ -2,7 +2,7 @@
 
 namespace BLL.Exceptions;
 
-public class PasswordIncorrectException : CoreException
+public sealed class PasswordIncorrectException : CoreException
 {
     public PasswordIncorrectException(string password) 
         : base(ExceptionCodesEnum.PasswordIncorrectExceptionCode,

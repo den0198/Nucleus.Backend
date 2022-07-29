@@ -20,7 +20,7 @@ public sealed class AuthService : IAuthService
 
     public async Task<TokenResult> SignInAsync(SignInParameter parameter)
     {
-        var user = await initialParams.UserAccountService.GetByLoginAsync(parameter.Login);
+        var user = await initialParams.UserService.GetByUserNameAsync(parameter.UserName);
 
         var isCorrectPassword = await initialParams.Repository.CheckPasswordAsync(user, parameter.Password);
         if (!isCorrectPassword)
@@ -31,31 +31,31 @@ public sealed class AuthService : IAuthService
 
     public async Task<TokenResult> NewTokenAsync(NewTokenParameter parameter)
     {
-        var userLogin = initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(parameter.AccessToken);
-        if (userLogin.IsNull()) 
+        var userName = initialParams.AuthServiceHelper.FindUserNameOutAccessToken(parameter.AccessToken);
+        if (userName.IsNull()) 
             throw new TokenIncorrectException(true, parameter.AccessToken);
 
-        var userAccount = await initialParams.UserAccountService.GetByLoginAsync(userLogin!);
+        var user = await initialParams.UserService.GetByUserNameAsync(userName!);
         var tokenProvider = initialParams.AuthOptions.Audience;
 
-        var isRefreshTokenValid = await initialParams.Repository.VerifyRefreshTokenAsync(userAccount,
+        var isRefreshTokenValid = await initialParams.Repository.VerifyRefreshTokenAsync(user,
             tokenProvider, parameter.RefreshToken);
         if (!isRefreshTokenValid)
             throw new TokenIncorrectException(false, parameter.RefreshToken);
 
-        return await getAuthResultAsync(userAccount);
+        return await getAuthResultAsync(user);
     }
 
-    private async Task<TokenResult> getAuthResultAsync(UserAccount userAccount)
+    private async Task<TokenResult> getAuthResultAsync(User user)
     {
-        var userRoles = await initialParams.RoleService.GetUserRolesAsync(userAccount);
-        var claims = await initialParams.Repository.GetUserClaimsAsync(userAccount);
+        var userRoles = await initialParams.RoleService.GetUserRolesAsync(user);
+        var claims = await initialParams.Repository.GetUserClaimsAsync(user);
         var tokenProvider = initialParams.AuthOptions.Audience;
 
         return new TokenResult
         {
-            AccessToken = initialParams.AuthServiceHelper.GetAccessToken(userAccount, userRoles, claims),
-            RefreshToken = await initialParams.Repository.GenerateRefreshTokenAsync(userAccount, tokenProvider)
+            AccessToken = initialParams.AuthServiceHelper.GetAccessToken(user, userRoles, claims),
+            RefreshToken = await initialParams.Repository.GenerateRefreshTokenAsync(user, tokenProvider)
         };
     }
 }

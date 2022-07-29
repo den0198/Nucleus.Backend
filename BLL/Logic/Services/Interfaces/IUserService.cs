@@ -1,33 +1,40 @@
-﻿using Models.Service.Parameters.User;
-using Models.Service.Results;
+﻿using Models.Entities;
+using Models.Service.Parameters.User;
 
 namespace BLL.Logic.Services.Interfaces;
 
 public interface IUserService
 {
     /// <summary>
-    /// Получает пользователей по логину
+    /// Получает пользователя по идентификатору
     /// </summary>
-    /// <param name="login">Логин</param>
+    /// <param name="userId">Идентификатор</param>
     /// <returns>Пользователь</returns>
-    Task<FullUserResult> GetByLoginAsync(string login);
+    Task<User> GetByIdAsync(long userId);
+    
+    /// <summary>
+    /// Получает пользователя по логину
+    /// </summary>
+    /// <param name="userName">Пользовательское имя</param>
+    /// <returns>Пользователь</returns>
+    Task<User> GetByUserNameAsync(string userName);
 
     /// <summary>
-    /// Ишет пользователей по email
+    /// Ишет пользователя по email
     /// </summary>
     /// <param name="email">Email</param>
-    /// <returns>Список пользователей</returns>
-    Task<IEnumerable<FullUserResult>> FindAllByEmailAsync(string email);
+    /// <returns>Пользователь</returns>
+    Task<User> GetByEmailAsync(string email);
 
     /// <summary>
     /// Добовляет пользователя
     /// </summary>
     /// <param name="parameter">Параметры для добовляения</param>
-    Task AddUserAsync(RegisterUserParameter parameter);
+    Task AddAsync(RegisterUserParameter parameter);
 
     /// <summary>
     /// Даёт админ роль
     /// </summary>
-    /// <param name ="userAccountId">Идентификатор акаунта</param>
-    Task UpgrateToAdmin(long userAccountId);
+    /// <param name ="userId">Идентификатор</param>
+    Task UpgrateToAdmin(long userId);
 }

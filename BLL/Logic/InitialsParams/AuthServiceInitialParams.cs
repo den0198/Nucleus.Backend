@@ -14,20 +14,20 @@ public sealed class AuthServiceInitialParams
     private Lazy<IAuthServiceHelper> authServiceHelper;
     private Lazy<IAuthOptions> authOptions;
 
-    public AuthServiceInitialParams(IUserAccountService userAccountService, IRoleService roleService, IUnitOfWork unitOfWork, 
+    public AuthServiceInitialParams(IUserService userService, IRoleService roleService, IUnitOfWork unitOfWork, 
         IOptions<AuthOptions> authOptions)
     {
         this.authOptions = new Lazy<IAuthOptions>(authOptions.Value);
         authServiceHelper = new Lazy<IAuthServiceHelper>(new AuthServiceHelper(AuthOptions));
 
         Repository = unitOfWork.AuthRepository;
-        UserAccountService = userAccountService;
+        UserService = userService;
         RoleService = roleService;
 
     }
 
     public IAuthRepository Repository { get; }
-    public IUserAccountService UserAccountService { get; }
+    public IUserService UserService { get; }
     public IRoleService RoleService { get; }
 
     public IAuthOptions AuthOptions

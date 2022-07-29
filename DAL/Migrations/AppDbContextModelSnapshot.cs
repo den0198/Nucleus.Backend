@@ -69,7 +69,7 @@ namespace DAL.Migrations
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint")
-                        .HasColumnName("user_account_id");
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
@@ -94,20 +94,20 @@ namespace DAL.Migrations
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint")
-                        .HasColumnName("user_account_id");
+                        .HasColumnName("user_id");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_provider", (string)null);
+                    b.ToTable("user_providers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint")
-                        .HasColumnName("user_account_id");
+                        .HasColumnName("user_id");
 
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint")
@@ -124,7 +124,7 @@ namespace DAL.Migrations
                 {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint")
-                        .HasColumnName("user_account_id");
+                        .HasColumnName("user_id");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)")
@@ -141,6 +141,78 @@ namespace DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("user_tokens", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Entities.Option", b =>
+                {
+                    b.Property<long>("OptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("option_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OptionId"), 1L, 1);
+
+                    b.Property<long?>("PropertyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("property_id");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("value");
+
+                    b.HasKey("OptionId");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("options", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Entities.Product", b =>
+                {
+                    b.Property<long>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("product_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ProductId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("store_id");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("products", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Entities.Property", b =>
+                {
+                    b.Property<long>("PropertyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("property_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PropertyId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("product_id");
+
+                    b.HasKey("PropertyId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("properties", (string)null);
                 });
 
             modelBuilder.Entity("Models.Entities.Role", b =>
@@ -177,12 +249,96 @@ namespace DAL.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("Models.Entities.UserAccount", b =>
+            modelBuilder.Entity("Models.Entities.Store", b =>
+                {
+                    b.Property<long>("StoreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("store_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("StoreId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<long?>("OwnerId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("StoreId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("stores", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Entities.SubProduct", b =>
+                {
+                    b.Property<long>("SubProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("sub_product_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SubProductId"), 1L, 1);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int")
+                        .HasColumnName("count");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("price");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("product_id");
+
+                    b.HasKey("SubProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("sub_products", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Entities.SubProductPropertyOption", b =>
+                {
+                    b.Property<long>("SubProductPropertyOptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("sub_product_property_option_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SubProductPropertyOptionId"), 1L, 1);
+
+                    b.Property<long?>("OptionId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("option_id");
+
+                    b.Property<long?>("PropertyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("product_id");
+
+                    b.Property<long?>("SubProductId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("sub_product_id");
+
+                    b.HasKey("SubProductPropertyOptionId");
+
+                    b.HasIndex("OptionId");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("SubProductId");
+
+                    b.ToTable("sub_product_property_options", (string)null);
+                });
+
+            modelBuilder.Entity("Models.Entities.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("user_account_id");
+                        .HasColumnName("user_id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
@@ -201,9 +357,29 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasColumnName("email");
 
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit")
+                        .HasColumnName("email_confirmed");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("last_name");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit")
                         .HasColumnName("is_lockout");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnName("lockout_end");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("middle_name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -213,7 +389,7 @@ namespace DAL.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)")
-                        .HasColumnName("normalized_login");
+                        .HasColumnName("normalized_username");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)")
@@ -231,15 +407,15 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("security_stamp");
 
-                    b.Property<long?>("UserDetailId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_detail_id");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit")
+                        .HasColumnName("two_factor_enabled");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)")
-                        .HasColumnName("login");
+                        .HasColumnName("username");
 
                     b.HasKey("Id");
 
@@ -249,49 +425,9 @@ namespace DAL.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[normalized_login] IS NOT NULL");
+                        .HasFilter("[normalized_username] IS NOT NULL");
 
-                    b.HasIndex("UserDetailId")
-                        .IsUnique()
-                        .HasFilter("[user_detail_id] IS NOT NULL");
-
-                    b.ToTable("users_accounts", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.UserDetail", b =>
-                {
-                    b.Property<long>("UserDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_detail_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("UserDetailId"), 1L, 1);
-
-                    b.Property<short>("Age")
-                        .HasColumnType("smallint")
-                        .HasColumnName("age");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("first_name");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("last_name");
-
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("middle_name");
-
-                    b.Property<long>("UserAccountId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_account_id");
-
-                    b.HasKey("UserDetailId");
-
-                    b.ToTable("users_details", (string)null);
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -305,7 +441,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("Models.Entities.UserAccount", null)
+                    b.HasOne("Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,7 +450,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("Models.Entities.UserAccount", null)
+                    b.HasOne("Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,7 +465,7 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Models.Entities.UserAccount", null)
+                    b.HasOne("Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -338,25 +474,99 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("Models.Entities.UserAccount", null)
+                    b.HasOne("Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Models.Entities.UserAccount", b =>
+            modelBuilder.Entity("Models.Entities.Option", b =>
                 {
-                    b.HasOne("Models.Entities.UserDetail", "UserDetail")
-                        .WithOne("UserAccount")
-                        .HasForeignKey("Models.Entities.UserAccount", "UserDetailId");
+                    b.HasOne("Models.Entities.Property", "Property")
+                        .WithMany("Options")
+                        .HasForeignKey("PropertyId");
 
-                    b.Navigation("UserDetail");
+                    b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("Models.Entities.UserDetail", b =>
+            modelBuilder.Entity("Models.Entities.Product", b =>
                 {
-                    b.Navigation("UserAccount");
+                    b.HasOne("Models.Entities.Store", "Store")
+                        .WithMany("Products")
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("Models.Entities.Property", b =>
+                {
+                    b.HasOne("Models.Entities.Product", "Product")
+                        .WithMany("Properties")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Models.Entities.Store", b =>
+                {
+                    b.HasOne("Models.Entities.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Models.Entities.SubProduct", b =>
+                {
+                    b.HasOne("Models.Entities.Product", "Product")
+                        .WithMany("SubProducts")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Models.Entities.SubProductPropertyOption", b =>
+                {
+                    b.HasOne("Models.Entities.Option", "Option")
+                        .WithMany()
+                        .HasForeignKey("OptionId");
+
+                    b.HasOne("Models.Entities.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId");
+
+                    b.HasOne("Models.Entities.SubProduct", "SubProduct")
+                        .WithMany("PropertyOptions")
+                        .HasForeignKey("SubProductId");
+
+                    b.Navigation("Option");
+
+                    b.Navigation("Property");
+
+                    b.Navigation("SubProduct");
+                });
+
+            modelBuilder.Entity("Models.Entities.Product", b =>
+                {
+                    b.Navigation("Properties");
+
+                    b.Navigation("SubProducts");
+                });
+
+            modelBuilder.Entity("Models.Entities.Property", b =>
+                {
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("Models.Entities.Store", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Models.Entities.SubProduct", b =>
+                {
+                    b.Navigation("PropertyOptions");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,7 +17,7 @@ using Xunit;
 
 namespace BLL.UnitTests.Services;
 
-public sealed class AuthServiceTests
+public sealed class AuthServiceTests : UnitTest
 {
     private static IAuthService getService(out AuthServiceInitialParams initialParams)
     {
@@ -28,11 +28,11 @@ public sealed class AuthServiceTests
     private static void preparingToReceiveTokens(AuthServiceInitialParams initialParams, AuthTestData testData, string accessToken, 
         string refreshToken)
     {
-        initialParams.RoleService.GetUserRolesAsync(testData.UserAccount).Returns(testData.Roles);
-        initialParams.Repository.GetUserClaimsAsync(testData.UserAccount).Returns(testData.Claims);
+        initialParams.RoleService.GetUserRolesAsync(testData.User).Returns(testData.Roles);
+        initialParams.Repository.GetUserClaimsAsync(testData.User).Returns(testData.Claims);
         initialParams.AuthOptions.Audience.Returns(testData.AuthOptions.Audience);
-        initialParams.AuthServiceHelper.GetAccessToken(testData.UserAccount, testData.Roles, testData.Claims).Returns(accessToken);
-        initialParams.Repository.GenerateRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience).Returns(refreshToken);
+        initialParams.AuthServiceHelper.GetAccessToken(testData.User, testData.Roles, testData.Claims).Returns(accessToken);
+        initialParams.Repository.GenerateRefreshTokenAsync(testData.User, testData.AuthOptions.Audience).Returns(refreshToken);
     }
 
     private static async Task checkCorrectToken(AuthServiceInitialParams initialParams, AuthTestData testData, TokenResult actualToken,
@@ -40,15 +40,15 @@ public sealed class AuthServiceTests
     {
         Assert.Equal(expectedAccessToken, actualToken.AccessToken);
         Assert.Equal(expectedRefreshToken, actualToken.RefreshToken);
-        initialParams.AuthServiceHelper.Received(1).GetAccessToken(testData.UserAccount, testData.Roles, testData.Claims);
-        await initialParams.Repository.Received(1).GenerateRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience);
+        initialParams.AuthServiceHelper.Received(1).GetAccessToken(testData.User, testData.Roles, testData.Claims);
+        await initialParams.Repository.Received(1).GenerateRefreshTokenAsync(testData.User, testData.AuthOptions.Audience);
     }
 
     private static async Task checkIncorrectToken(AuthServiceInitialParams initialParams)
     {
-        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(Arg.Any<UserAccount>(), Arg.Any<IEnumerable<Role>>(),
+        initialParams.AuthServiceHelper.DidNotReceive().GetAccessToken(Arg.Any<User>(), Arg.Any<IEnumerable<Role>>(),
             Arg.Any<IEnumerable<Claim>>());
-        await initialParams.Repository.DidNotReceive().GenerateRefreshTokenAsync(Arg.Any<UserAccount>(), Arg.Any<string>());
+        await initialParams.Repository.DidNotReceive().GenerateRefreshTokenAsync(Arg.Any<User>(), Arg.Any<string>());
     }
 
     #region SignIn
@@ -61,8 +61,8 @@ public sealed class AuthServiceTests
         var accessToken = AnyValue.String;
         var refreshToken = AnyValue.String;
 
-        initialParams.UserAccountService.GetByLoginAsync(testData.SignInParameter.Login).Returns(testData.UserAccount);
-        initialParams.Repository.CheckPasswordAsync(testData.UserAccount, testData.SignInParameter.Password).Returns(true);
+        initialParams.UserService.GetByUserNameAsync(testData.SignInParameter.UserName).Returns(testData.User);
+        initialParams.Repository.CheckPasswordAsync(testData.User, testData.SignInParameter.Password).Returns(true);
         preparingToReceiveTokens(initialParams, testData, accessToken, refreshToken);
 
         var result = await service.SignInAsync(testData.SignInParameter);
@@ -76,8 +76,8 @@ public sealed class AuthServiceTests
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
 
-        initialParams.UserAccountService.GetByLoginAsync(testData.SignInParameter.Login).Returns(testData.UserAccount);
-        initialParams.Repository.CheckPasswordAsync(testData.UserAccount, testData.SignInParameter.Password).Returns(false);
+        initialParams.UserService.GetByUserNameAsync(testData.SignInParameter.UserName).Returns(testData.User);
+        initialParams.Repository.CheckPasswordAsync(testData.User, testData.SignInParameter.Password).Returns(false);
 
         await Assert.ThrowsAsync<PasswordIncorrectException>(async () => await service.SignInAsync(testData.SignInParameter));
 
@@ -96,10 +96,10 @@ public sealed class AuthServiceTests
         var newAccessToken = AnyValue.String;
         var newRefreshToken = AnyValue.String;
 
-        initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(testData.NewTokenParameter.AccessToken)
-            .Returns(testData.UserAccount.UserName);
-        initialParams.UserAccountService.GetByLoginAsync(testData.UserAccount.UserName).Returns(testData.UserAccount);
-        initialParams.Repository.VerifyRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience, 
+        initialParams.AuthServiceHelper.FindUserNameOutAccessToken(testData.NewTokenParameter.AccessToken)
+            .Returns(testData.User.UserName);
+        initialParams.UserService.GetByUserNameAsync(testData.User.UserName).Returns(testData.User);
+        initialParams.Repository.VerifyRefreshTokenAsync(testData.User, testData.AuthOptions.Audience, 
             testData.NewTokenParameter.RefreshToken).Returns(true);
         preparingToReceiveTokens(initialParams, testData, newAccessToken, newRefreshToken);
 
@@ -114,7 +114,7 @@ public sealed class AuthServiceTests
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
 
-        initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(testData.NewTokenParameter.AccessToken)
+        initialParams.AuthServiceHelper.FindUserNameOutAccessToken(testData.NewTokenParameter.AccessToken)
             .ReturnsNull();
 
         await Assert.ThrowsAsync<TokenIncorrectException>(async () => await service.NewTokenAsync(testData.NewTokenParameter));
@@ -128,10 +128,10 @@ public sealed class AuthServiceTests
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
 
-        initialParams.AuthServiceHelper.FindUserLoginOutAccessToken(testData.NewTokenParameter.AccessToken)
-            .Returns(testData.UserAccount.UserName);
-        initialParams.UserAccountService.GetByLoginAsync(testData.UserAccount.UserName).Returns(testData.UserAccount);
-        initialParams.Repository.VerifyRefreshTokenAsync(testData.UserAccount, testData.AuthOptions.Audience,
+        initialParams.AuthServiceHelper.FindUserNameOutAccessToken(testData.NewTokenParameter.AccessToken)
+            .Returns(testData.User.UserName);
+        initialParams.UserService.GetByUserNameAsync(testData.User.UserName).Returns(testData.User);
+        initialParams.Repository.VerifyRefreshTokenAsync(testData.User, testData.AuthOptions.Audience,
             testData.NewTokenParameter.RefreshToken).Returns(false);
 
         await Assert.ThrowsAsync<TokenIncorrectException>(async () => await service.NewTokenAsync(testData.NewTokenParameter));

@@ -14,9 +14,9 @@ public interface IRoleService
     /// <summary>
     /// Получает все роли
     /// </summary>
-    /// <param name="userAccount">Акаунт</param>
+    /// <param name="user">Акаунт</param>
     /// <returns>Cписок ролей</returns>
-    Task<IEnumerable<Role>> GetUserRolesAsync(UserAccount userAccount);
+    Task<IEnumerable<Role>> GetUserRolesAsync(User user);
 
     /// <summary>
     /// Добовляет роль
@@ -27,7 +27,7 @@ public interface IRoleService
     /// <summary>
     /// Назначает роль
     /// </summary>
-    /// <param name="userAccount">Акаунт</param>
+    /// <param name="user">Акаунт</param>
     /// <param name="name">Названия</param>
-    Task GiveUserRoleAsync(UserAccount userAccount, string name);
+    Task GiveUserRoleAsync(User user, string name);
 }

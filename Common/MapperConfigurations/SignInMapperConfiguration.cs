@@ -4,12 +4,12 @@ using Models.Service.Parameters.Auth;
 
 namespace Common.MapperConfigurations;
 
-public partial class CoreMapperConfiguration
+public static partial class CoreMapperConfiguration
 {
-    private static void signIn()
+    private static void AddSignInConfigurations()
     {
         TypeAdapterConfig<SignInRequest, SignInParameter>.NewConfig()
-            .Map(dest => dest.Login,    src => src.Login)
+            .Map(dest => dest.UserName,    src => src.UserName)
             .Map(dest => dest.Password, src => src.Password);
     }
 }

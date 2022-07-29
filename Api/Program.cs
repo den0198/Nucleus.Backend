@@ -12,8 +12,9 @@ public class Program
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        CoreMapperConfiguration.AddConfiguration();
+        CoreMapperConfiguration.AddConfigurations();
 
+        services.AddMyCors();
         services.AddControllers();
         services.AddAuth(configuration);
         services.AddGraphQl();
@@ -25,7 +26,8 @@ public class Program
         services.AddFilters();
 
         var app = builder.Build();
-
+        
+        app.UseCors("MyAllowAllHeadersPolicy");
         app.UseInitializationDataBase();
         app.MapGraphQL("/");
         app.UseAuth();

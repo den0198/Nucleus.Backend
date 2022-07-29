@@ -8,7 +8,7 @@ public class SignInParameterBuilder : CoreBuilder<SignInParameter>
     {
         Entity = new SignInParameter
         {
-            Login = AnyValue.String,
+            UserName = AnyValue.String,
             Password = AnyValue.Password,
         };
     }

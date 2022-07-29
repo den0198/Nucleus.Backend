@@ -2,7 +2,7 @@
 
 namespace BLL.Exceptions;
 
-public class TokenIncorrectException : CoreException
+public sealed class TokenIncorrectException : CoreException
 {
     public TokenIncorrectException(bool isAccess, string token) 
         : base(isAccess ? ExceptionCodesEnum.AccessTokenIncorrectExceptionCode : ExceptionCodesEnum.RefreshTokenIncorrectExceptionCode, 

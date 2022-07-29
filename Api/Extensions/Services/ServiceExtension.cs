@@ -8,8 +8,6 @@ public static class ServiceExtension
     public static void AddBllServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IUserService, UserService>();
-        serviceCollection.AddScoped<IUserAccountService, UserAccountService>();
-        serviceCollection.AddScoped<IUserDetailService, UserDetailService>();
         serviceCollection.AddScoped<IAuthService, AuthService>();
         serviceCollection.AddScoped<IRoleService, RoleService>();
     }

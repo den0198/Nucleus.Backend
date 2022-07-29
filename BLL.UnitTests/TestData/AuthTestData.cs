@@ -7,12 +7,12 @@ using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;
 
-internal class AuthTestData
+internal sealed class AuthTestData
 {
     public AuthTestData()
     {
         AuthOptions = Builder.AuthOption.Build();
-        UserAccount = Builder.UserAccount.Build();
+        User = Builder.User.Build();
         Roles = new[]
         {
             Builder.Role.Build()
@@ -27,7 +27,7 @@ internal class AuthTestData
     }
 
     public IAuthOptions AuthOptions { get; }
-    public UserAccount UserAccount { get; }
+    public User User { get; }
     public IEnumerable<Role> Roles { get; }
     public IEnumerable<Claim> Claims { get; }
     public SignInParameter SignInParameter { get; }

@@ -18,22 +18,22 @@ public sealed class AuthServiceHelper : IAuthServiceHelper
         this.authOptions = authOptions;
     }
 
-    public string GetAccessToken(UserAccount userAccount, IEnumerable<Role> userRoles, IEnumerable<Claim> claims)
+    public string GetAccessToken(User user, IEnumerable<Role> userRoles, IEnumerable<Claim> claims)
     {
         var claimsList = claims.ToList();
-        var userLogin = claimsList
+        var userName = claimsList
             .Where(_ => _.Type.Contains("userdata"))
             .Select(_ => _.Value)
             .FirstOrDefault();
-        if (userLogin.IsNull())
-            claimsList.Add(new Claim(ClaimTypes.UserData, userAccount.UserName));
+        if (userName.IsNull())
+            claimsList.Add(new Claim(ClaimTypes.UserData, user.UserName));
 
         claimsList.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Name)));
 
         return getJwtToken(claimsList);
     }
 
-    public string? FindUserLoginOutAccessToken(string oldAccessToken)
+    public string? FindUserNameOutAccessToken(string oldAccessToken)
     {
         try
         {

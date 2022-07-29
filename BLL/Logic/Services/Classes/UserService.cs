@@ -1,81 +1,53 @@
-﻿using BLL.Logic.InitialsParams;
+﻿using BLL.Exceptions;
+using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Consts.DataBase;
 using Mapster;
 using Models.Entities;
 using Models.Service.Parameters.User;
-using Models.Service.Results;
 
 namespace BLL.Logic.Services.Classes;
 
 public sealed class UserService : IUserService
 {
-
     private readonly UserServiceInitialParams initialParams;
 
     public UserService(UserServiceInitialParams initialParams)
     {
         this.initialParams = initialParams;
     }
-
-    public async Task<FullUserResult> GetByLoginAsync(string login)
+    
+    public async Task<User> GetByIdAsync(long userId)
     {
-        var userAccounts = await initialParams.UserAccountService.GetByLoginAsync(login);
+        return await initialParams.Repository.FindByIdAsync(userId)
+               ?? throw new UserNotFoundException($"userId: {userId}");
+    }
+
+    public async Task<User> GetByUserNameAsync(string userName)
+    {
+        return await initialParams.Repository.FindByUserNameAsync(userName)
+               ?? throw new UserNotFoundException($"userName: {userName}");
+    }
+
+    public async Task<User> GetByEmailAsync(string email)
+    {
+        return await initialParams.Repository.FindByEmailAsync(email)
+               ?? throw new UserNotFoundException($"email: {email}");
+    }
+
+    public async Task AddAsync(RegisterUserParameter parameter)
+    {
+        var user = parameter.Adapt<User>();
+        var identityResult = await initialParams.Repository.AddAsync(user, parameter.Password);
+        if (!identityResult.Succeeded)
+            throw new AddUserException(identityResult.Errors.Select(e => e.Description));
         
-        return await getFullUserAsync(userAccounts);
+        await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.BUYER);
     }
 
-    public async Task<IEnumerable<FullUserResult>> FindAllByEmailAsync(string email)
+    public async Task UpgrateToAdmin(long userId)
     {
-        var userAccounts = await initialParams.UserAccountService.FindAllByEmailAsync(email);
-        var users = new List<FullUserResult>();
-
-        foreach (var userAccount in userAccounts)
-        {
-            var fullUser = await getFullUserAsync(userAccount);
-            users.Add(fullUser);
-        }
-
-        return users;
+        var user = await GetByIdAsync(userId);
+        await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.ADMIN);
     }
-
-    public async Task AddUserAsync(RegisterUserParameter parameter)
-    {
-        await initialParams.UserAccountService.AddAsync(parameter.Adapt<UserAccountAddParameter>());
-
-        var userDetailParameter = parameter.Adapt<UserDetailAddParameter>();
-        var userAccount = await initialParams.UserAccountService.GetByLoginAsync(parameter.Login);
-        userDetailParameter.UserAccountId = userAccount.Id;
-        await initialParams.UserDetailService.AddAsync(userDetailParameter);
-        var userDetail = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
-        userAccount.UserDetailId = userDetail.UserDetailId;
-
-        await initialParams.UserAccountService.UpdateAsync(userAccount);
-        await initialParams.RoleService.GiveUserRoleAsync(userAccount, DefaultSeeds.USER);
-    }
-
-    public async Task UpgrateToAdmin(long userAccountId)
-    {
-        var userAccount = await initialParams.UserAccountService.GetByIdAsync(userAccountId);
-        await initialParams.RoleService.GiveUserRoleAsync(userAccount, DefaultSeeds.ADMIN);
-    }
-
-    private async Task<FullUserResult> getFullUserAsync(UserAccount userAccount)
-    {
-        var userDetail = await initialParams.UserDetailService.GetByUserAccountIdAsync(userAccount.Id);
-        
-        return new FullUserResult
-        {
-            UserAccountId = userAccount.Id,
-            UserDetailId = userDetail.UserDetailId,
-            Login = userAccount.UserName,
-            Email = userAccount.Email,
-            PhoneNumber = userAccount.PhoneNumber,
-            FirstName = userDetail.FirstName,
-            LastName = userDetail.LastName,
-            MiddleName = userDetail.MiddleName,
-            Age = userDetail.Age
-        };
-    }
-
 }

@@ -12,15 +12,15 @@ public sealed class RoleClaimsConfiguration : IEntityTypeConfiguration<IdentityR
         builder.ToTable(TablesNames.ROLE_CLAIMS);
 
         builder.Property(rc => rc.Id)
-            .HasColumnName(ColumnsNames.ROLE_CLAIMS_ID);
+            .HasColumnName(ColumnNames.ROLE_CLAIMS_ID);
 
         builder.Property(rc => rc.RoleId)
-            .HasColumnName(ColumnsNames.ROLE_ID);
+            .HasColumnName(ColumnNames.ROLE_ID);
 
         builder.Property(rc => rc.ClaimType)
-            .HasColumnName(ColumnsNames.CLAIM_TYPE);
+            .HasColumnName(ColumnNames.CLAIM_TYPE);
 
         builder.Property(rc => rc.ClaimValue)
-            .HasColumnName(ColumnsNames.CLAIM_VALUE);
+            .HasColumnName(ColumnNames.CLAIM_VALUE);
     }
 }

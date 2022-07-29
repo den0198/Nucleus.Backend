@@ -43,8 +43,8 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         var client = getClient();
         var request = new SignInRequest
         {
-            Login = DefaultSeeds.USER_USER_LOGIN,
-            Password = DefaultSeeds.USER_USER_PASSWORD
+            UserName = DefaultSeeds.USER_SELLER_USERNAME,
+            Password = DefaultSeeds.USER_SELLER_PASSWORD
         };
         var response = await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request);
 

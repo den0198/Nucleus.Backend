@@ -2,9 +2,9 @@
 
 namespace BLL.Exceptions;
 
-public class CoreException : Exception
+public abstract class CoreException : Exception
 {
-    public CoreException(ExceptionCodesEnum codeEnum, string? message = default) 
+    protected CoreException(ExceptionCodesEnum codeEnum, string? message = default) 
         : base(message)
     {
         Code = (int)codeEnum;

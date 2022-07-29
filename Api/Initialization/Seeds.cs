@@ -23,20 +23,21 @@ public static class Seeds
         try
         {
             await roleService.AddAsync(DefaultSeeds.ADMIN);
-            await roleService.AddAsync(DefaultSeeds.USER);
+            await roleService.AddAsync(DefaultSeeds.SELLER);
+            await roleService.AddAsync(DefaultSeeds.BUYER);
 
             foreach (var registerUserParameter in usersParameters)
             {
-                await userService.AddUserAsync(registerUserParameter);
+                await userService.AddAsync(registerUserParameter);
             }
 
-            var user = await userService.GetByLoginAsync(usersParameters.First().Login);
-            await userService.UpgrateToAdmin(user.UserAccountId);
+            var user = await userService.GetByUserNameAsync(usersParameters.First().UserName);
+            await userService.UpgrateToAdmin(user.Id);
         }
-        catch (RoleExistsException)
+        catch (AddRoleException)
         {
         }
-        catch (UserExistsException)
+        catch (AddUserException)
         {
         }
     }
@@ -47,25 +48,33 @@ public static class Seeds
         {
             new()
             {
-                Login = DefaultSeeds.USER_ADMIN_LOGIN,
+                UserName = DefaultSeeds.USER_ADMIN_USERNAME,
                 Password = DefaultSeeds.USER_ADMIN_PASSWORD,
                 Email = DefaultSeeds.USER_ADMIN_EMAIL,
                 PhoneNumber = "12345",
                 FirstName = "Admin",
                 LastName = "Admin",
-                MiddleName = "Admin",
-                Age = 100,
+                MiddleName = "Admin"
             },
             new() 
             {
-                Login = DefaultSeeds.USER_USER_LOGIN,
-                Password = DefaultSeeds.USER_USER_PASSWORD,
-                Email = DefaultSeeds.USER_USER_EMAIL,
+                UserName = DefaultSeeds.USER_SELLER_USERNAME,
+                Password = DefaultSeeds.USER_SELLER_PASSWORD,
+                Email = DefaultSeeds.USER_SELLER_EMAIL,
                 PhoneNumber = "12345",
-                FirstName = "User",
-                LastName = "User",
-                MiddleName = "User",
-                Age = 1,
+                FirstName = "Seller",
+                LastName = "Seller",
+                MiddleName = "Seller"
+            },
+            new() 
+            {
+            UserName = DefaultSeeds.USER_BUYER_USERNAME,
+            Password = DefaultSeeds.USER_BUYER_PASSWORD,
+            Email = DefaultSeeds.USER_BUYER_EMAIL,
+            PhoneNumber = "12345",
+            FirstName = "Buyer",
+            LastName = "Buyer",
+            MiddleName = "Buyer"
             }
         };
     }

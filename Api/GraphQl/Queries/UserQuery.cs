@@ -7,13 +7,13 @@ using Models.DTOs.Responses;
 namespace API.GraphQl.Queries;
 
 [ExtendObjectType(typeof(CoreQuery))]
-public class UserQuery : CoreQuery
+public sealed class UserQuery : CoreQuery
 {
     [Authorize]
-    public async Task<IEnumerable<FullUserResponse>> FindUsersByEmail(FindUsersByEmailRequest request, [Service]IUserService service)
+    public async Task<UserResponse> GetUserByEmail(FindUserByEmailRequest request, [Service]IUserService service)
     {
-        var serviceResult = await service.FindAllByEmailAsync(request.Email);
+        var serviceResult = await service.GetByEmailAsync(request.Email);
 
-        return serviceResult.Adapt<IEnumerable<FullUserResponse>>();
+        return serviceResult.Adapt<UserResponse>();
     }
 }

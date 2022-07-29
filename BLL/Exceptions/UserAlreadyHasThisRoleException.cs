@@ -2,7 +2,7 @@
 
 namespace BLL.Exceptions;
 
-public class UserAlreadyHasThisRoleException : CoreException
+public sealed class UserAlreadyHasThisRoleException : CoreException
 {
     public UserAlreadyHasThisRoleException() 
         : base(ExceptionCodesEnum.UserAlreadyHasThisRoleExceptionCode,

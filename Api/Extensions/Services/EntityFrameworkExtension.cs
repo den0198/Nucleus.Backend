@@ -11,7 +11,7 @@ public static class EntityFrameworkExtension
     public static void AddEntityFramework(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Default");
+        var connectionString = configuration.GetConnectionString("Default")!;
         var authOptions = configuration.GetSection("AuthOptions").Get<AuthOptions>();
         var passwordOptions = configuration.GetSection("PasswordOptions").Get<PasswordOptions>();
 
@@ -28,9 +28,13 @@ public static class EntityFrameworkExtension
     private static void addIdentity(IServiceCollection serviceCollection, AuthOptions authOptions, PasswordOptions passwordOptions)
     {
         serviceCollection
-            .AddIdentityCore<UserAccount>(option => option.Password = passwordOptions)
+            .AddIdentityCore<User>(option =>
+            {
+                option.Password = passwordOptions;
+                option.User.RequireUniqueEmail = true;
+            })
             .AddRoles<Role>()
             .AddEntityFrameworkStores<AppDbContext>()
-            .AddTokenProvider(authOptions.Audience, typeof(DataProtectorTokenProvider<UserAccount>));
+            .AddTokenProvider(authOptions.Audience, typeof(DataProtectorTokenProvider<User>));
     }       
 }
