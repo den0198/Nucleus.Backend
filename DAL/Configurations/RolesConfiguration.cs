@@ -12,15 +12,15 @@ public sealed class RolesConfiguration : IEntityTypeConfiguration<Role>
         builder.ToTable(TablesNames.ROLES);
 
         builder.Property(r => r.Id)
-            .HasColumnName(ColumnsNames.ROLE_ID);
+            .HasColumnName(ColumnNames.ROLE_ID);
 
         builder.Property(r => r.Name)
-            .HasColumnName(ColumnsNames.NAME);
+            .HasColumnName(ColumnNames.NAME);
 
         builder.Property(r => r.NormalizedName)
-            .HasColumnName(ColumnsNames.NORMALIZED_NAME);
+            .HasColumnName(ColumnNames.NORMALIZED_NAME);
 
         builder.Property(r => r.ConcurrencyStamp)
-            .HasColumnName(ColumnsNames.CONCURRENCY_STAMP);
+            .HasColumnName(ColumnNames.CONCURRENCY_STAMP);
     }
 }

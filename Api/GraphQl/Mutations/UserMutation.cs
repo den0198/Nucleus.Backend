@@ -1,4 +1,5 @@
 ﻿using BLL.Logic.Services.Interfaces;
+using HotChocolate.AspNetCore.Authorization;
 using Mapster;
 using Models.DTOs.Requests;
 using Models.DTOs.Responses;
@@ -11,7 +12,7 @@ public sealed class UserMutation : CoreMutation
 {
     public async Task<OkResponse> Register(RegisterUserRequest request, [Service] IUserService service)
     {
-        await service.AddUserAsync(request.Adapt<RegisterUserParameter>());
+        await service.AddAsync(request.Adapt<RegisterUserParameter>());
 
         return new OkResponse();
     }

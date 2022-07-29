@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Nucleus": {
+    "SimpleMarket": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

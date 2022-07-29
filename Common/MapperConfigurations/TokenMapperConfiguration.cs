@@ -6,9 +6,9 @@ using Models.Service.Results;
 
 namespace Common.MapperConfigurations;
 
-public partial class CoreMapperConfiguration
+public static partial class CoreMapperConfiguration
 {
-    private static void token()
+    private static void AddTokenConfigurations()
     {
         TypeAdapterConfig<NewTokenRequest, NewTokenParameter>.NewConfig()
             .Map(dest => dest.AccessToken,   src => src.AccessToken)

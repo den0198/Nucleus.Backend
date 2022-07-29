@@ -17,7 +17,7 @@ using Xunit;
 
 namespace BLL.UnitTests.Services;
 
-public class RoleServiceTests
+public sealed class RoleServiceTests : UnitTest
 {
     private static IRoleService getService(out RoleServiceInitialParams initialParams)
     {
@@ -65,13 +65,13 @@ public class RoleServiceTests
         var testData = new RoleTestData();
         var rolesNames = testData.Roles.Select(role => role.Name).ToList();
 
-        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(rolesNames);
+        initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(rolesNames);
         foreach (var role in testData.Roles)
         {
             initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
         }
 
-        var result = await service.GetUserRolesAsync(testData.UserAccount);
+        var result = await service.GetUserRolesAsync(testData.User);
 
         Assert.False(rolesNames.Except(result.Select(role => role.Name)).Any());
     }
@@ -80,33 +80,38 @@ public class RoleServiceTests
 
     #region Add
 
+    private async void checkReceivedAdd(RoleServiceInitialParams initialParams, string newRoleName)
+    {
+        await initialParams.Repository.Received(1).AddAsync(Arg.Is<Role>(role => role.Name == newRoleName));
+    }
+
     [Fact]
     public async Task Add_RoleNotExists_Success()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
         var newRole = testData.Roles.First();
-
-        initialParams.Repository.FindByNameAsync(newRole.Name).ReturnsNull();
-        initialParams.Repository.AddAsync(newRole).Returns(testData.IdentityResultSuccess);
+        
+        initialParams.Repository.AddAsync(Arg.Is<Role>(role => role.Name == newRole.Name))
+            .Returns(testData.IdentityResultSuccess);
 
         await service.AddAsync(newRole.Name);
 
-        await initialParams.Repository.Received(1).AddAsync(Arg.Is<Role>(role => role.Name == newRole.Name));
+        checkReceivedAdd(initialParams, newRole.Name);
     }
 
     [Fact]
-    public async Task Add_RoleExist_RoleExistsException()
+    public async Task Add_ErrorAddRole_AddRoleException()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
         var newRole = testData.Roles.First();
 
-        initialParams.Repository.FindByNameAsync(newRole.Name).Returns(newRole);
+        initialParams.Repository.AddAsync(Arg.Is<Role>(role => role.Name == newRole.Name))
+            .Returns(testData.IdentityResultFailed);
+        await Assert.ThrowsAsync<AddRoleException>(async () => await service.AddAsync(newRole.Name));
 
-        await Assert.ThrowsAsync<RoleExistsException>(async () => await service.AddAsync(newRole.Name));
-
-        await initialParams.Repository.DidNotReceive().AddAsync(Arg.Any<Role>());
+        checkReceivedAdd(initialParams, newRole.Name);
     }
 
     #endregion
@@ -121,12 +126,12 @@ public class RoleServiceTests
         var role = testData.Roles.First();
 
         initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
-        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(new List<string>());
-        initialParams.Repository.GiveUserRoleAsync(testData.UserAccount, role.Name).Returns(testData.IdentityResultSuccess);
+        initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(new List<string>());
+        initialParams.Repository.GiveUserRoleAsync(testData.User, role.Name).Returns(testData.IdentityResultSuccess);
 
-        await service.GiveUserRoleAsync(testData.UserAccount, role.Name);
+        await service.GiveUserRoleAsync(testData.User, role.Name);
 
-        await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.UserAccount, role.Name);
+        await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.User, role.Name);
     }
 
     [Fact]
@@ -138,12 +143,12 @@ public class RoleServiceTests
         var roleName = rolesNames.First();
 
         initialParams.Repository.FindByNameAsync(roleName).Returns(testData.Roles.First(r => r.Name.IsEqual(roleName)));
-        initialParams.Repository.GetUserRolesNamesAsync(testData.UserAccount).Returns(rolesNames);
+        initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(rolesNames);
 
         await Assert.ThrowsAsync<UserAlreadyHasThisRoleException>(async () =>
-            await service.GiveUserRoleAsync(testData.UserAccount, roleName));
+            await service.GiveUserRoleAsync(testData.User, roleName));
 
-        await initialParams.Repository.DidNotReceive().GiveUserRoleAsync(Arg.Any<UserAccount>(), Arg.Any<string>());
+        await initialParams.Repository.DidNotReceive().GiveUserRoleAsync(Arg.Any<User>(), Arg.Any<string>());
     }
 
     #endregion

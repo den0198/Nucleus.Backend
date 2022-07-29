@@ -33,7 +33,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var response = await sendMutationAsync<NewTokenRequest, TokenResponse>(authClient, "newToken", request);
 
-        var user = await Context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_USER_LOGIN);
+        var user = await Context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_SELLER_USERNAME);
         var refreshToken = await Context.UserTokens.FirstAsync(t => t.UserId == user.Id);
 
         Assert.NotNull(response.AccessToken);
@@ -84,8 +84,8 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var oldTokenRequest = new SignInRequest
         {
-            Login = DefaultSeeds.USER_USER_LOGIN,
-            Password = DefaultSeeds.USER_USER_PASSWORD
+            UserName = DefaultSeeds.USER_SELLER_USERNAME,
+            Password = DefaultSeeds.USER_SELLER_PASSWORD
         };
 
         return await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", oldTokenRequest);

@@ -21,9 +21,9 @@ public class RoleService : IRoleService
                ?? throw new RoleNotFoundException(name);
     }
 
-    public async Task<IEnumerable<Role>> GetUserRolesAsync(UserAccount userAccount)
+    public async Task<IEnumerable<Role>> GetUserRolesAsync(User user)
     {
-        var userRolesNames = await initialParams.Repository.GetUserRolesNamesAsync(userAccount);
+        var userRolesNames = await initialParams.Repository.GetUserRolesNamesAsync(user);
         var userRoles = new List<Role>();
         foreach (var roleName in userRolesNames)
         {
@@ -36,21 +36,20 @@ public class RoleService : IRoleService
 
     public async Task AddAsync(string name)
     {
-        var role = await initialParams.Repository.FindByNameAsync(name);
-        if (role.IsNotNull())
-            throw new RoleExistsException(name);
+        var identityResult = await initialParams.Repository.AddAsync(new Role { Name = name });
+        if (!identityResult.Succeeded)
+            throw new AddRoleException(identityResult.Errors.Select(e => e.Description));
 
-        await initialParams.Repository.AddAsync(new Role { Name = name });
     }
 
-    public async Task GiveUserRoleAsync(UserAccount userAccount, string name)
+    public async Task GiveUserRoleAsync(User user, string name)
     {
         var role = await GetByNameAsync(name);
-        var userRoles = await initialParams.Repository.GetUserRolesNamesAsync(userAccount);
+        var userRoles = await initialParams.Repository.GetUserRolesNamesAsync(user);
 
         if (!userRoles.All(ur => ur.IsNotEqual(role.Name)))
             throw new UserAlreadyHasThisRoleException();
         
-        await initialParams.Repository.GiveUserRoleAsync(userAccount, role.Name);
+        await initialParams.Repository.GiveUserRoleAsync(user, role.Name);
     }
 }

@@ -5,9 +5,9 @@ namespace Models.DTOs.Requests;
 
 public sealed class SignInRequest
 {
-    [JsonPropertyName("login")]
+    [JsonPropertyName("userName")]
     [Required]
-    public string Login { get; set; }
+    public string UserName { get; set; }
 
     [JsonPropertyName("password")]
     [Required]

@@ -1,4 +1,4 @@
 ﻿namespace API.GraphQl.Mutations;
 
-public class CoreMutation
+public abstract class CoreMutation
 { }

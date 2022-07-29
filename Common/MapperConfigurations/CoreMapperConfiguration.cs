@@ -1,12 +1,11 @@
 ﻿namespace Common.MapperConfigurations;
 
-public partial class CoreMapperConfiguration
+public static partial class CoreMapperConfiguration
 {
-    public static void AddConfiguration()
+    public static void AddConfigurations()
     {
-        registerUser();
-        token();
-        signIn();
-        UsersInfo();
+        AddUserConfigurations();
+        AddTokenConfigurations();
+        AddSignInConfigurations();
     }
 }

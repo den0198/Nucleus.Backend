@@ -2,16 +2,19 @@
 
 public static class DefaultSeeds
 {
-    public const string USER = "User";
+    public const string SELLER = "Seller";
     public const string ADMIN = "Admin";
+    public const string BUYER = "Buyer";
     
-    public const string USER_USER_LOGIN = "User";
-    public const string USER_USER_PASSWORD = "qwe123QWE!@#";
-    public const string USER_USER_EMAIL = "User@gmail.com";
-
-    public const string USER_ADMIN_LOGIN = "Admin";
-    public const string USER_ADMIN_PASSWORD = "123qwe!@#QWE";
-    public const string USER_ADMIN_EMAIL = "Admin@gmail.com";
-
-
+    public const string USER_ADMIN_USERNAME = "Admin";
+    public const string USER_ADMIN_PASSWORD = "simpledimple4";
+    public const string USER_ADMIN_EMAIL = "admin@gmail.com";
+    
+    public const string USER_SELLER_USERNAME = "Seller";
+    public const string USER_SELLER_PASSWORD = "simpledimple4";
+    public const string USER_SELLER_EMAIL = "seller@gmail.com";
+    
+    public const string USER_BUYER_USERNAME = "Buyer";
+    public const string USER_BUYER_PASSWORD = "simpledimple4";
+    public const string USER_BUYER_EMAIL = "Buyer@gmail.com";
 }

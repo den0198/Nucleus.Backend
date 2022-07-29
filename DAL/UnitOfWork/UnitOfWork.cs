@@ -9,21 +9,19 @@ namespace DAL.UnitOfWork;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext context;
-    private readonly UserManager<UserAccount> userManager;
+    private readonly UserManager<User> userManager;
 
-    public UnitOfWork(AppDbContext context, UserManager<UserAccount> userManager, RoleManager<Role> roleManager)
+    public UnitOfWork(AppDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager)
     {
         this.context = context;
         this.userManager = userManager;
 
-        UserAccountRepository = new UserAccountRepository(userManager, context);
-        UserDetailRepository = new UserDetailRepository(context);
+        UserRepository = new UserRepository(userManager);
         RoleRepository = new RoleRepository(userManager, roleManager);
         AuthRepository = new AuthRepository(userManager);
     }
 
-    public IUserAccountRepository UserAccountRepository { get; }
-    public IUserDetailRepository UserDetailRepository { get; }
+    public IUserRepository UserRepository { get; }
     public IRoleRepository RoleRepository { get; }
     public IAuthRepository AuthRepository { get; }
 
