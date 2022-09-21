@@ -143,90 +143,6 @@ namespace DAL.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("Models.Entities.Option", b =>
-                {
-                    b.Property<long>("OptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("option_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OptionId"), 1L, 1);
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int")
-                        .HasColumnName("count");
-
-                    b.Property<decimal>("PriceIncrease")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("price_increase");
-
-                    b.Property<long?>("PropertyId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("property_id");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("value");
-
-                    b.HasKey("OptionId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("options", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.Product", b =>
-                {
-                    b.Property<long>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("product_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ProductId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("price");
-
-                    b.Property<long?>("StoreId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("store_id");
-
-                    b.HasKey("ProductId");
-
-                    b.HasIndex("StoreId");
-
-                    b.ToTable("products", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.Property", b =>
-                {
-                    b.Property<long>("PropertyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("property_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PropertyId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
-
-                    b.Property<long?>("ProductId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("product_id");
-
-                    b.HasKey("PropertyId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("properties", (string)null);
-                });
-
             modelBuilder.Entity("Models.Entities.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -259,30 +175,6 @@ namespace DAL.Migrations
                         .HasFilter("[normalized_name] IS NOT NULL");
 
                     b.ToTable("roles", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.Store", b =>
-                {
-                    b.Property<long>("StoreId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("store_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("StoreId"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
-
-                    b.Property<long?>("OwnerId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("StoreId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("stores", (string)null);
                 });
 
             modelBuilder.Entity("Models.Entities.User", b =>
@@ -431,57 +323,6 @@ namespace DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Models.Entities.Option", b =>
-                {
-                    b.HasOne("Models.Entities.Property", "Property")
-                        .WithMany("Options")
-                        .HasForeignKey("PropertyId");
-
-                    b.Navigation("Property");
-                });
-
-            modelBuilder.Entity("Models.Entities.Product", b =>
-                {
-                    b.HasOne("Models.Entities.Store", "Store")
-                        .WithMany("Products")
-                        .HasForeignKey("StoreId");
-
-                    b.Navigation("Store");
-                });
-
-            modelBuilder.Entity("Models.Entities.Property", b =>
-                {
-                    b.HasOne("Models.Entities.Product", "Product")
-                        .WithMany("Properties")
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Models.Entities.Store", b =>
-                {
-                    b.HasOne("Models.Entities.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("Models.Entities.Product", b =>
-                {
-                    b.Navigation("Properties");
-                });
-
-            modelBuilder.Entity("Models.Entities.Property", b =>
-                {
-                    b.Navigation("Options");
-                });
-
-            modelBuilder.Entity("Models.Entities.Store", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
