@@ -152,6 +152,14 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OptionId"), 1L, 1);
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int")
+                        .HasColumnName("count");
+
+                    b.Property<decimal>("PriceIncrease")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("price_increase");
+
                     b.Property<long?>("PropertyId")
                         .HasColumnType("bigint")
                         .HasColumnName("property_id");
@@ -179,6 +187,10 @@ namespace DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)")
+                        .HasColumnName("price");
 
                     b.Property<long?>("StoreId")
                         .HasColumnType("bigint")
@@ -271,66 +283,6 @@ namespace DAL.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("stores", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.SubProduct", b =>
-                {
-                    b.Property<long>("SubProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("sub_product_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SubProductId"), 1L, 1);
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int")
-                        .HasColumnName("count");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)")
-                        .HasColumnName("price");
-
-                    b.Property<long?>("ProductId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("product_id");
-
-                    b.HasKey("SubProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("sub_products", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.SubProductPropertyOption", b =>
-                {
-                    b.Property<long>("SubProductPropertyOptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("sub_product_property_option_id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SubProductPropertyOptionId"), 1L, 1);
-
-                    b.Property<long?>("OptionId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("option_id");
-
-                    b.Property<long?>("PropertyId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("product_id");
-
-                    b.Property<long?>("SubProductId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("sub_product_id");
-
-                    b.HasKey("SubProductPropertyOptionId");
-
-                    b.HasIndex("OptionId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.HasIndex("SubProductId");
-
-                    b.ToTable("sub_product_property_options", (string)null);
                 });
 
             modelBuilder.Entity("Models.Entities.User", b =>
@@ -517,41 +469,9 @@ namespace DAL.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Models.Entities.SubProduct", b =>
-                {
-                    b.HasOne("Models.Entities.Product", "Product")
-                        .WithMany("SubProducts")
-                        .HasForeignKey("ProductId");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Models.Entities.SubProductPropertyOption", b =>
-                {
-                    b.HasOne("Models.Entities.Option", "Option")
-                        .WithMany()
-                        .HasForeignKey("OptionId");
-
-                    b.HasOne("Models.Entities.Property", "Property")
-                        .WithMany()
-                        .HasForeignKey("PropertyId");
-
-                    b.HasOne("Models.Entities.SubProduct", "SubProduct")
-                        .WithMany("PropertyOptions")
-                        .HasForeignKey("SubProductId");
-
-                    b.Navigation("Option");
-
-                    b.Navigation("Property");
-
-                    b.Navigation("SubProduct");
-                });
-
             modelBuilder.Entity("Models.Entities.Product", b =>
                 {
                     b.Navigation("Properties");
-
-                    b.Navigation("SubProducts");
                 });
 
             modelBuilder.Entity("Models.Entities.Property", b =>
@@ -562,11 +482,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("Models.Entities.Store", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Models.Entities.SubProduct", b =>
-                {
-                    b.Navigation("PropertyOptions");
                 });
 #pragma warning restore 612, 618
         }

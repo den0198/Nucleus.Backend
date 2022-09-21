@@ -7,8 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="HotChocolate.Types" Version="12.7.0" />
       <PackageReference Include="Mapster" Version="7.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Models">
+        <HintPath>..\API.IntegrationTests\bin\Debug\net6.0\Models.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

@@ -16,6 +16,10 @@ public sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
         
         builder.Property(p => p.Name)
             .HasColumnName(ColumnNames.NAME);
+
+        builder.Property(p => p.Price)
+            .HasColumnName(ColumnNames.PRICE)
+            .HasColumnType(ColumnTypes.DECIMAL);
         
         builder.Property("StoreId")
             .HasColumnName(ColumnNames.STORE_ID);

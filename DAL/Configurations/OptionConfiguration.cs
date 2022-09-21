@@ -16,7 +16,14 @@ public sealed class OptionConfiguration : IEntityTypeConfiguration<Option>
         
         builder.Property(o => o.Value)
             .HasColumnName(ColumnNames.VALUE);
-        
+
+        builder.Property(o => o.PriceIncrease)
+            .HasColumnName(ColumnNames.PRICE_INCREASE)
+            .HasColumnType(ColumnTypes.DECIMAL);
+
+        builder.Property(o => o.Count)
+            .HasColumnName(ColumnNames.COUNT);
+
         builder.Property("PropertyId")
             .HasColumnName(ColumnNames.PROPERTY_ID); 
     }

@@ -2,8 +2,9 @@
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Models.DTOs.Requests;
-using Models.DTOs.Responses;
+using Models.DTOs.Inputs;
+using Models.GraphQl.Data;
+using Models.GraphQl.Inputs;
 using TestsHelpers;
 using Xunit;
 
@@ -22,7 +23,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
     public async Task Register_CorrectRequest_UserAdded()
     {
         var client = getClient();
-        var request = new RegisterUserRequest
+        var request = new RegisterUserInput
         {
             UserName = AnyValue.ShortString,
             Password = AnyValue.Password,
@@ -33,9 +34,9 @@ public sealed class UserMutationTests : BaseIntegrationTests
             MiddleName = AnyValue.String
         };
 
-        var response = await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request);
+        var response = await sendMutationAsync<RegisterUserInput, OkData>(client, "register", request);
 
-        var okResponse = new OkResponse();
+        var okResponse = new OkData();
         var user = await Context.Users
             .FirstAsync(u => u.Email == request.Email);
         Assert.Equal(okResponse.Ok, response.Ok);
@@ -55,7 +56,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
     {
         var client = getClient();
         var user = await Context.Users.FirstAsync();
-        var request = new RegisterUserRequest
+        var request = new RegisterUserInput
         {
             UserName = isExistUserName ? user.UserName : AnyValue.ShortString,
             Password = AnyValue.Password,
@@ -67,7 +68,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
+            await sendMutationAsync<RegisterUserInput, OkData>(client, "register", request));
 
         AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
@@ -81,7 +82,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
     public async Task Register_IncorrectPassword_ErrorResponseWithCodeRegisterException(string incorrectPassword)
     {
         var client = getClient();
-        var request = new RegisterUserRequest
+        var request = new RegisterUserInput
         {
             UserName = AnyValue.ShortString,
             Password = incorrectPassword,
@@ -93,7 +94,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<RegisterUserRequest, OkResponse>(client, "register", request));
+            await sendMutationAsync<RegisterUserInput, OkData>(client, "register", request));
 
         AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }

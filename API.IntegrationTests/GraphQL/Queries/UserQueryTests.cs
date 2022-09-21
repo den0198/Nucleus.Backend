@@ -2,8 +2,8 @@
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Models.DTOs.Requests;
-using Models.DTOs.Responses;
+using Models.DTOs.Inputs;
+using Models.GraphQl.Data;
 using TestsHelpers;
 using Xunit;
 
@@ -24,12 +24,12 @@ public class UserQueryTests : BaseIntegrationTests
         var authClient = await getAuthClientAsync();
         var expectedUser = await Context.Users
             .FirstAsync();
-        var request = new FindUserByEmailRequest
+        var request = new FindUserByEmailInput
         {
             Email = expectedUser.Email
         };
 
-        var response = await sendQueryAsync<FindUserByEmailRequest, UserResponse>(authClient,
+        var response = await sendQueryAsync<FindUserByEmailInput, UserData>(authClient,
             "userByEmail", request);
         
         Assert.Equal(expectedUser.Id, response.UserId);
@@ -44,13 +44,13 @@ public class UserQueryTests : BaseIntegrationTests
     public async Task GetUserByEmail_UserNotFound_ResponseWithExceptionCodeUserNotFound()
     {
         var authClient = await getAuthClientAsync();
-        var request = new FindUserByEmailRequest
+        var request = new FindUserByEmailInput
         {
             Email = AnyValue.Email
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
-            await sendQueryAsync<FindUserByEmailRequest, UserResponse>(authClient, "userByEmail", request));
+            await sendQueryAsync<FindUserByEmailInput, UserData>(authClient, "userByEmail", request));
 
         AssertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
     }

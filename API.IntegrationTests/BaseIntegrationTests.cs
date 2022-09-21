@@ -19,9 +19,10 @@ using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.Extensions.DependencyInjection;
-using Models.DTOs.Requests;
-using Models.DTOs.Responses;
+using Models.DTOs.Inputs;
 using Models.GraphQl;
+using Models.GraphQl.Data;
+using Models.GraphQl.Inputs;
 using Xunit;
 
 namespace API.IntegrationTests;
@@ -41,12 +42,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     protected async Task<GraphQLHttpClient> getAuthClientAsync()
     {
         var client = getClient();
-        var request = new SignInRequest
+        var request = new SignInInput
         {
             UserName = DefaultSeeds.USER_SELLER_USERNAME,
             Password = DefaultSeeds.USER_SELLER_PASSWORD
         };
-        var response = await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", request);
+        var response = await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request);
 
         return getAuthClient(response.AccessToken);
     }
@@ -129,7 +130,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     {
         var requestModelProperties = typeof(TRequest).GetProperties();
 
-        var graphQlStringRequest = new StringBuilder("request:{");
+        var graphQlStringRequest = new StringBuilder("input:{");
         graphQlStringRequest.Append(string.Join(',', requestModelProperties.Select(property =>
             property.Name.FirstLetterToLower() + ": " + JsonSerializer.Serialize(property.GetValue(request)))));
         graphQlStringRequest.Append('}');

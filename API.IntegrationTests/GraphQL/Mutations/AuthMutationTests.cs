@@ -3,8 +3,9 @@ using Common.Consts.DataBase;
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Models.DTOs.Requests;
-using Models.DTOs.Responses;
+using Models.DTOs.Inputs;
+using Models.GraphQl.Data;
+using Models.GraphQl.Inputs;
 using TestsHelpers;
 using Xunit;
 
@@ -25,13 +26,13 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         var oldToken = await getOldTokenAsync();
         var authClient = getAuthClient(oldToken.AccessToken);
 
-        var request = new NewTokenRequest
+        var request = new NewTokenInput
         {
             AccessToken = oldToken.AccessToken,
             RefreshToken = oldToken.RefreshToken,
         };
 
-        var response = await sendMutationAsync<NewTokenRequest, TokenResponse>(authClient, "newToken", request);
+        var response = await sendMutationAsync<NewTokenInput, TokenData>(authClient, "newToken", request);
 
         var user = await Context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_SELLER_USERNAME);
         var refreshToken = await Context.UserTokens.FirstAsync(t => t.UserId == user.Id);
@@ -48,14 +49,14 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         var authClient = await getAuthClientAsync();
         var oldToken = await getOldTokenAsync();
 
-        var request = new NewTokenRequest
+        var request = new NewTokenInput
         {
             AccessToken = AnyValue.String,
             RefreshToken = correctRefreshToken ? oldToken.RefreshToken : AnyValue.String,
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<NewTokenRequest, TokenResponse>(authClient, "newToken", request));
+            await sendMutationAsync<NewTokenInput, TokenData>(authClient, "newToken", request));
 
         AssertExceptionCode(ExceptionCodesEnum.AccessTokenIncorrectExceptionCode, exception.Code);
     }
@@ -66,29 +67,29 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         var authClient = await getAuthClientAsync();
         var oldToken = await getOldTokenAsync();
 
-        var request = new NewTokenRequest
+        var request = new NewTokenInput
         {
             AccessToken = oldToken.AccessToken,
             RefreshToken = AnyValue.ShortString,
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<NewTokenRequest, TokenResponse>(authClient, "newToken", request));
+            await sendMutationAsync<NewTokenInput, TokenData>(authClient, "newToken", request));
 
         AssertExceptionCode(ExceptionCodesEnum.RefreshTokenIncorrectExceptionCode, exception.Code);
     }
 
-    private async Task<TokenResponse> getOldTokenAsync()
+    private async Task<TokenData> getOldTokenAsync()
     {
         var client = getClient();
 
-        var oldTokenRequest = new SignInRequest
+        var oldTokenRequest = new SignInInput
         {
             UserName = DefaultSeeds.USER_SELLER_USERNAME,
             Password = DefaultSeeds.USER_SELLER_PASSWORD
         };
 
-        return await sendQueryAsync<SignInRequest, TokenResponse>(client, "signIn", oldTokenRequest);
+        return await sendQueryAsync<SignInInput, TokenData>(client, "signIn", oldTokenRequest);
     }
 
     #endregion

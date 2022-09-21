@@ -13,8 +13,6 @@ public static class TablesNames
     public const string STORES = "stores";
     
     public const string PRODUCTS = "products";
-    public const string SUB_PRODUCTS = "sub_products";
     public const string PROPERTIES = "properties";
     public const string OPTIONS = "options";
-    public const string SUB_PRODUCT_PROPERTY_OPTIONS = "sub_product_property_options";
 }

@@ -1,5 +1,6 @@
 ﻿using Mapster;
-using Models.DTOs.Requests;
+using Models.DTOs.Inputs;
+using Models.GraphQl.Inputs;
 using Models.Service.Parameters.Auth;
 
 namespace Common.MapperConfigurations;
@@ -8,7 +9,7 @@ public static partial class CoreMapperConfiguration
 {
     private static void AddSignInConfigurations()
     {
-        TypeAdapterConfig<SignInRequest, SignInParameter>.NewConfig()
+        TypeAdapterConfig<SignInInput, SignInParameter>.NewConfig()
             .Map(dest => dest.UserName,    src => src.UserName)
             .Map(dest => dest.Password, src => src.Password);
     }

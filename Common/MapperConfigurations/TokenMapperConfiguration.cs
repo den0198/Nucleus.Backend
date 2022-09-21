@@ -1,6 +1,7 @@
 ﻿using Mapster;
-using Models.DTOs.Requests;
-using Models.DTOs.Responses;
+using Models.DTOs.Inputs;
+using Models.GraphQl.Data;
+using Models.GraphQl.Inputs;
 using Models.Service.Parameters.Auth;
 using Models.Service.Results;
 
@@ -10,11 +11,11 @@ public static partial class CoreMapperConfiguration
 {
     private static void AddTokenConfigurations()
     {
-        TypeAdapterConfig<NewTokenRequest, NewTokenParameter>.NewConfig()
+        TypeAdapterConfig<NewTokenInput, NewTokenParameter>.NewConfig()
             .Map(dest => dest.AccessToken,   src => src.AccessToken)
             .Map(dest => dest.RefreshToken,  src => src.RefreshToken);
 
-        TypeAdapterConfig<TokenResult, TokenResponse>.NewConfig()
+        TypeAdapterConfig<TokenResult, TokenData>.NewConfig()
             .Map(dest => dest.AccessToken,      src => src.AccessToken)
             .Map(dest => dest.RefreshToken,     src => src.RefreshToken);
     }

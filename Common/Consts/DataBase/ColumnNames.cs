@@ -65,13 +65,6 @@ public static class ColumnNames
     #region Product
 
     public const string PRODUCT_ID = "product_id";
-
-    #endregion
-
-    #region SubProduct
-
-    public const string SUB_PRODUCT_ID = "sub_product_id";
-    public const string COUNT = "count";
     public const string PRICE = "price";
 
     #endregion
@@ -85,14 +78,9 @@ public static class ColumnNames
     #region Option
 
     public const string OPTION_ID = "option_id";
+    public const string COUNT = "count";
+    public const string PRICE_INCREASE = "price_increase";
 
     #endregion
-
-    #region SUB_PRODUCT_PROPERTY_OPTION
-
-    public const string SUB_PRODUCT_PROPERTY_OPTION_ID = "sub_product_property_option_id";
-
-    #endregion
-
-
+    
 }
