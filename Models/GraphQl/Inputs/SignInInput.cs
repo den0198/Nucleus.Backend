@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Common.GraphQl;
 using HotChocolate.Types;
 
 namespace Models.GraphQl.Inputs;

@@ -1,6 +1,6 @@
 using HotChocolate.Types;
 
-namespace Common.GraphQl;
+namespace Models.GraphQl;
 
 public abstract class CoreType <T> : ObjectType<T> where T : class
 { 
@@ -9,7 +9,7 @@ public abstract class CoreType <T> : ObjectType<T> where T : class
         descriptor.Name(getName());
     }
     
-    private string getName()
+    private static string getName()
     {
         var fullName = typeof(T).Name;
         
