@@ -30,7 +30,7 @@ public sealed class AuthServiceTests : UnitTest
     {
         initialParams.RoleService.GetUserRolesAsync(testData.User).Returns(testData.Roles);
         initialParams.Repository.GetUserClaimsAsync(testData.User).Returns(testData.Claims);
-        initialParams.AuthOptions.Audience.Returns(testData.AuthOptions.Audience);
+        initialParams.AuthOptions = testData.AuthOptions;
         initialParams.AuthServiceHelper.GetAccessToken(testData.User, testData.Roles, testData.Claims).Returns(accessToken);
         initialParams.Repository.GenerateRefreshTokenAsync(testData.User, testData.AuthOptions.Audience).Returns(refreshToken);
     }

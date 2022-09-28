@@ -5,15 +5,15 @@ using Common.Extensions;
 using Common.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Models.Entities;
-using Models.Options.Interfaces;
+using Models.Options;
 
 namespace BLL.Logic.ServiceHelpers.Classes;
 
 public sealed class AuthServiceHelper : IAuthServiceHelper
 {
-    private readonly IAuthOptions authOptions;
+    private readonly AuthOptions authOptions;
 
-    public AuthServiceHelper(IAuthOptions authOptions)
+    public AuthServiceHelper(AuthOptions authOptions)
     {
         this.authOptions = authOptions;
     }

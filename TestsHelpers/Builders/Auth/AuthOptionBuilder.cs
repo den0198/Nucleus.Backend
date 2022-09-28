@@ -1,4 +1,4 @@
-﻿using Models.Options.Classes;
+﻿using Models.Options;
 
 namespace TestsHelpers.Builders.Auth;
 

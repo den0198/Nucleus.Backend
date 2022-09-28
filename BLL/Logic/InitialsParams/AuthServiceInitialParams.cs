@@ -4,20 +4,19 @@ using BLL.Logic.Services.Interfaces;
 using DAL.Repositories.Interfaces;
 using DAL.UnitOfWork;
 using Microsoft.Extensions.Options;
-using Models.Options.Classes;
-using Models.Options.Interfaces;
+using Models.Options;
 
 namespace BLL.Logic.InitialsParams;
 
 public sealed class AuthServiceInitialParams
 {
     private Lazy<IAuthServiceHelper> authServiceHelper;
-    private Lazy<IAuthOptions> authOptions;
+    private Lazy<AuthOptions> authOptions;
 
     public AuthServiceInitialParams(IUserService userService, IRoleService roleService, IUnitOfWork unitOfWork, 
         IOptions<AuthOptions> authOptions)
     {
-        this.authOptions = new Lazy<IAuthOptions>(authOptions.Value);
+        this.authOptions = new Lazy<AuthOptions>(authOptions.Value);
         authServiceHelper = new Lazy<IAuthServiceHelper>(new AuthServiceHelper(AuthOptions));
 
         Repository = unitOfWork.AuthRepository;
@@ -30,10 +29,10 @@ public sealed class AuthServiceInitialParams
     public IUserService UserService { get; }
     public IRoleService RoleService { get; }
 
-    public IAuthOptions AuthOptions
+    public AuthOptions AuthOptions
     {
         get => authOptions.Value;
-        set => authOptions = new Lazy<IAuthOptions>(value);
+        set => authOptions = new Lazy<AuthOptions>(value);
     }
 
     public IAuthServiceHelper AuthServiceHelper

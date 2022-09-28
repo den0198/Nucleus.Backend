@@ -8,7 +8,7 @@ public interface IAuthServiceHelper
     /// <summary>
     /// Получает AccessToken
     /// </summary>
-    /// <param name="user">Акаунта пользователя</param>
+    /// <param name="user">Акаунт пользователя</param>
     /// <param name="userRoles">Роль</param>
     /// <param name="claims">Дополнительная информация</param>
     /// <returns>AccessToken</returns>

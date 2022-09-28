@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using Models.Entities;
-using Models.Options.Interfaces;
+using Models.Options;
 using Models.Service.Parameters.Auth;
 using TestsHelpers;
 
@@ -26,12 +26,10 @@ internal sealed class AuthTestData
 
     }
 
-    public IAuthOptions AuthOptions { get; }
+    public AuthOptions AuthOptions { get; }
     public User User { get; }
     public IEnumerable<Role> Roles { get; }
     public IEnumerable<Claim> Claims { get; }
     public SignInParameter SignInParameter { get; }
     public NewTokenParameter NewTokenParameter { get; }
-
-
 }
