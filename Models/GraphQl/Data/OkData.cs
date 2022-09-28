@@ -1,4 +1,6 @@
-﻿namespace Models.GraphQl.Data;
+﻿using System.Text.Json.Serialization;
+
+namespace Models.GraphQl.Data;
 
 public sealed class OkData
 {
@@ -7,5 +9,6 @@ public sealed class OkData
         Ok = "Ok!";
     }
     
+    [JsonPropertyName("ok")]
     public string Ok { get; }
 }

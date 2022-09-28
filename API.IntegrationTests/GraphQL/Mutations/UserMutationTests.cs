@@ -2,7 +2,6 @@
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
 using TestsHelpers;

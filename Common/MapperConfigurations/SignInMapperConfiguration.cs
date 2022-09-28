@@ -1,5 +1,4 @@
 ﻿using Mapster;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Inputs;
 using Models.Service.Parameters.Auth;
 

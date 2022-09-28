@@ -23,8 +23,7 @@ public static class Seeds
         try
         {
             await roleService.AddAsync(DefaultSeeds.ADMIN);
-            await roleService.AddAsync(DefaultSeeds.SELLER);
-            await roleService.AddAsync(DefaultSeeds.BUYER);
+            await roleService.AddAsync(DefaultSeeds.USER);
 
             foreach (var registerUserParameter in usersParameters)
             {
@@ -58,23 +57,13 @@ public static class Seeds
             },
             new() 
             {
-                UserName = DefaultSeeds.USER_SELLER_USERNAME,
-                Password = DefaultSeeds.USER_SELLER_PASSWORD,
-                Email = DefaultSeeds.USER_SELLER_EMAIL,
+                UserName = DefaultSeeds.USER_USER_USERNAME,
+                Password = DefaultSeeds.USER_USER_PASSWORD,
+                Email = DefaultSeeds.USER_USER_EMAIL,
                 PhoneNumber = "12345",
-                FirstName = "Seller",
-                LastName = "Seller",
-                MiddleName = "Seller"
-            },
-            new() 
-            {
-            UserName = DefaultSeeds.USER_BUYER_USERNAME,
-            Password = DefaultSeeds.USER_BUYER_PASSWORD,
-            Email = DefaultSeeds.USER_BUYER_EMAIL,
-            PhoneNumber = "12345",
-            FirstName = "Buyer",
-            LastName = "Buyer",
-            MiddleName = "Buyer"
+                FirstName = "User",
+                LastName = "User",
+                MiddleName = "User"
             }
         };
     }

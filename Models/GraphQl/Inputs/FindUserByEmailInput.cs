@@ -2,7 +2,7 @@
 using Common.GraphQl;
 using HotChocolate.Types;
 
-namespace Models.DTOs.Inputs;
+namespace Models.GraphQl.Inputs;
 
 public sealed class FindUserByEmailInput
 {

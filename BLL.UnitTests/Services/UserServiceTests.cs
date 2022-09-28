@@ -144,7 +144,7 @@ public sealed class UserServiceTests : UnitTest
         await service.AddAsync(testData.RegisterUserParameter);
 
         await checkReceivedAddUser(initialParams, testData.RegisterUserParameter);
-        await initialParams.RoleService.Received(1).GiveUserRoleAsync(Arg.Any<User>(), DefaultSeeds.BUYER);
+        await initialParams.RoleService.Received(1).GiveUserRoleAsync(Arg.Any<User>(), DefaultSeeds.USER);
     }
     
     [Fact]

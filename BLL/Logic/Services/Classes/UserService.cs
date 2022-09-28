@@ -42,7 +42,7 @@ public sealed class UserService : IUserService
         if (!identityResult.Succeeded)
             throw new AddUserException(identityResult.Errors.Select(e => e.Description));
         
-        await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.BUYER);
+        await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
     }
 
     public async Task UpgrateToAdmin(long userId)

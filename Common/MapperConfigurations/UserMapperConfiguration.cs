@@ -1,5 +1,4 @@
 ﻿using Mapster;
-using Models.DTOs.Inputs;
 using Models.Entities;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;

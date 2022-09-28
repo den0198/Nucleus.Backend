@@ -1,9 +1,7 @@
 ﻿using API.GraphQl.Mutations;
 using API.GraphQl.Queries;
 using HotChocolate.Execution.Configuration;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Inputs;
-using Models.GraphQl.Inputs.SubInputs;
 
 namespace API.Extensions.Services;
 
@@ -25,13 +23,8 @@ public static class GraphQlExtension
         builder
             .AddType<SignInInputType>()
             .AddType<NewTokenInputType>()
-            
             .AddType<FindUserByEmailInputType>()
-            .AddType<RegisterUserInputType>()
-            
-            .AddType<OptionSubInputType>()
-            .AddType<PropertySubInputType>()
-            .AddType<AddProductInputType>();
+            .AddType<RegisterUserInputType>();
     }
 
     private static void addQueries(IRequestExecutorBuilder builder)
@@ -47,7 +40,6 @@ public static class GraphQlExtension
         builder
             .AddMutationType<CoreMutation>()
             .AddTypeExtension<UserMutation>()
-            .AddTypeExtension<AuthMutation>()
-            .AddTypeExtension<ProductMutation>();
+            .AddTypeExtension<AuthMutation>();
     }
 }

@@ -19,7 +19,6 @@ using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.Extensions.DependencyInjection;
-using Models.DTOs.Inputs;
 using Models.GraphQl;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
@@ -44,8 +43,8 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         var client = getClient();
         var request = new SignInInput
         {
-            UserName = DefaultSeeds.USER_SELLER_USERNAME,
-            Password = DefaultSeeds.USER_SELLER_PASSWORD
+            UserName = DefaultSeeds.USER_USER_USERNAME,
+            Password = DefaultSeeds.USER_USER_PASSWORD
         };
         var response = await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request);
 
@@ -116,7 +115,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
 
             if (responseDictionary.IsNull())
                 throw new Exception("Response is null!");
-
+            
             return JsonSerializer.Deserialize<TResponse>(responseDictionary.ToString()!)!;
         }
         catch (GraphQLHttpRequestException e)

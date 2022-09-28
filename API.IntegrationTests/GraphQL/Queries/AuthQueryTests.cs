@@ -2,7 +2,6 @@
 using Common.Consts.DataBase;
 using Common.Enums;
 using Common.GraphQl;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
 using TestsHelpers;
@@ -25,8 +24,8 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         var client = getClient();
         var request = new SignInInput
         {
-            UserName = DefaultSeeds.USER_SELLER_USERNAME,
-            Password = DefaultSeeds.USER_SELLER_PASSWORD
+            UserName = DefaultSeeds.USER_USER_USERNAME,
+            Password = DefaultSeeds.USER_USER_PASSWORD
         };
 
         var response = await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request);
@@ -44,7 +43,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         var request = new SignInInput
         {
             UserName = AnyValue.ShortString,
-            Password = correctPassword ? DefaultSeeds.USER_SELLER_PASSWORD : AnyValue.Password
+            Password = correctPassword ? DefaultSeeds.USER_USER_PASSWORD : AnyValue.Password
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
@@ -59,7 +58,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         var client = getClient();
         var request = new SignInInput
         {
-            UserName = DefaultSeeds.USER_SELLER_USERNAME,
+            UserName = DefaultSeeds.USER_USER_USERNAME,
             Password = AnyValue.Password
         };
 

@@ -1,6 +1,5 @@
 ﻿using BLL.Logic.Services.Interfaces;
 using Mapster;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
 using Models.Service.Parameters.Auth;

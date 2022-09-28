@@ -1,7 +1,5 @@
 ﻿using BLL.Logic.Services.Interfaces;
-using HotChocolate.AspNetCore.Authorization;
 using Mapster;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
 using Models.Service.Parameters.User;

@@ -3,7 +3,6 @@ using Common.Consts.DataBase;
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Models.DTOs.Inputs;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
 using TestsHelpers;
@@ -34,7 +33,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var response = await sendMutationAsync<NewTokenInput, TokenData>(authClient, "newToken", request);
 
-        var user = await Context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_SELLER_USERNAME);
+        var user = await Context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_USER_USERNAME);
         var refreshToken = await Context.UserTokens.FirstAsync(t => t.UserId == user.Id);
 
         Assert.NotNull(response.AccessToken);
@@ -85,8 +84,8 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var oldTokenRequest = new SignInInput
         {
-            UserName = DefaultSeeds.USER_SELLER_USERNAME,
-            Password = DefaultSeeds.USER_SELLER_PASSWORD
+            UserName = DefaultSeeds.USER_USER_USERNAME,
+            Password = DefaultSeeds.USER_USER_PASSWORD
         };
 
         return await sendQueryAsync<SignInInput, TokenData>(client, "signIn", oldTokenRequest);
