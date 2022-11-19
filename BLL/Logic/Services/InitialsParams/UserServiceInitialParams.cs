@@ -2,7 +2,7 @@
 using DAL.Repositories.Interfaces;
 using DAL.UnitOfWork;
 
-namespace BLL.Logic.InitialsParams;
+namespace BLL.Logic.Services.InitialsParams;
 
 public sealed class UserServiceInitialParams
 {

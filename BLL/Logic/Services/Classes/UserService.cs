@@ -1,5 +1,5 @@
 ﻿using BLL.Exceptions;
-using BLL.Logic.InitialsParams;
+using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Consts.DataBase;
 using Mapster;
@@ -45,7 +45,7 @@ public sealed class UserService : IUserService
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
     }
 
-    public async Task UpgrateToAdmin(long userId)
+    public async Task UpgrateToAdminAsync(long userId)
     {
         var user = await GetByIdAsync(userId);
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.ADMIN);

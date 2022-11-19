@@ -1,5 +1,5 @@
 ﻿using BLL.Exceptions;
-using BLL.Logic.InitialsParams;
+using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Extensions;
 using Models.Entities;
@@ -39,7 +39,6 @@ public class RoleService : IRoleService
         var identityResult = await initialParams.Repository.AddAsync(new Role { Name = name });
         if (!identityResult.Succeeded)
             throw new AddRoleException(identityResult.Errors.Select(e => e.Description));
-
     }
 
     public async Task GiveUserRoleAsync(User user, string name)

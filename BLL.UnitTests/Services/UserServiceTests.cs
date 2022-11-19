@@ -2,8 +2,8 @@
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using BLL.Exceptions;
-using BLL.Logic.InitialsParams;
 using BLL.Logic.Services.Classes;
+using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
 using Common.Consts.DataBase;
@@ -174,7 +174,7 @@ public sealed class UserServiceTests : UnitTest
 
         initialParams.Repository.FindByIdAsync(testData.User.Id).Returns(testData.User);
 
-        await service.UpgrateToAdmin(testData.User.Id);
+        await service.UpgrateToAdminAsync(testData.User.Id);
 
         await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.User, DefaultSeeds.ADMIN);
     }

@@ -1,5 +1,5 @@
 ﻿using BLL.Exceptions;
-using BLL.Logic.InitialsParams;
+using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Extensions;
 using Models.Entities;
@@ -10,7 +10,6 @@ namespace BLL.Logic.Services.Classes;
 
 public sealed class AuthService : IAuthService
 {
-
     private readonly AuthServiceInitialParams initialParams;
 
     public AuthService(AuthServiceInitialParams initialParams)

@@ -1,4 +1,4 @@
-﻿using BLL.Logic.InitialsParams;
+﻿using BLL.Logic.Services.InitialsParams;
 
 namespace API.Extensions.Services;
 

@@ -6,7 +6,7 @@ using DAL.UnitOfWork;
 using Microsoft.Extensions.Options;
 using Models.Options;
 
-namespace BLL.Logic.InitialsParams;
+namespace BLL.Logic.Services.InitialsParams;
 
 public sealed class AuthServiceInitialParams
 {
@@ -22,7 +22,6 @@ public sealed class AuthServiceInitialParams
         Repository = unitOfWork.AuthRepository;
         UserService = userService;
         RoleService = roleService;
-
     }
 
     public IAuthRepository Repository { get; }
@@ -31,7 +30,7 @@ public sealed class AuthServiceInitialParams
 
     public AuthOptions AuthOptions
     {
-        get => authOptions.Value;
+        get => authOptions.Value; 
         set => authOptions = new Lazy<AuthOptions>(value);
     }
 
