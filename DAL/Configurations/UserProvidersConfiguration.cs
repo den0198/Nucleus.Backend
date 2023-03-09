@@ -1,4 +1,4 @@
-﻿using Common.Consts.DataBase;
+﻿using Common.Constants.DataBase;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

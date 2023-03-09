@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Common.Consts.DataBase;
+using Common.Constants.DataBase;
 using Common.Enums;
 using Common.Extensions;
 using Common.GraphQl;

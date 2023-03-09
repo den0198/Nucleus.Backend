@@ -6,7 +6,7 @@ using BLL.Logic.Services.Classes;
 using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
-using Common.Consts.DataBase;
+using Common.Constants.DataBase;
 using Models.Entities;
 using Models.Service.Parameters.User;
 using NSubstitute;

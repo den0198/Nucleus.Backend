@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Common.Consts.DataBase;
+using Common.Constants.DataBase;
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;

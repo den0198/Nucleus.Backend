@@ -1,7 +1,7 @@
 ﻿using BLL.Exceptions;
 using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
-using Common.Consts.DataBase;
+using Common.Constants.DataBase;
 using Mapster;
 using Models.Entities;
 using Models.Service.Parameters.User;

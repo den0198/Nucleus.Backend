@@ -1,6 +1,6 @@
 ﻿using BLL.Exceptions;
 using BLL.Logic.Services.Interfaces;
-using Common.Consts.DataBase;
+using Common.Constants.DataBase;
 using Common.Extensions;
 using Models.Service.Parameters.User;
 

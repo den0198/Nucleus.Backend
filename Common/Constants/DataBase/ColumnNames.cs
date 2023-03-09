@@ -1,4 +1,4 @@
-﻿namespace Common.Consts.DataBase;
+﻿namespace Common.Constants.DataBase;
 
 public static class ColumnNames
 {
