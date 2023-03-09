@@ -174,7 +174,7 @@ public sealed class UserServiceTests : UnitTest
 
         initialParams.Repository.FindByIdAsync(testData.User.Id).Returns(testData.User);
 
-        await service.UpgrateToAdminAsync(testData.User.Id);
+        await service.UpgradeToAdminAsync(testData.User.Id);
 
         await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.User, DefaultSeeds.ADMIN);
     }

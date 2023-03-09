@@ -36,5 +36,5 @@ public interface IUserService
     /// Даёт админ роль
     /// </summary>
     /// <param name ="userId">Идентификатор</param>
-    Task UpgrateToAdminAsync(long userId);
+    Task UpgradeToAdminAsync(long userId);
 }

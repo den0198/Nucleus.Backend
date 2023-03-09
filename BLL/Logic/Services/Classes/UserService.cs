@@ -45,7 +45,7 @@ public sealed class UserService : IUserService
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
     }
 
-    public async Task UpgrateToAdminAsync(long userId)
+    public async Task UpgradeToAdminAsync(long userId)
     {
         var user = await GetByIdAsync(userId);
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.ADMIN);

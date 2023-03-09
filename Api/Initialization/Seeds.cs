@@ -31,7 +31,7 @@ public static class Seeds
             }
 
             var user = await userService.GetByUserNameAsync(usersParameters.First().UserName);
-            await userService.UpgrateToAdminAsync(user.Id);
+            await userService.UpgradeToAdminAsync(user.Id);
         }
         catch (AddRoleException)
         {
