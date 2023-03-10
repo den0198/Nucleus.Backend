@@ -45,26 +45,22 @@ public static class Seeds
     {
         return new RegisterUserParameter[]
         {
-            new()
-            {
-                UserName = DefaultSeeds.USER_ADMIN_USERNAME,
-                Password = DefaultSeeds.USER_ADMIN_PASSWORD,
-                Email = DefaultSeeds.USER_ADMIN_EMAIL,
-                PhoneNumber = "12345",
-                FirstName = "Admin",
-                LastName = "Admin",
-                MiddleName = "Admin"
-            },
-            new() 
-            {
-                UserName = DefaultSeeds.USER_USER_USERNAME,
-                Password = DefaultSeeds.USER_USER_PASSWORD,
-                Email = DefaultSeeds.USER_USER_EMAIL,
-                PhoneNumber = "12345",
-                FirstName = "User",
-                LastName = "User",
-                MiddleName = "User"
-            }
+            new(
+                DefaultSeeds.USER_ADMIN_USERNAME,
+                DefaultSeeds.USER_ADMIN_EMAIL,
+                DefaultSeeds.USER_ADMIN_PHONE_NUMBER,
+                DefaultSeeds.USER_ADMIN_PASSWORD,
+                DefaultSeeds.USER_ADMIN_FIRST_NAME,
+                DefaultSeeds.USER_ADMIN_LAST_NAME,
+                DefaultSeeds.USER_ADMIN_MIDDLE_NAME),
+            new(
+                DefaultSeeds.USER_USER_USERNAME,
+                DefaultSeeds.USER_USER_EMAIL,
+                DefaultSeeds.USER_USER_PHONE_NUMBER,
+                DefaultSeeds.USER_USER_PASSWORD,
+                DefaultSeeds.USER_USER_FIRST_NAME,
+                DefaultSeeds.USER_USER_LAST_NAME,
+                DefaultSeeds.USER_USER_MIDDLE_NAME)
         };
     }
 }

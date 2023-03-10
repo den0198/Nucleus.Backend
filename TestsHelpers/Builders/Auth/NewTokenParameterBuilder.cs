@@ -6,10 +6,8 @@ public class NewTokenParameterBuilder : CoreBuilder<NewTokenParameter>
 {
     public NewTokenParameterBuilder()
     {
-        Entity = new NewTokenParameter
-        {
-            AccessToken = AnyValue.String,
-            RefreshToken = AnyValue.String
-        };
+        Entity = new NewTokenParameter(
+            AnyValue.String, 
+            AnyValue.String);
     }
 }

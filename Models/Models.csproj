@@ -18,8 +18,4 @@
       </Reference>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="GraphQl\Inputs\SubInputs" />
-    </ItemGroup>
-
 </Project>

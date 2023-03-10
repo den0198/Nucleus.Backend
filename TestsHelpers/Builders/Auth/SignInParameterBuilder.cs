@@ -6,11 +6,9 @@ public class SignInParameterBuilder : CoreBuilder<SignInParameter>
 {
     public SignInParameterBuilder()
     {
-        Entity = new SignInParameter
-        {
-            UserName = AnyValue.String,
-            Password = AnyValue.Password,
-        };
+        Entity = new SignInParameter(
+            AnyValue.String,
+            AnyValue.Password);
     }
 
 }
