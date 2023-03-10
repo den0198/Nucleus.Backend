@@ -9,10 +9,4 @@ public static class TablesNames
     public const string USER_PROVIDERS = "user_providers";
     public const string USER_CLAIMS = "user_claims";
     public const string ROLE_CLAIMS = "role_claims";
-
-    public const string STORES = "stores";
-    
-    public const string PRODUCTS = "products";
-    public const string PROPERTIES = "properties";
-    public const string OPTIONS = "options";
 }

@@ -2,7 +2,7 @@
 
 public static class ColumnNames
 {
-    #region CommonColumns
+    #region Common
 
     public const string NAME = "name";
     public const string NORMALIZED_NAME = "normalized_name";
@@ -55,32 +55,4 @@ public static class ColumnNames
     public const string PROVIDER_DISPLAY_NAME = "provider_display_name";
 
     #endregion
-
-    #region Store
-
-    public const string STORE_ID = "store_id";
-
-    #endregion
-
-    #region Product
-
-    public const string PRODUCT_ID = "product_id";
-    public const string PRICE = "price";
-
-    #endregion
-    
-    #region Property
-
-    public const string PROPERTY_ID = "property_id";
-
-    #endregion
-
-    #region Option
-
-    public const string OPTION_ID = "option_id";
-    public const string COUNT = "count";
-    public const string PRICE_INCREASE = "price_increase";
-
-    #endregion
-    
 }
