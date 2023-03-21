@@ -93,7 +93,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     private (HttpClient, GraphQLHttpClientOptions) getClientAndOptions()
     {
         var httpClient = factory.CreateClient();
-        var option = new GraphQLHttpClientOptions()
+        var option = new GraphQLHttpClientOptions
         {
             EndPoint = httpClient.BaseAddress,
         };

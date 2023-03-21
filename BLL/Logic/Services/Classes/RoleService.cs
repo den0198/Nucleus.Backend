@@ -36,7 +36,7 @@ public class RoleService : IRoleService
 
     public async Task AddAsync(string name)
     {
-        var identityResult = await initialParams.Repository.AddAsync(new Role { Name = name });
+        var identityResult = await initialParams.Repository.CreateAsync(new Role { Name = name });
         if (!identityResult.Succeeded)
             throw new AddRoleException(identityResult.Errors.Select(e => e.Description));
     }

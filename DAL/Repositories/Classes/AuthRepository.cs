@@ -5,7 +5,7 @@ using Models.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public class AuthRepository : IAuthRepository
+public sealed class AuthRepository : IAuthRepository
 {
     private readonly UserManager<User> userManager;
     private const string refresh_token = "RefreshToken";

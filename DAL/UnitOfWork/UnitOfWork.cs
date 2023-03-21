@@ -2,33 +2,29 @@
 using DAL.Repositories.Classes;
 using DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
 namespace DAL.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly AppDbContext context;
-    private readonly UserManager<User> userManager;
-
-    public UnitOfWork(AppDbContext context, UserManager<User> userManager, RoleManager<Role> roleManager)
+    public UnitOfWork(IDbContextFactory<AppDbContext> contextFactory, UserManager<User> userManager, 
+        RoleManager<Role> roleManager)
     {
-        this.context = context;
-        this.userManager = userManager;
-
         UserRepository = new UserRepository(userManager);
         RoleRepository = new RoleRepository(userManager, roleManager);
         AuthRepository = new AuthRepository(userManager);
+        ProductRepository = new ProductRepository(contextFactory);
     }
 
     public IUserRepository UserRepository { get; }
     public IRoleRepository RoleRepository { get; }
     public IAuthRepository AuthRepository { get; }
+    public IProductRepository ProductRepository { get; }
 
     public void Dispose()
     {
-        context?.Dispose();
-        userManager?.Dispose();
         GC.SuppressFinalize(this);
     }
 }

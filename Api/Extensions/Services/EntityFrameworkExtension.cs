@@ -21,11 +21,12 @@ public static class EntityFrameworkExtension
 
     private static void addOptions(IServiceCollection serviceCollection, string connectionString)
     {
-        serviceCollection.AddDbContext<AppDbContext>(options =>
+        serviceCollection.AddDbContextFactory<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
     }
 
-    private static void addIdentity(IServiceCollection serviceCollection, AuthOptions authOptions, PasswordOptions passwordOptions)
+    private static void addIdentity(IServiceCollection serviceCollection, AuthOptions authOptions, 
+        PasswordOptions passwordOptions)
     {
         serviceCollection
             .AddIdentityCore<User>(option =>

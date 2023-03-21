@@ -21,7 +21,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 .AddEntityFrameworkInMemoryDatabase()
                 .BuildServiceProvider();
 
-            serviceCollection.AddDbContext<AppDbContext>(options =>
+            serviceCollection.AddDbContextFactory<AppDbContext>(options =>
             {
                 options.UseInMemoryDatabase("InMemoryDbForTesting");
                 options.UseInternalServiceProvider(serviceProvider);
@@ -29,6 +29,4 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             SeedForTest.InitialSeeds(serviceCollection);
         });
     }
-
-    
 }

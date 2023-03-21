@@ -40,6 +40,7 @@ public static class GraphQlExtension
         builder
             .AddMutationType<CoreMutation>()
             .AddTypeExtension<UserMutation>()
-            .AddTypeExtension<AuthMutation>();
+            .AddTypeExtension<AuthMutation>()
+            .AddTypeExtension<ProductMutation>();
     }
 }

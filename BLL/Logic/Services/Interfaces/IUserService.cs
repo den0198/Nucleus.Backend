@@ -20,7 +20,7 @@ public interface IUserService
     Task<User> GetByUserNameAsync(string userName);
 
     /// <summary>
-    /// Ишет пользователя по email
+    /// Ищет пользователя по email
     /// </summary>
     /// <param name="email">Email</param>
     /// <returns>Пользователь</returns>

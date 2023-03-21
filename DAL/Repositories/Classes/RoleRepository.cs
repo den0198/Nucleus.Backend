@@ -5,7 +5,7 @@ using Models.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public class RoleRepository : IRoleRepository
+public sealed class RoleRepository : IRoleRepository
 {
     private readonly UserManager<User> userManager;
     private readonly RoleManager<Role> roleManager;
@@ -26,7 +26,7 @@ public class RoleRepository : IRoleRepository
         return await roleManager.FindByNameAsync(name);
     }
 
-    public async Task<IdentityResult> AddAsync(Role role)
+    public async Task<IdentityResult> CreateAsync(Role role)
     {
         var result = await roleManager.CreateAsync(role);
         if(result.Succeeded)

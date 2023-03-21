@@ -10,6 +10,8 @@ public static class ColumnNames
     public const string CONCURRENCY_STAMP = "concurrency_stamp";
     public const string CLAIM_TYPE = "claim_type";
     public const string CLAIM_VALUE = "claim_value";
+    public const string PRICE = "price";
+    public const string QUANTITY = "quantity";
 
     #endregion
 
@@ -53,6 +55,48 @@ public static class ColumnNames
     public const string PROVIDER_KEY = "provider_key";
     public const string LOGIN_PROVIDER = "login_provider";
     public const string PROVIDER_DISPLAY_NAME = "provider_display_name";
+
+    #endregion
+
+    #region Catalog
+    
+    public const string CATALOG_ID = "catalog_id";
+
+    #endregion
+    
+    #region Product
+
+    public const string PRODUCT_ID = "product_id";
+
+    #endregion
+
+    #region SubProduct
+
+    public const string SUB_PRODUCT_ID = "sub_product_id";
+
+    #endregion
+
+    #region AddOn
+
+    public const string ADD_ON_ID = "add_on_id";
+
+    #endregion
+
+    #region Parameter
+
+    public const string PARAMETER_ID = "parameter_id";
+
+    #endregion
+
+    #region ParameterValue
+
+    public const string PARAMETER_VALUE_ID = "parameter_value_id";
+
+    #endregion
+
+    #region SubProductParameterValue
+
+    public const string SUB_PRODUCT_PARAMETER_VALUE_ID = "sub_product_parameter_value";
 
     #endregion
 }

@@ -20,11 +20,11 @@ public interface IRoleRepository
     Task<Role> FindByNameAsync(string name);
 
     /// <summary>
-    ///  /// Добовляет роль
+    /// Создаёт новую роль
     /// </summary>
     /// <param name="role">Роль</param>
     ///<returns>Резултат добовления роли</returns>
-    Task<IdentityResult> AddAsync(Role role);
+    Task<IdentityResult> CreateAsync(Role role);
 
     /// <summary>
     /// Назначает роль
