@@ -2,7 +2,7 @@
 using BLL.Logic.Services.Interfaces;
 using Common.Constants.DataBase;
 using Common.Extensions;
-using Models.Service.Parameters.User;
+using Models.Service.Parameters;
 
 namespace API.Initialization;
 
@@ -27,7 +27,7 @@ public static class Seeds
 
             foreach (var registerUserParameter in usersParameters)
             {
-                await userService.AddAsync(registerUserParameter);
+                await userService.CreateAsync(registerUserParameter);
             }
 
             var user = await userService.GetByUserNameAsync(usersParameters.First().UserName);
@@ -41,9 +41,9 @@ public static class Seeds
         }
     }
 
-    private static IEnumerable<RegisterUserParameter> getUsersParameters()
+    private static IEnumerable<CreateUserParameters> getUsersParameters()
     {
-        return new RegisterUserParameter[]
+        return new CreateUserParameters[]
         {
             new(
                 DefaultSeeds.USER_ADMIN_USERNAME,

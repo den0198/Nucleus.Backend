@@ -16,12 +16,14 @@ public class UnitOfWork : IUnitOfWork
         RoleRepository = new RoleRepository(userManager, roleManager);
         AuthRepository = new AuthRepository(userManager);
         ProductRepository = new ProductRepository(contextFactory);
+        ParameterRepository = new ParameterRepository(contextFactory);
     }
 
     public IUserRepository UserRepository { get; }
     public IRoleRepository RoleRepository { get; }
     public IAuthRepository AuthRepository { get; }
     public IProductRepository ProductRepository { get; }
+    public IParameterRepository ParameterRepository { get; }
 
     public void Dispose()
     {

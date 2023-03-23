@@ -28,12 +28,12 @@ public interface IUserRepository
 
 
     /// <summary>
-    /// Добовляет пользователя
+    /// Создаёт нового пользователя
     /// </summary>
     /// <param name="user">Акаунт</param>
     /// <param name="password">Пароль</param>
     /// <returns>Резултат добовления пользователя</returns>
-    Task<IdentityResult> AddAsync(User user, string password);
+    Task<IdentityResult> CrateAsync(User user, string password);
 
     /// <summary>
     /// Обновляет пользователя

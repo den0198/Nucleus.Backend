@@ -1,5 +1,5 @@
 ﻿using Models.Entities;
-using Models.Service.Parameters.User;
+using Models.Service.Parameters;
 
 namespace BLL.Logic.Services.Interfaces;
 
@@ -27,10 +27,10 @@ public interface IUserService
     Task<User> GetByEmailAsync(string email);
 
     /// <summary>
-    /// Добовляет пользователя
+    /// Cоздаёт нового пользователя
     /// </summary>
-    /// <param name="parameter">Параметры для добовляения</param>
-    Task AddAsync(RegisterUserParameter parameter);
+    /// <param name="parameters">Параметры создания пользователя</param>
+    Task CreateAsync(CreateUserParameters parameters);
 
     /// <summary>
     /// Даёт админ роль

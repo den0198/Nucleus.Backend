@@ -1,6 +1,4 @@
-﻿using Models.Entities;
-
-namespace TestsHelpers.Builders.User;
+﻿namespace TestsHelpers.Builders;
 
 public class UserBuilder : CoreBuilder<Models.Entities.User>
 {

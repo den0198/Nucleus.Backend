@@ -1,9 +1,12 @@
-﻿namespace BLL.Logic.Services.Interfaces;
+﻿using Models.Service.Parameters;
+
+namespace BLL.Logic.Services.Interfaces;
 
 public interface IProductService
 {
     /// <summary>
     /// Создаёт новый товар
     /// </summary>
-    Task CreateProduct();
+    /// <param name="parameters">Параметры создания продукта</param>
+    Task CreateProduct(CreateProductParameters parameters);
 }

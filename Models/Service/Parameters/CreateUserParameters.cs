@@ -1,6 +1,6 @@
-﻿namespace Models.Service.Parameters.User;
+﻿namespace Models.Service.Parameters;
 
-public sealed record RegisterUserParameter(
+public sealed record CreateUserParameters(
     string UserName,
     string Email,
     string PhoneNumber,

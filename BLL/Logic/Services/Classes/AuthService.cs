@@ -3,7 +3,7 @@ using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Extensions;
 using Models.Entities;
-using Models.Service.Parameters.Auth;
+using Models.Service.Parameters;
 using Models.Service.Results;
 
 namespace BLL.Logic.Services.Classes;
@@ -17,30 +17,30 @@ public sealed class AuthService : IAuthService
         this.initialParams = initialParams;
     }
 
-    public async Task<TokenResult> SignInAsync(SignInParameter parameter)
+    public async Task<TokenResult> SignInAsync(SignInParameters parameters)
     {
-        var user = await initialParams.UserService.GetByUserNameAsync(parameter.UserName);
+        var user = await initialParams.UserService.GetByUserNameAsync(parameters.UserName);
 
-        var isCorrectPassword = await initialParams.Repository.CheckPasswordAsync(user, parameter.Password);
+        var isCorrectPassword = await initialParams.Repository.CheckPasswordAsync(user, parameters.Password);
         if (!isCorrectPassword)
-            throw new PasswordIncorrectException(parameter.Password);
+            throw new PasswordIncorrectException(parameters.Password);
 
         return await getAuthResultAsync(user);
     }
 
-    public async Task<TokenResult> NewTokenAsync(NewTokenParameter parameter)
+    public async Task<TokenResult> NewTokenAsync(NewTokenParameters parameters)
     {
-        var userName = initialParams.AuthServiceHelper.FindUserNameOutAccessToken(parameter.AccessToken);
+        var userName = initialParams.AuthServiceHelper.FindUserNameOutAccessToken(parameters.AccessToken);
         if (userName.IsNull()) 
-            throw new TokenIncorrectException(true, parameter.AccessToken);
+            throw new TokenIncorrectException(true, parameters.AccessToken);
 
         var user = await initialParams.UserService.GetByUserNameAsync(userName!);
         var tokenProvider = initialParams.AuthOptions.Audience;
 
         var isRefreshTokenValid = await initialParams.Repository.VerifyRefreshTokenAsync(user,
-            tokenProvider, parameter.RefreshToken);
+            tokenProvider, parameters.RefreshToken);
         if (!isRefreshTokenValid)
-            throw new TokenIncorrectException(false, parameter.RefreshToken);
+            throw new TokenIncorrectException(false, parameters.RefreshToken);
 
         return await getAuthResultAsync(user);
     }

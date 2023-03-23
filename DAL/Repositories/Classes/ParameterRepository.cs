@@ -5,20 +5,20 @@ using Models.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public sealed class ProductRepository : IProductRepository
+public sealed class ParameterRepository : IParameterRepository
 {
     private readonly IDbContextFactory<AppDbContext> contextFactory;
-
-    public ProductRepository(IDbContextFactory<AppDbContext> contextFactory)
+    
+    public ParameterRepository(IDbContextFactory<AppDbContext> contextFactory)
     {
         this.contextFactory = contextFactory;
     }
-
-    public async Task CreateAsync(Product product)
+    
+    public async Task CreateAsync(Parameter parameter)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
 
-        await context.Products.AddAsync(product);
+        await context.Parameters.AddAsync(parameter);
         await context.SaveChangesAsync();
     }
 }

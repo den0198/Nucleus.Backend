@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TestsHelpers.Builders.Auth;
+namespace TestsHelpers.Builders;
 
 public class IdentityResultBuilder : CoreBuilder<Task<IdentityResult>>
 {

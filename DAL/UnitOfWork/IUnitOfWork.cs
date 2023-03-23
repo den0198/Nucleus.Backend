@@ -8,4 +8,5 @@ public interface IUnitOfWork : IDisposable
     IRoleRepository RoleRepository { get; }
     IAuthRepository AuthRepository { get; }
     IProductRepository ProductRepository { get; }
+    IParameterRepository ParameterRepository { get; }
 }

@@ -4,7 +4,7 @@ using BLL.Logic.Services.Interfaces;
 using Common.Constants.DataBase;
 using Mapster;
 using Models.Entities;
-using Models.Service.Parameters.User;
+using Models.Service.Parameters;
 
 namespace BLL.Logic.Services.Classes;
 
@@ -35,10 +35,10 @@ public sealed class UserService : IUserService
                ?? throw new UserNotFoundException($"email: {email}");
     }
 
-    public async Task AddAsync(RegisterUserParameter parameter)
+    public async Task CreateAsync(CreateUserParameters parameters)
     {
-        var user = parameter.Adapt<User>();
-        var identityResult = await initialParams.Repository.AddAsync(user, parameter.Password);
+        var user = parameters.Adapt<User>();
+        var identityResult = await initialParams.Repository.CrateAsync(user, parameters.Password);
         if (!identityResult.Succeeded)
             throw new AddUserException(identityResult.Errors.Select(e => e.Description));
         

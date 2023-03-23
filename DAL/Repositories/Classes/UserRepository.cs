@@ -28,7 +28,7 @@ public sealed class UserRepository : IUserRepository
         return await userManager.FindByEmailAsync(email);
     }
 
-    public async Task<IdentityResult> AddAsync(User user, string password)
+    public async Task<IdentityResult> CrateAsync(User user, string password)
     {
         return await userManager.CreateAsync(user, password);
     }

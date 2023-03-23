@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace TestsHelpers.Builders.Auth;
+namespace TestsHelpers.Builders;
 
 public class ClaimBuilder : CoreBuilder<Claim>
 {

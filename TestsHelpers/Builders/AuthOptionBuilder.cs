@@ -1,6 +1,6 @@
 ﻿using Models.Options;
 
-namespace TestsHelpers.Builders.Auth;
+namespace TestsHelpers.Builders;
 
 public class AuthOptionBuilder : CoreBuilder<AuthOptions>
 {

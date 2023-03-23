@@ -2,6 +2,7 @@
 using API.GraphQl.Queries;
 using HotChocolate.Execution.Configuration;
 using Models.GraphQl.Inputs;
+using Models.GraphQl.SubInputs;
 
 namespace API.Extensions.Services;
 
@@ -12,6 +13,7 @@ public static class GraphQlExtension
         var builder = serviceCollection.AddGraphQLServer();
         
         addInputTypes(builder);
+        addSubInputTypes(builder);
         addQueries(builder);
         addMutations(builder);
 
@@ -24,7 +26,14 @@ public static class GraphQlExtension
             .AddType<SignInInputType>()
             .AddType<NewTokenInputType>()
             .AddType<FindUserByEmailInputType>()
-            .AddType<RegisterUserInputType>();
+            .AddType<RegisterUserInputType>()
+            .AddType<CreateProductInputType>();
+    }
+
+    private static void addSubInputTypes(IRequestExecutorBuilder builder)
+    {
+        builder
+            .AddType<CreateParameterSubInputType>();
     }
 
     private static void addQueries(IRequestExecutorBuilder builder)

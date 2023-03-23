@@ -1,12 +1,12 @@
 ﻿using Models.Entities;
 
-namespace TestsHelpers.TestDataBase.MocksData;
+namespace TestsHelpers.MocksData;
 
 public static class LegacyRoleMockData
 {
     public static Role GetOne()
     {
-        return new Role()
+        return new Role
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString,

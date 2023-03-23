@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Models.Entities;
 using Models.Options;
-using Models.Service.Parameters.Auth;
+using Models.Service.Parameters;
 using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;
@@ -21,8 +21,8 @@ internal sealed class AuthTestData
         {
             Builder.Claim.Build()
         };
-        SignInParameter = Builder.SignInParameter.Build();
-        NewTokenParameter = Builder.NewTokenParameter.Build();
+        SignInParameters = Builder.SignInParameter.Build();
+        NewTokenParameters = Builder.NewTokenParameter.Build();
 
     }
 
@@ -30,6 +30,6 @@ internal sealed class AuthTestData
     public User User { get; }
     public IEnumerable<Role> Roles { get; }
     public IEnumerable<Claim> Claims { get; }
-    public SignInParameter SignInParameter { get; }
-    public NewTokenParameter NewTokenParameter { get; }
+    public SignInParameters SignInParameters { get; }
+    public NewTokenParameters NewTokenParameters { get; }
 }

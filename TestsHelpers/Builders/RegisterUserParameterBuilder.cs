@@ -1,12 +1,12 @@
-﻿using Models.Service.Parameters.User;
+﻿using Models.Service.Parameters;
 
-namespace TestsHelpers.Builders.User;
+namespace TestsHelpers.Builders;
 
-public class RegisterUserParameterBuilder : CoreBuilder<RegisterUserParameter>
+public class RegisterUserParameterBuilder : CoreBuilder<CreateUserParameters>
 {
     public RegisterUserParameterBuilder()
     {
-        Entity = new RegisterUserParameter(
+        Entity = new CreateUserParameters(
             AnyValue.String,
             AnyValue.Email,
             AnyValue.String,

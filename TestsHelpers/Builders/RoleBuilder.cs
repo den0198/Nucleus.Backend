@@ -1,4 +1,4 @@
-﻿namespace TestsHelpers.Builders.Role;
+﻿namespace TestsHelpers.Builders;
 
 public class RoleBuilder : CoreBuilder<Models.Entities.Role>
 {

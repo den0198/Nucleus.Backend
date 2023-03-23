@@ -8,7 +8,7 @@ using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
 using Common.Constants.DataBase;
 using Models.Entities;
-using Models.Service.Parameters.User;
+using Models.Service.Parameters;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using Xunit;
@@ -123,13 +123,13 @@ public sealed class UserServiceTests : UnitTest
 
     #region Add
 
-    private async Task checkReceivedAddUser(UserServiceInitialParams initialParams, RegisterUserParameter registerUserParameter)
+    private async Task checkReceivedAddUser(UserServiceInitialParams initialParams, CreateUserParameters createUserParameters)
     {
-        await initialParams.Repository.Received(1).AddAsync(Arg.Is<User>(u =>
-                u.UserName == registerUserParameter.UserName
-                && u.Email == registerUserParameter.Email
-                && u.PhoneNumber == registerUserParameter.PhoneNumber), 
-            registerUserParameter.Password);
+        await initialParams.Repository.Received(1).CrateAsync(Arg.Is<User>(u =>
+                u.UserName == createUserParameters.UserName
+                && u.Email == createUserParameters.Email
+                && u.PhoneNumber == createUserParameters.PhoneNumber), 
+            createUserParameters.Password);
     }
 
     [Fact]
@@ -138,12 +138,12 @@ public sealed class UserServiceTests : UnitTest
         var service = getService(out var initialParams);
         var testData = new UserTestData();
         
-        initialParams.Repository.AddAsync(Arg.Any<User>(), testData.RegisterUserParameter.Password)
+        initialParams.Repository.CrateAsync(Arg.Any<User>(), testData.CreateUserParameters.Password)
             .Returns(testData.IdentityResultSuccess);
 
-        await service.AddAsync(testData.RegisterUserParameter);
+        await service.CreateAsync(testData.CreateUserParameters);
 
-        await checkReceivedAddUser(initialParams, testData.RegisterUserParameter);
+        await checkReceivedAddUser(initialParams, testData.CreateUserParameters);
         await initialParams.RoleService.Received(1).GiveUserRoleAsync(Arg.Any<User>(), DefaultSeeds.USER);
     }
     
@@ -153,13 +153,13 @@ public sealed class UserServiceTests : UnitTest
         var service = getService(out var initialParams);
         var testData = new UserTestData();
         
-        initialParams.Repository.AddAsync(Arg.Any<User>(), testData.RegisterUserParameter.Password)
+        initialParams.Repository.CrateAsync(Arg.Any<User>(), testData.CreateUserParameters.Password)
             .Returns(testData.IdentityResultFailed);
 
         await Assert.ThrowsAsync<AddUserException>(async () =>
-            await service.AddAsync(testData.RegisterUserParameter));
+            await service.CreateAsync(testData.CreateUserParameters));
 
-        await checkReceivedAddUser(initialParams, testData.RegisterUserParameter);
+        await checkReceivedAddUser(initialParams, testData.CreateUserParameters);
     }
 
     #endregion
