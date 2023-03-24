@@ -49,7 +49,7 @@ namespace DAL.Migrations
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     quantity = table.Column<long>(type: "bigint", nullable: false),
-                    product_id = table.Column<long>(type: "bigint", nullable: true)
+                    product_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +58,8 @@ namespace DAL.Migrations
                         name: "FK_add_ons_products_product_id",
                         column: x => x.product_id,
                         principalTable: "products",
-                        principalColumn: "product_id");
+                        principalColumn: "product_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,7 +69,7 @@ namespace DAL.Migrations
                     parameter_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    product_id = table.Column<long>(type: "bigint", nullable: true)
+                    product_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +78,8 @@ namespace DAL.Migrations
                         name: "FK_parameters_products_product_id",
                         column: x => x.product_id,
                         principalTable: "products",
-                        principalColumn: "product_id");
+                        principalColumn: "product_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +90,7 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     quantity = table.Column<long>(type: "bigint", nullable: false),
-                    product_id = table.Column<long>(type: "bigint", nullable: true)
+                    product_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,7 +99,8 @@ namespace DAL.Migrations
                         name: "FK_sub_products_products_product_id",
                         column: x => x.product_id,
                         principalTable: "products",
-                        principalColumn: "product_id");
+                        principalColumn: "product_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,7 +110,7 @@ namespace DAL.Migrations
                     parameter_value_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    parameter_id = table.Column<long>(type: "bigint", nullable: true)
+                    parameter_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,7 +119,8 @@ namespace DAL.Migrations
                         name: "FK_parameter_values_parameters_parameter_id",
                         column: x => x.parameter_id,
                         principalTable: "parameters",
-                        principalColumn: "parameter_id");
+                        principalColumn: "parameter_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,9 +129,9 @@ namespace DAL.Migrations
                 {
                     sub_product_parameter_value = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    sub_product_id = table.Column<long>(type: "bigint", nullable: true),
-                    parameter_id = table.Column<long>(type: "bigint", nullable: true),
-                    parameter_value_id = table.Column<long>(type: "bigint", nullable: true)
+                    sub_product_id = table.Column<long>(type: "bigint", nullable: false),
+                    parameter_id = table.Column<long>(type: "bigint", nullable: false),
+                    parameter_value_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

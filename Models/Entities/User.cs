@@ -2,7 +2,7 @@
 
 namespace Models.Entities;
 
-public sealed class User : IdentityUser<long>
+public class User : IdentityUser<long>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

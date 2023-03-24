@@ -9,18 +9,23 @@ public sealed class RoleClaimsConfiguration : IEntityTypeConfiguration<IdentityR
 {
     public void Configure(EntityTypeBuilder<IdentityRoleClaim<long>> builder)
     {
-        builder.ToTable(TablesNames.ROLE_CLAIMS);
+        builder
+            .ToTable(TablesNames.ROLE_CLAIMS);
 
-        builder.Property(rc => rc.Id)
+        builder
+            .Property(rc => rc.Id)
             .HasColumnName(ColumnNames.ROLE_CLAIMS_ID);
 
-        builder.Property(rc => rc.RoleId)
+        builder
+            .Property(rc => rc.RoleId)
             .HasColumnName(ColumnNames.ROLE_ID);
 
-        builder.Property(rc => rc.ClaimType)
+        builder
+            .Property(rc => rc.ClaimType)
             .HasColumnName(ColumnNames.CLAIM_TYPE);
 
-        builder.Property(rc => rc.ClaimValue)
+        builder
+            .Property(rc => rc.ClaimValue)
             .HasColumnName(ColumnNames.CLAIM_VALUE);
     }
 }

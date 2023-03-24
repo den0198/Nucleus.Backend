@@ -1,7 +1,7 @@
 ﻿using BLL.Logic.Services.Interfaces;
+using Mapster;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
-using Models.Service.CommonDtos;
 using Models.Service.Parameters;
 
 namespace API.GraphQl.Mutations;
@@ -11,7 +11,8 @@ public sealed class ProductMutation : CoreMutation
 {
     public async Task<OkData> CreateProduct(CreateProductInput input, [Service]IProductService service)
     {
-        await service.CreateProduct(new CreateProductParameters("sd", new List<ParameterCommonDto>()));
+        var createProductParameters = input.Adapt<CreateProductParameters>();
+        await service.CreateProduct(createProductParameters);
 
         return new OkData();
     }

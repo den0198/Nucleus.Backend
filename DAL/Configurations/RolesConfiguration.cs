@@ -9,18 +9,23 @@ public sealed class RolesConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.ToTable(TablesNames.ROLES);
+        builder
+            .ToTable(TablesNames.ROLES);
 
-        builder.Property(r => r.Id)
+        builder
+            .Property(r => r.Id)
             .HasColumnName(ColumnNames.ROLE_ID);
 
-        builder.Property(r => r.Name)
+        builder
+            .Property(r => r.Name)
             .HasColumnName(ColumnNames.NAME);
 
-        builder.Property(r => r.NormalizedName)
+        builder
+            .Property(r => r.NormalizedName)
             .HasColumnName(ColumnNames.NORMALIZED_NAME);
 
-        builder.Property(r => r.ConcurrencyStamp)
+        builder
+            .Property(r => r.ConcurrencyStamp)
             .HasColumnName(ColumnNames.CONCURRENCY_STAMP);
     }
 }

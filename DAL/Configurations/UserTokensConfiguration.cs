@@ -9,18 +9,23 @@ public sealed class UserTokensConfiguration : IEntityTypeConfiguration<IdentityU
 {
     public void Configure(EntityTypeBuilder<IdentityUserToken<long>> builder)
     {
-        builder.ToTable(TablesNames.USER_TOKENS);
+        builder
+            .ToTable(TablesNames.USER_TOKENS);
 
-        builder.Property(ut => ut.LoginProvider)
+        builder
+            .Property(ut => ut.LoginProvider)
             .HasColumnName(ColumnNames.LOGIN_PROVIDER);
 
-        builder.Property(ut => ut.UserId)
+        builder
+            .Property(ut => ut.UserId)
             .HasColumnName(ColumnNames.USER_ID);
 
-        builder.Property(ut => ut.Name)
+        builder
+            .Property(ut => ut.Name)
             .HasColumnName(ColumnNames.NAME);
 
-        builder.Property(ut => ut.Value)
+        builder
+            .Property(ut => ut.Value)
             .HasColumnName(ColumnNames.VALUE);
     }
 }

@@ -2,6 +2,6 @@
 
 namespace Models.Entities;
 
-public sealed class Role : IdentityRole<long>
+public class Role : IdentityRole<long>
 {
 }

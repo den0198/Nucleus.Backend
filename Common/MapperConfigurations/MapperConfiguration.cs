@@ -2,6 +2,7 @@
 using Models.Entities;
 using Models.GraphQl.Data;
 using Models.GraphQl.Inputs;
+using Models.GraphQl.SubInputs;
 using Models.Service.CommonDtos;
 using Models.Service.Parameters;
 using Models.Service.Results;
@@ -19,20 +20,32 @@ public static class CoreMapperConfiguration
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName)
             .Map(dest => dest.MiddleName, src => src.MiddleName);
-        
+
         TypeAdapterConfig<CreateProductParameters, Product>.NewConfig()
-            .Map(dest => dest.Name, src => src.Name);
+            .Map(dest => dest.Name, src => src.Name)
+            .Ignore(dest => dest.Parameters)
+            .Ignore(dest => dest.AddOns)
+            .Ignore(dest => dest.SubProducts);
 
         TypeAdapterConfig<CreateParameterParameters, Parameter>.NewConfig()
             .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.Product, src => src.Product);
+            .Map(dest => dest.ProductId, src => src.ProductId);
+
+        TypeAdapterConfig<CreateProductInput, CreateProductParameters>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.Parameters, 
+                src => src.Parameters.Select(p => p.Adapt<ParameterCommonDto>()));
+        
+        TypeAdapterConfig<CreateParameterSubInput, ParameterCommonDto>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name);
 
         TypeAdapterConfig<NewTokenInput, NewTokenParameters>.NewConfig()
             .Map(dest => dest.AccessToken, src => src.AccessToken)
             .Map(dest => dest.RefreshToken, src => src.RefreshToken);
         
         TypeAdapterConfig<ParameterCommonDto, CreateParameterParameters>.NewConfig()
-            .Map(dest => dest.Name, src => src.Name);
+            .Map(dest => dest.Name, src => src.Name)
+            .MapToConstructor(true);
         
         TypeAdapterConfig<RegisterUserInput, CreateUserParameters>.NewConfig()
             .Map(dest => dest.UserName, src => src.UserName)

@@ -24,7 +24,7 @@ public sealed class ProductService : IProductService
         foreach (var parameter in parameters.Parameters)
         {
             var createParameterParameters = parameter.Adapt<CreateParameterParameters>();
-            createParameterParameters.Product = product;
+            createParameterParameters.ProductId = product.Id;
             
             await initialParams.ParameterService.CreateAsync(createParameterParameters);
         }

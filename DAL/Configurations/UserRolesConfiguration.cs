@@ -9,12 +9,15 @@ public sealed class UserRolesConfiguration : IEntityTypeConfiguration<IdentityUs
 {
     public void Configure(EntityTypeBuilder<IdentityUserRole<long>> builder)
     {
-        builder.ToTable(TablesNames.USER_ROLES);
+        builder
+            .ToTable(TablesNames.USER_ROLES);
 
-        builder.Property(ur => ur.RoleId)
+        builder
+            .Property(ur => ur.RoleId)
             .HasColumnName(ColumnNames.ROLE_ID);
 
-        builder.Property(ur => ur.UserId)
+        builder
+            .Property(ur => ur.UserId)
             .HasColumnName(ColumnNames.USER_ID);
     }
 }

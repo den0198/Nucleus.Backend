@@ -160,7 +160,7 @@ namespace DAL.Migrations
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("price");
 
-                    b.Property<long?>("ProductId")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint")
                         .HasColumnName("product_id");
 
@@ -206,7 +206,7 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.Property<long?>("ProductId")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint")
                         .HasColumnName("product_id");
 
@@ -226,7 +226,7 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("ParameterId")
+                    b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
                         .HasColumnName("parameter_id");
 
@@ -312,7 +312,7 @@ namespace DAL.Migrations
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("price");
 
-                    b.Property<long?>("ProductId")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint")
                         .HasColumnName("product_id");
 
@@ -336,15 +336,15 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("ParameterId")
+                    b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
                         .HasColumnName("parameter_id");
 
-                    b.Property<long?>("ParameterValueId")
+                    b.Property<long>("ParameterValueId")
                         .HasColumnType("bigint")
                         .HasColumnName("parameter_value_id");
 
-                    b.Property<long?>("SubProductId")
+                    b.Property<long>("SubProductId")
                         .HasColumnType("bigint")
                         .HasColumnName("sub_product_id");
 
@@ -511,7 +511,9 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Models.Entities.Product", "Product")
                         .WithMany("AddOns")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -520,7 +522,9 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Models.Entities.Product", "Product")
                         .WithMany("Parameters")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -529,7 +533,9 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Models.Entities.Parameter", "Parameter")
                         .WithMany("ParameterValues")
-                        .HasForeignKey("ParameterId");
+                        .HasForeignKey("ParameterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Parameter");
                 });
@@ -538,7 +544,8 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Models.Entities.Catalog", "Catalog")
                         .WithMany("Products")
-                        .HasForeignKey("CatalogId");
+                        .HasForeignKey("CatalogId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Catalog");
                 });
@@ -547,7 +554,9 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Models.Entities.Product", "Product")
                         .WithMany("SubProducts")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -556,15 +565,21 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Models.Entities.Parameter", "Parameter")
                         .WithMany("SubProductParameterValues")
-                        .HasForeignKey("ParameterId");
+                        .HasForeignKey("ParameterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Models.Entities.ParameterValue", "ParameterValue")
                         .WithMany("SubProductParameterValues")
-                        .HasForeignKey("ParameterValueId");
+                        .HasForeignKey("ParameterValueId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Models.Entities.SubProduct", "SubProduct")
-                        .WithMany("SubProductAttributeValue")
-                        .HasForeignKey("SubProductId");
+                        .WithMany("SubProductParameterValues")
+                        .HasForeignKey("SubProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Parameter");
 
@@ -601,7 +616,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Models.Entities.SubProduct", b =>
                 {
-                    b.Navigation("SubProductAttributeValue");
+                    b.Navigation("SubProductParameterValues");
                 });
 #pragma warning restore 612, 618
         }
