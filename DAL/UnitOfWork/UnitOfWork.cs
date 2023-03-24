@@ -24,9 +24,4 @@ public class UnitOfWork : IUnitOfWork
     public IAuthRepository AuthRepository { get; }
     public IProductRepository ProductRepository { get; }
     public IParameterRepository ParameterRepository { get; }
-
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
-    }
 }

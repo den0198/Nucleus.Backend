@@ -2,7 +2,7 @@
 
 namespace DAL.UnitOfWork;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWork
 {
     IUserRepository UserRepository { get; }
     IRoleRepository RoleRepository { get; }
