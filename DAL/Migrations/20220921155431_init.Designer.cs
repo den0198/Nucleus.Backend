@@ -13,7 +13,7 @@ namespace DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20220921155431_init")]
-    partial class init
+    partial class @init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
