@@ -36,7 +36,7 @@ public sealed class RoleServiceTests : UnitTest
 
         initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
 
-        var result = await service.GetByNameAsync(role.Name);
+        var result = await service.GetByNameAsync(role.Name!);
 
         Assert.Equal(role.Id, result.Id);
         Assert.Equal(role.Name, result.Name);
@@ -90,14 +90,14 @@ public sealed class RoleServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
-        var newRole = testData.Roles.First();
+        var newRoleName = testData.Roles.First().Name!;
         
-        initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRole.Name))
+        initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRoleName))
             .Returns(testData.IdentityResultSuccess);
 
-        await service.AddAsync(newRole.Name);
+        await service.AddAsync(newRoleName);
 
-        checkReceivedAdd(initialParams, newRole.Name);
+        checkReceivedAdd(initialParams, newRoleName);
     }
 
     [Fact]
@@ -105,13 +105,13 @@ public sealed class RoleServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
-        var newRole = testData.Roles.First();
+        var newRoleName = testData.Roles.First().Name!;
 
-        initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRole.Name))
+        initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRoleName))
             .Returns(testData.IdentityResultFailed);
-        await Assert.ThrowsAsync<AddRoleException>(async () => await service.AddAsync(newRole.Name));
+        await Assert.ThrowsAsync<AddRoleException>(async () => await service.AddAsync(newRoleName));
 
-        checkReceivedAdd(initialParams, newRole.Name);
+        checkReceivedAdd(initialParams, newRoleName);
     }
 
     #endregion
@@ -124,12 +124,13 @@ public sealed class RoleServiceTests : UnitTest
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
         var role = testData.Roles.First();
+        var newRoleName = role.Name!;
 
-        initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
+        initialParams.Repository.FindByNameAsync(newRoleName).Returns(role);
         initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(new List<string>());
-        initialParams.Repository.GiveUserRoleAsync(testData.User, role.Name).Returns(testData.IdentityResultSuccess);
+        initialParams.Repository.GiveUserRoleAsync(testData.User, newRoleName).Returns(testData.IdentityResultSuccess);
 
-        await service.GiveUserRoleAsync(testData.User, role.Name);
+        await service.GiveUserRoleAsync(testData.User, newRoleName);
 
         await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.User, role.Name);
     }
@@ -139,10 +140,10 @@ public sealed class RoleServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
-        var rolesNames = testData.Roles.Select(role => role.Name).ToList();
+        var rolesNames = testData.Roles.Select(role => role.Name!).ToList();
         var roleName = rolesNames.First();
 
-        initialParams.Repository.FindByNameAsync(roleName).Returns(testData.Roles.First(r => r.Name.IsEqual(roleName)));
+        initialParams.Repository.FindByNameAsync(roleName).Returns(testData.Roles.First(r => r.Name!.IsEqual(roleName)));
         initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(rolesNames);
 
         await Assert.ThrowsAsync<UserAlreadyHasThisRoleException>(async () =>

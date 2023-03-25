@@ -70,10 +70,11 @@ public sealed class UserServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
+        var userName = testData.User.UserName!;
         
-        initialParams.Repository.FindByUserNameAsync(testData.User.UserName).Returns(testData.User);
+        initialParams.Repository.FindByUserNameAsync(userName).Returns(testData.User);
         
-        var result = await service.GetByUserNameAsync(testData.User.UserName);
+        var result = await service.GetByUserNameAsync(userName);
 
         checkUser(testData.User, result);
     }
@@ -83,11 +84,12 @@ public sealed class UserServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
+        var userName = testData.User.UserName!;
 
-        initialParams.Repository.FindByUserNameAsync(testData.User.UserName).ReturnsNull();
+        initialParams.Repository.FindByUserNameAsync(userName).ReturnsNull();
 
         await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetByUserNameAsync(testData.User.UserName));
+            await service.GetByUserNameAsync(userName));
     }
     
     #endregion
@@ -99,10 +101,11 @@ public sealed class UserServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
+        var userEmail = testData.User.Email!;
         
-        initialParams.Repository.FindByEmailAsync(testData.User.Email).Returns(testData.User);
+        initialParams.Repository.FindByEmailAsync(userEmail).Returns(testData.User);
         
-        var result = await service.GetByEmailAsync(testData.User.Email);
+        var result = await service.GetByEmailAsync(userEmail);
 
         checkUser(testData.User, result);
     }
@@ -112,11 +115,12 @@ public sealed class UserServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
+        var userName = testData.User.UserName!;
 
         initialParams.Repository.FindByEmailAsync(testData.User.Email).ReturnsNull();
 
         await Assert.ThrowsAsync<UserNotFoundException>(async () =>
-            await service.GetByEmailAsync(testData.User.UserName));
+            await service.GetByEmailAsync(userName));
     }
     
     #endregion
@@ -167,7 +171,7 @@ public sealed class UserServiceTests : UnitTest
     #region UpgrateToAdmin
 
     [Fact]
-    public async Task UpgrateToAdmin_UpgrateToAdmin_Success()
+    public async Task UpgradeToAdmin_UpgradeToAdmin_Success()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();

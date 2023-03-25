@@ -9,7 +9,7 @@ public static class AuthExtension
 {
     public static void AddAuth(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var authOptions = configuration.GetSection("AuthOptions").Get<AuthOptions>();
+        var authOptions = configuration.GetSection("AuthOptions").Get<AuthOptions>()!;
 
         addAuthentication(serviceCollection, authOptions);
     }

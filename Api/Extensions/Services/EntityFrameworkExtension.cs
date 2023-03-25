@@ -12,8 +12,8 @@ public static class EntityFrameworkExtension
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default")!;
-        var authOptions = configuration.GetSection("AuthOptions").Get<AuthOptions>();
-        var passwordOptions = configuration.GetSection("PasswordOptions").Get<PasswordOptions>();
+        var authOptions = configuration.GetSection("AuthOptions").Get<AuthOptions>()!;
+        var passwordOptions = configuration.GetSection("PasswordOptions").Get<PasswordOptions>()!;
 
         addOptions(serviceCollection, connectionString);
         addIdentity(serviceCollection, authOptions, passwordOptions);

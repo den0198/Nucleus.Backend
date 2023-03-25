@@ -93,12 +93,13 @@ public sealed class AuthServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
+        var userName = testData.User.UserName!;
         var newAccessToken = AnyValue.String;
         var newRefreshToken = AnyValue.String;
 
         initialParams.AuthServiceHelper.FindUserNameOutAccessToken(testData.NewTokenParameters.AccessToken)
             .Returns(testData.User.UserName);
-        initialParams.UserService.GetByUserNameAsync(testData.User.UserName).Returns(testData.User);
+        initialParams.UserService.GetByUserNameAsync(userName).Returns(testData.User);
         initialParams.Repository.VerifyRefreshTokenAsync(testData.User, testData.AuthOptions.Audience, 
             testData.NewTokenParameters.RefreshToken).Returns(true);
         preparingToReceiveTokens(initialParams, testData, newAccessToken, newRefreshToken);
@@ -127,10 +128,11 @@ public sealed class AuthServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new AuthTestData();
+        var userName = testData.User.UserName!;
 
         initialParams.AuthServiceHelper.FindUserNameOutAccessToken(testData.NewTokenParameters.AccessToken)
             .Returns(testData.User.UserName);
-        initialParams.UserService.GetByUserNameAsync(testData.User.UserName).Returns(testData.User);
+        initialParams.UserService.GetByUserNameAsync(userName).Returns(testData.User);
         initialParams.Repository.VerifyRefreshTokenAsync(testData.User, testData.AuthOptions.Audience,
             testData.NewTokenParameters.RefreshToken).Returns(false);
 
