@@ -26,9 +26,9 @@ public sealed class AuthServiceHelper : IAuthServiceHelper
             .Select(_ => _.Value)
             .FirstOrDefault();
         if (userName.IsNull())
-            claimsList.Add(new Claim(ClaimTypes.UserData, user.UserName));
+            claimsList.Add(new Claim(ClaimTypes.UserData, user.UserName!));
 
-        claimsList.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Name)));
+        claimsList.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Name!)));
 
         return getJwtToken(claimsList);
     }
