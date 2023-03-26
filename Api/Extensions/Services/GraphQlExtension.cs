@@ -33,7 +33,9 @@ public static class GraphQlExtension
     private static void addSubInputTypes(IRequestExecutorBuilder builder)
     {
         builder
-            .AddType<CreateParameterSubInputType>();
+            .AddType<CreateParameterSubInputType>()
+            .AddType<CreateParameterValueSubInputType>()
+            .AddType<CreateAddOnSubInputType>();
     }
 
     private static void addQueries(IRequestExecutorBuilder builder)

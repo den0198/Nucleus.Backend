@@ -7,6 +7,9 @@ public sealed class CreateParameterSubInput
 {
     [Required]
     public string Name { get; set; }
+    
+    [Required] 
+    public IList<CreateParameterValueSubInput> Values { get; set; }
 }
 
 public sealed class CreateParameterSubInputType : CoreType<CreateParameterSubInput>
@@ -19,5 +22,10 @@ public sealed class CreateParameterSubInputType : CoreType<CreateParameterSubInp
             .Field(nti => nti.Name)
             .Name("name")
             .Type<StringType>();
+
+        descriptor
+            .Field(nti => nti.Values)
+            .Name("values")
+            .Type<ListType<CreateParameterValueSubInputType>>();
     }
 }

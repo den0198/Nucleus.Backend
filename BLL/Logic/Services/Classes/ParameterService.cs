@@ -18,7 +18,15 @@ public sealed class ParameterService : IParameterService
     public async Task CreateAsync(CreateParameterParameters parameters)
     {
         var parameter = parameters.Adapt<Parameter>();
-
         await initialParams.Repository.CreateAsync(parameter);
+
+        //TODO:Заменит на CreateRange
+        foreach (var value in parameters.Values)
+        {
+            var createParameterValueParameters = value.Adapt<CreateParameterValueParameters>();
+            createParameterValueParameters.ParameterId = parameter.Id;
+            
+            await initialParams.ParameterValueService.CreateAsync(createParameterValueParameters);
+        }
     }
 }

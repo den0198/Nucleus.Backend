@@ -17,6 +17,8 @@ public class UnitOfWork : IUnitOfWork
         AuthRepository = new AuthRepository(userManager);
         ProductRepository = new ProductRepository(contextFactory);
         ParameterRepository = new ParameterRepository(contextFactory);
+        ParameterValueRepository = new ParameterValueRepository(contextFactory);
+        AddOnRepository = new AddOnRepository(contextFactory);
     }
 
     public IUserRepository UserRepository { get; }
@@ -24,4 +26,6 @@ public class UnitOfWork : IUnitOfWork
     public IAuthRepository AuthRepository { get; }
     public IProductRepository ProductRepository { get; }
     public IParameterRepository ParameterRepository { get; }
+    public IParameterValueRepository ParameterValueRepository { get; }
+    public IAddOnRepository AddOnRepository { get; }
 }

@@ -21,6 +21,7 @@ public sealed class ProductService : IProductService
 
         await initialParams.Repository.CreateAsync(product);
 
+        //TODO:Заменит на CreateRange 
         foreach (var parameter in parameters.Parameters)
         {
             var createParameterParameters = parameter.Adapt<CreateParameterParameters>();
@@ -28,5 +29,8 @@ public sealed class ProductService : IProductService
             
             await initialParams.ParameterService.CreateAsync(createParameterParameters);
         }
+
+        var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
+        await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
     }
 }

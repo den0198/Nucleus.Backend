@@ -9,4 +9,6 @@ public interface IUnitOfWork
     IAuthRepository AuthRepository { get; }
     IProductRepository ProductRepository { get; }
     IParameterRepository ParameterRepository { get; }
+    IParameterValueRepository ParameterValueRepository { get; }
+    IAddOnRepository AddOnRepository { get; }
 }

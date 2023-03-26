@@ -30,6 +30,7 @@ public class Program
         app.UseCors("MyAllowAllHeadersPolicy");
         app.UseInitializationDataBase();
         app.MapGraphQL("/");
+        app.UseRouting();
         app.UseAuth();
 
         app.Run();

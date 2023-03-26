@@ -4,4 +4,5 @@ namespace NucleusModels.Service.Parameters;
 
 public record CreateProductParameters(
     string Name,
-    IList<ParameterCommonDto> Parameters);
+    IList<ParameterCommonDto> Parameters,
+    IList<AddOnCommonDto> AddOns);

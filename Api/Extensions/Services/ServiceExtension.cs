@@ -12,5 +12,7 @@ public static class ServiceExtension
         serviceCollection.AddScoped<IRoleService, RoleService>();
         serviceCollection.AddScoped<IProductService, ProductService>();
         serviceCollection.AddScoped<IParameterService, ParameterService>();
+        serviceCollection.AddScoped<IParameterValueService, ParameterValueService>();
+        serviceCollection.AddScoped<IAddOnService, AddOnService>();
     }
 }

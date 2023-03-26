@@ -10,7 +10,10 @@ public sealed class CreateProductInput
     public string Name { get; set; }
 
     [Required]
-    public List<CreateParameterSubInput> Parameters { get; set; }
+    public IList<CreateParameterSubInput> Parameters { get; set; }
+
+    [Required] 
+    public IList<CreateAddOnSubInput> AddOns { get; set; }
 }
 
 public sealed class CreateProductInputType : CoreType<CreateProductInput>
@@ -28,5 +31,10 @@ public sealed class CreateProductInputType : CoreType<CreateProductInput>
             .Field(nti => nti.Parameters)
             .Name("parameters")
             .Type<ListType<CreateParameterSubInputType>>();
+        
+        descriptor
+            .Field(nti => nti.AddOns)
+            .Name("addons")
+            .Type<ListType<CreateAddOnSubInputType>>();
     }
 }
