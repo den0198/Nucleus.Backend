@@ -4,8 +4,8 @@ using BLL.Logic.ServiceHelpers.Interfaces;
 using Common.Extensions;
 using Common.Helpers;
 using Microsoft.IdentityModel.Tokens;
-using Models.Entities;
-using Models.Options;
+using NucleusModels.Entities;
+using NucleusModels.Options;
 
 namespace BLL.Logic.ServiceHelpers.Classes;
 

@@ -2,9 +2,9 @@
 using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Extensions;
-using Models.Entities;
-using Models.Service.Parameters;
-using Models.Service.Results;
+using NucleusModels.Entities;
+using NucleusModels.Service.Parameters;
+using NucleusModels.Service.Results;
 
 namespace BLL.Logic.Services.Classes;
 

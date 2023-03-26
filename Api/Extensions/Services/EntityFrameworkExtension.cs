@@ -1,8 +1,8 @@
 ﻿using DAL.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Models.Entities;
-using Models.Options;
+using NucleusModels.Entities;
+using NucleusModels.Options;
 
 namespace API.Extensions.Services;
 

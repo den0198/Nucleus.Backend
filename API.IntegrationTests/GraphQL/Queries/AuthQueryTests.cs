@@ -2,8 +2,8 @@
 using Common.Constants.DataBase;
 using Common.Enums;
 using Common.GraphQl;
-using Models.GraphQl.Data;
-using Models.GraphQl.Inputs;
+using NucleusModels.GraphQl.Data;
+using NucleusModels.GraphQl.Inputs;
 using TestsHelpers;
 using Xunit;
 

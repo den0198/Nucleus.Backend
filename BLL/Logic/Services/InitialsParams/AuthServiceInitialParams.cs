@@ -4,7 +4,7 @@ using BLL.Logic.Services.Interfaces;
 using DAL.Repositories.Interfaces;
 using DAL.UnitOfWork;
 using Microsoft.Extensions.Options;
-using Models.Options;
+using NucleusModels.Options;
 
 namespace BLL.Logic.Services.InitialsParams;
 

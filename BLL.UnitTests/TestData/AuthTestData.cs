@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Models.Entities;
-using Models.Options;
-using Models.Service.Parameters;
+using NucleusModels.Entities;
+using NucleusModels.Options;
+using NucleusModels.Service.Parameters;
 using TestsHelpers;
 
 namespace BLL.UnitTests.TestData;

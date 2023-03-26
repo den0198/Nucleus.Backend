@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Models.Entities;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Classes;
 

@@ -19,9 +19,9 @@ using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.Extensions.DependencyInjection;
-using Models.GraphQl;
-using Models.GraphQl.Data;
-using Models.GraphQl.Inputs;
+using NucleusModels.GraphQl;
+using NucleusModels.GraphQl.Data;
+using NucleusModels.GraphQl.Inputs;
 using Xunit;
 
 namespace API.IntegrationTests;

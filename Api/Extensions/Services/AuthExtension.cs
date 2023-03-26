@@ -1,7 +1,7 @@
 ﻿using Common.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Models.Options;
+using NucleusModels.Options;
 
 namespace API.Extensions.Services;
 

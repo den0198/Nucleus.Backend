@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Models.Entities;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 

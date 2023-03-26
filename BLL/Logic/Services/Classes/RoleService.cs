@@ -2,7 +2,7 @@
 using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Extensions;
-using Models.Entities;
+using NucleusModels.Entities;
 
 namespace BLL.Logic.Services.Classes;
 

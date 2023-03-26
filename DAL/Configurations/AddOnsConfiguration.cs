@@ -1,7 +1,7 @@
 ﻿using Common.Constants.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Models.Entities;
+using NucleusModels.Entities;
 
 namespace DAL.Configurations;
 

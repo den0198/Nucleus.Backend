@@ -1,10 +1,10 @@
 ﻿namespace TestsHelpers.Builders;
 
-public class RoleBuilder : CoreBuilder<Models.Entities.Role>
+public class RoleBuilder : CoreBuilder<NucleusModels.Entities.Role>
 {
     public RoleBuilder()
     {
-        Entity = new Models.Entities.Role
+        Entity = new NucleusModels.Entities.Role
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString

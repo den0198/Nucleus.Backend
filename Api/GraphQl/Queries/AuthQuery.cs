@@ -1,8 +1,8 @@
 ﻿using BLL.Logic.Services.Interfaces;
 using Mapster;
-using Models.GraphQl.Data;
-using Models.GraphQl.Inputs;
-using Models.Service.Parameters;
+using NucleusModels.GraphQl.Data;
+using NucleusModels.GraphQl.Inputs;
+using NucleusModels.Service.Parameters;
 
 namespace API.GraphQl.Queries;
 

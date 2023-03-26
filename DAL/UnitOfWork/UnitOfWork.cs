@@ -3,7 +3,7 @@ using DAL.Repositories.Classes;
 using DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Models.Entities;
+using NucleusModels.Entities;
 
 namespace DAL.UnitOfWork;
 

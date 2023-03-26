@@ -1,7 +1,7 @@
 ﻿using DAL.EntityFramework;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Models.Entities;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Classes;
 

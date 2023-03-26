@@ -3,8 +3,8 @@ using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Common.Constants.DataBase;
 using Mapster;
-using Models.Entities;
-using Models.Service.Parameters;
+using NucleusModels.Entities;
+using NucleusModels.Service.Parameters;
 
 namespace BLL.Logic.Services.Classes;
 

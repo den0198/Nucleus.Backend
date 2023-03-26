@@ -2,7 +2,7 @@
 using BLL.Logic.Services.Interfaces;
 using Common.Constants.DataBase;
 using Common.Extensions;
-using Models.Service.Parameters;
+using NucleusModels.Service.Parameters;
 
 namespace API.Initialization;
 

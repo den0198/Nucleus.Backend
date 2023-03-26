@@ -1,10 +1,10 @@
 ﻿namespace TestsHelpers.Builders;
 
-public class UserBuilder : CoreBuilder<Models.Entities.User>
+public class UserBuilder : CoreBuilder<NucleusModels.Entities.User>
 {
     public UserBuilder()
     {
-        Entity = new Models.Entities.User
+        Entity = new NucleusModels.Entities.User
         {
             Id = AnyValue.Long,
             UserName = AnyValue.ShortString,

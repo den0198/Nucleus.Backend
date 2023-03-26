@@ -1,8 +1,8 @@
 ﻿using API.GraphQl.Mutations;
 using API.GraphQl.Queries;
 using HotChocolate.Execution.Configuration;
-using Models.GraphQl.Inputs;
-using Models.GraphQl.SubInputs;
+using NucleusModels.GraphQl.Inputs;
+using NucleusModels.GraphQl.SubInputs;
 
 namespace API.Extensions.Services;
 

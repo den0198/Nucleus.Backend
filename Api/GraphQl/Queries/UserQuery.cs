@@ -1,8 +1,8 @@
 ﻿using BLL.Logic.Services.Interfaces;
 using HotChocolate.Authorization;
 using Mapster;
-using Models.GraphQl.Data;
-using Models.GraphQl.Inputs;
+using NucleusModels.GraphQl.Data;
+using NucleusModels.GraphQl.Inputs;
 
 namespace API.GraphQl.Queries;
 

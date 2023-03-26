@@ -9,7 +9,7 @@ using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using BLL.UnitTests.TestData;
 using Common.Extensions;
-using Models.Entities;
+using NucleusModels.Entities;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using TestsHelpers;

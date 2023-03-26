@@ -1,4 +1,4 @@
-﻿using Models.Entities;
+﻿using NucleusModels.Entities;
 
 namespace TestsHelpers.MocksData;
 
