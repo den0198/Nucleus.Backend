@@ -5,8 +5,8 @@ namespace BLL.Logic.Services.Interfaces;
 public interface IParameterService
 {
     /// <summary>
-    /// Создаёт новый параметер
+    /// Создаёт новые параметеры
     /// </summary>
-    /// <param name="parameters"></param>
-    Task CreateAsync(CreateParameterParameters parameters);
+    /// <param name="parameters">Параметры для создания новых параметров</param>
+    Task CreateRangeAsync(CreateParametersParameters parameters);
 }

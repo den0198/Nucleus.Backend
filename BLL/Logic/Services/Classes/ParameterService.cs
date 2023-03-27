@@ -15,18 +15,17 @@ public sealed class ParameterService : IParameterService
         this.initialParams = initialParams;
     }
 
-    public async Task CreateAsync(CreateParameterParameters parameters)
+    public async Task CreateRangeAsync(CreateParametersParameters parameters)
     {
-        var parameter = parameters.Adapt<Parameter>();
-        await initialParams.Repository.CreateAsync(parameter);
-
-        //TODO:Заменит на CreateRange
-        foreach (var value in parameters.Values)
+        foreach (var parameterCommonDto in parameters.Parameters)
         {
-            var createParameterValueParameters = value.Adapt<CreateParameterValueParameters>();
-            createParameterValueParameters.ParameterId = parameter.Id;
-            
-            await initialParams.ParameterValueService.CreateAsync(createParameterValueParameters);
+            var parameter = parameterCommonDto.Adapt<Parameter>();
+            parameter.ProductId = parameters.ProductId;
+            await initialParams.Repository.CreateAsync(parameter);
+
+            var createParameterValuesParameters = new CreateParameterValuesParameters(parameterCommonDto.Values,
+                parameter.Id);
+            await initialParams.ParameterValueService.CreateRangeAsync(createParameterValuesParameters);
         }
     }
 }

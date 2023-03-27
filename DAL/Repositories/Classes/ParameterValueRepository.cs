@@ -14,11 +14,11 @@ public sealed class ParameterValueRepository : IParameterValueRepository
         this.contextFactory = contextFactory;
     }
     
-    public async Task CreateAsync(ParameterValue parameterValue)
+    public async Task CreateRangeAsync(IEnumerable<ParameterValue> parameterValues)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
 
-        await context.ParameterValues.AddAsync(parameterValue);
+        await context.ParameterValues.AddRangeAsync(parameterValues);
         await context.SaveChangesAsync();
     }
 }

@@ -8,6 +8,5 @@ public interface IParameterRepository
     /// Создаёт новый параметер
     /// </summary>
     /// <param name="parameter">Параметер</param>
-    /// <returns></returns>
     Task CreateAsync(Parameter parameter);
 }

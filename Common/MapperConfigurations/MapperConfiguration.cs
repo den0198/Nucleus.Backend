@@ -13,6 +13,11 @@ public static class CoreMapperConfiguration
 {
     public static void AddConfigurations()
     {
+        TypeAdapterConfig<AddOnCommonDto, AddOn>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.Price, src => src.Price)
+            .Map(dest => dest.Quantity, src => src.Quantity);
+
         TypeAdapterConfig<CreateUserParameters, User>.NewConfig()
             .Map(dest => dest.UserName, src => src.UserName)
             .Map(dest => dest.Email, src => src.Email)
@@ -46,28 +51,17 @@ public static class CoreMapperConfiguration
             .Ignore(dest => dest.Parameters)
             .Ignore(dest => dest.AddOns)
             .Ignore(dest => dest.SubProducts);
-
-        TypeAdapterConfig<CreateParameterParameters, Parameter>.NewConfig()
-            .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.ProductId, src => src.ProductId);
-
-        TypeAdapterConfig<CreateParameterValueParameters, ParameterValue>.NewConfig()
-            .Map(dest => dest.Value, src => src.Value)
-            .Map(dest => dest.ParameterId, src => src.ParameterId);
         
         TypeAdapterConfig<NewTokenInput, NewTokenParameters>.NewConfig()
             .Map(dest => dest.AccessToken, src => src.AccessToken)
             .Map(dest => dest.RefreshToken, src => src.RefreshToken);
-        
-        TypeAdapterConfig<ParameterCommonDto, CreateParameterParameters>.NewConfig()
-            .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.Values, src => src.Values)
-            .MapToConstructor(true);
 
-        TypeAdapterConfig<ParameterValueCommonDto, CreateParameterValueParameters>.NewConfig()
-            .Map(dest => dest.Value, src => src.Value)
-            .MapToConstructor(true);
+        TypeAdapterConfig<ParameterCommonDto, Parameter>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name);
         
+        TypeAdapterConfig<ParameterValueCommonDto, ParameterValue>.NewConfig()
+            .Map(dest => dest.Value, src => src.Value);
+
         TypeAdapterConfig<RegisterUserInput, CreateUserParameters>.NewConfig()
             .Map(dest => dest.UserName, src => src.UserName)
             .Map(dest => dest.Password, src => src.Password)

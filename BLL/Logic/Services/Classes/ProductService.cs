@@ -18,18 +18,11 @@ public sealed class ProductService : IProductService
     public async Task CreateProduct(CreateProductParameters parameters)
     {
         var product = parameters.Adapt<Product>();
-
         await initialParams.Repository.CreateAsync(product);
 
-        //TODO:Заменит на CreateRange 
-        foreach (var parameter in parameters.Parameters)
-        {
-            var createParameterParameters = parameter.Adapt<CreateParameterParameters>();
-            createParameterParameters.ProductId = product.Id;
-            
-            await initialParams.ParameterService.CreateAsync(createParameterParameters);
-        }
-
+        var createParametersParameters = new CreateParametersParameters(parameters.Parameters, product.Id);
+        await initialParams.ParameterService.CreateRangeAsync(createParametersParameters);
+        
         var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
     }

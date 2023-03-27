@@ -5,8 +5,8 @@ namespace DAL.Repositories.Interfaces;
 public interface IParameterValueRepository
 {
     /// <summary>
-    /// Создаёт новое значение параметра
+    /// Создаёт новые значения параметра
     /// </summary>
-    /// <param name="parameterValue">Значение параметра</param>
-    Task CreateAsync(ParameterValue parameterValue);
+    /// <param name="parameterValues">Значения параметра</param>
+    Task CreateRangeAsync(IEnumerable<ParameterValue> parameterValues);
 }

@@ -15,10 +15,15 @@ public sealed class ParameterValueService : IParameterValueService
         this.initialParams = initialParams;
     }
 
-    public async Task CreateAsync(CreateParameterValueParameters parameters)
+    public async Task CreateRangeAsync(CreateParameterValuesParameters parameters)
     {
-        var parameterValue = parameters.Adapt<ParameterValue>();
-
-        await initialParams.Repository.CreateAsync(parameterValue);
+        var parameterValues = new List<ParameterValue>();
+        foreach (var valueCommonDto in parameters.Values)
+        {
+            var value = valueCommonDto.Adapt<ParameterValue>();
+            value.ParameterId = parameters.ParameterId;
+            parameterValues.Add(value);
+        }
+        await initialParams.Repository.CreateRangeAsync(parameterValues);
     }
 }
