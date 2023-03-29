@@ -1,6 +1,7 @@
 ﻿using API.GraphQl.Mutations;
 using API.GraphQl.Queries;
 using HotChocolate.Execution.Configuration;
+using NucleusModels.Entities;
 using NucleusModels.GraphQl.Inputs;
 using NucleusModels.GraphQl.SubInputs;
 
@@ -27,6 +28,7 @@ public static class GraphQlExtension
             .AddType<NewTokenInputType>()
             .AddType<FindUserByEmailInputType>()
             .AddType<RegisterUserInputType>()
+            .AddType<CreateCategoryInputType>()
             .AddType<CreateProductInputType>();
     }
 
@@ -52,6 +54,7 @@ public static class GraphQlExtension
             .AddMutationType<CoreMutation>()
             .AddTypeExtension<UserMutation>()
             .AddTypeExtension<AuthMutation>()
+            .AddTypeExtension<CategoryMutation>()
             .AddTypeExtension<ProductMutation>();
     }
 }

@@ -21,9 +21,8 @@ public sealed class ProductsConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName(ColumnNames.NAME);
         
         builder
-            .Property(p => p.CatalogId)
-            .HasColumnName(ColumnNames.CATALOG_ID)
-            .IsRequired(false);
+            .Property(p => p.CategoryId)
+            .HasColumnName(ColumnNames.CATEGORY_ID);
 
         builder
             .HasMany(p => p.Parameters)

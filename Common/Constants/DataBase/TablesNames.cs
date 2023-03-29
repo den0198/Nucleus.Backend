@@ -15,5 +15,5 @@ public static class TablesNames
     public const string PARAMETERS = "parameters";
     public const string PARAMETER_VALUES = "parameter_values";
     public const string SUB_PRODUCT_PARAMETER_VALUES = "sub_product_parameter_values";
-    public const string CATALOGS = "catalogs";
+    public const string CATEGORY = "category";
 }

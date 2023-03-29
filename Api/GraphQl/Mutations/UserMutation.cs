@@ -11,7 +11,8 @@ public sealed class UserMutation : CoreMutation
 {
     public async Task<OkData> RegisterUser(RegisterUserInput input, [Service]IUserService service)
     {
-        await service.CreateAsync(input.Adapt<CreateUserParameters>());
+        var createUserParameters = input.Adapt<CreateUserParameters>();
+        await service.CreateAsync(createUserParameters);
 
         return new OkData();
     }

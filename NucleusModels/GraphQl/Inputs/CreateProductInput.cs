@@ -9,6 +9,9 @@ public sealed class CreateProductInput
     [Required]
     public string Name { get; set; }
 
+    [Required] 
+    public long CategoryId { get; set; }
+
     [Required]
     public IList<CreateParameterSubInput> Parameters { get; set; }
 
@@ -26,6 +29,11 @@ public sealed class CreateProductInputType : CoreType<CreateProductInput>
             .Field(nti => nti.Name)
             .Name("name")
             .Type<StringType>();
+        
+        descriptor
+            .Field(nti => nti.CategoryId)
+            .Name("categoryId")
+            .Type<LongType>();
 
         descriptor
             .Field(nti => nti.Parameters)

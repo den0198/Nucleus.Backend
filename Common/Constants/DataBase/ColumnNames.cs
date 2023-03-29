@@ -60,7 +60,7 @@ public static class ColumnNames
 
     #region Catalog
     
-    public const string CATALOG_ID = "catalog_id";
+    public const string CATEGORY_ID = "category_id";
 
     #endregion
     

@@ -11,7 +11,7 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
     {
     }
 
-    public DbSet<Catalog> Catalogs { get; set; }
+    public DbSet<Category> Catalogs { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<AddOn> AddOns { get; set; }
     public DbSet<SubProduct> SubProducts { get; set; }

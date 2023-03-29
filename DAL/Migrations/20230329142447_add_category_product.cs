@@ -4,21 +4,23 @@
 
 namespace DAL.Migrations
 {
-    public partial class add_catalog_product : Migration
+    /// <inheritdoc />
+    public partial class add_category_product : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "catalogs",
+                name: "category",
                 columns: table => new
                 {
-                    catalog_id = table.Column<long>(type: "bigint", nullable: false)
+                    category_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_catalogs", x => x.catalog_id);
+                    table.PrimaryKey("PK_category", x => x.category_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -28,16 +30,16 @@ namespace DAL.Migrations
                     product_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    catalog_id = table.Column<long>(type: "bigint", nullable: true)
+                    category_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_products", x => x.product_id);
                     table.ForeignKey(
-                        name: "FK_products_catalogs_catalog_id",
-                        column: x => x.catalog_id,
-                        principalTable: "catalogs",
-                        principalColumn: "catalog_id");
+                        name: "FK_products_category_category_id",
+                        column: x => x.category_id,
+                        principalTable: "category",
+                        principalColumn: "category_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -169,9 +171,9 @@ namespace DAL.Migrations
                 column: "product_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_products_catalog_id",
+                name: "IX_products_category_id",
                 table: "products",
-                column: "catalog_id");
+                column: "category_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sub_product_parameter_values_parameter_id",
@@ -194,6 +196,7 @@ namespace DAL.Migrations
                 column: "product_id");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -215,7 +218,7 @@ namespace DAL.Migrations
                 name: "products");
 
             migrationBuilder.DropTable(
-                name: "catalogs");
+                name: "category");
         }
     }
 }

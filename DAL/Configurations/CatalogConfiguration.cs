@@ -5,16 +5,16 @@ using NucleusModels.Entities;
 
 namespace DAL.Configurations;
 
-public sealed class CatalogConfiguration : IEntityTypeConfiguration<Catalog>
+public sealed class CatalogConfiguration : IEntityTypeConfiguration<Category>
 {
-    public void Configure(EntityTypeBuilder<Catalog> builder)
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder
-            .ToTable(TablesNames.CATALOGS);
+            .ToTable(TablesNames.CATEGORY);
         
         builder
             .Property(c => c.Id)
-            .HasColumnName(ColumnNames.CATALOG_ID);
+            .HasColumnName(ColumnNames.CATEGORY_ID);
         
         builder
             .Property(c => c.Name)
@@ -22,8 +22,8 @@ public sealed class CatalogConfiguration : IEntityTypeConfiguration<Catalog>
         
         builder
             .HasMany(с => с.Products)
-            .WithOne(p => p.Catalog)
-            .HasForeignKey(p => p.CatalogId)
+            .WithOne(p => p.Category)
+            .HasForeignKey(p => p.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

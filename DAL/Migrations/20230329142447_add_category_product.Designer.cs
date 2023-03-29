@@ -12,17 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230324150147_add_catalog_product")]
-    partial class add_catalog_product
+    [Migration("20230329142447_add_category_product")]
+    partial class add_category_product
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "8.0.0-preview.2.23128.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
@@ -31,7 +32,7 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasColumnName("role_claims_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)")
@@ -59,7 +60,7 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasColumnName("user_claims_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)")
@@ -152,7 +153,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("add_on_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
@@ -177,14 +178,14 @@ namespace DAL.Migrations
                     b.ToTable("add_ons", (string)null);
                 });
 
-            modelBuilder.Entity("NucleusModels.Entities.Catalog", b =>
+            modelBuilder.Entity("NucleusModels.Entities.Category", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("catalog_id");
+                        .HasColumnName("category_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
@@ -192,7 +193,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("catalogs", (string)null);
+                    b.ToTable("category", (string)null);
                 });
 
             modelBuilder.Entity("NucleusModels.Entities.Parameter", b =>
@@ -202,7 +203,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("parameter_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
@@ -226,7 +227,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("parameter_value_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
@@ -250,11 +251,11 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("product_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("CatalogId")
+                    b.Property<long>("CategoryId")
                         .HasColumnType("bigint")
-                        .HasColumnName("catalog_id");
+                        .HasColumnName("category_id");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
@@ -262,7 +263,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CatalogId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("products", (string)null);
                 });
@@ -274,7 +275,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("role_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -308,7 +309,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("sub_product_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)")
@@ -336,7 +337,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("sub_product_parameter_value");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
@@ -368,7 +369,7 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("user_id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int")
@@ -544,12 +545,13 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("NucleusModels.Entities.Product", b =>
                 {
-                    b.HasOne("NucleusModels.Entities.Catalog", "Catalog")
+                    b.HasOne("NucleusModels.Entities.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CatalogId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("Catalog");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("NucleusModels.Entities.SubProduct", b =>
@@ -590,7 +592,7 @@ namespace DAL.Migrations
                     b.Navigation("SubProduct");
                 });
 
-            modelBuilder.Entity("NucleusModels.Entities.Catalog", b =>
+            modelBuilder.Entity("NucleusModels.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });

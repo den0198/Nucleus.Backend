@@ -17,7 +17,7 @@ public static class CoreMapperConfiguration
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.Price, src => src.Price)
             .Map(dest => dest.Quantity, src => src.Quantity);
-
+        
         TypeAdapterConfig<CreateUserParameters, User>.NewConfig()
             .Map(dest => dest.UserName, src => src.UserName)
             .Map(dest => dest.Email, src => src.Email)
@@ -25,9 +25,13 @@ public static class CoreMapperConfiguration
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName)
             .Map(dest => dest.MiddleName, src => src.MiddleName);
+
+        TypeAdapterConfig<CreateCategoryParameters, Category>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name);
         
         TypeAdapterConfig<CreateProductInput, CreateProductParameters>.NewConfig()
             .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.CategoryId, src => src.CategoryId)
             .Map(dest => dest.Parameters,
                 src => src.Parameters.Select(p => p.Adapt<ParameterCommonDto>()))
             .Map(dest => dest.AddOns,
@@ -48,6 +52,7 @@ public static class CoreMapperConfiguration
         
         TypeAdapterConfig<CreateProductParameters, Product>.NewConfig()
             .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.CategoryId, src => src.CategoryId)
             .Ignore(dest => dest.Parameters)
             .Ignore(dest => dest.AddOns)
             .Ignore(dest => dest.SubProducts);

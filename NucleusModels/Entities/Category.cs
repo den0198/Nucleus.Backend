@@ -1,6 +1,6 @@
 ﻿namespace NucleusModels.Entities;
 
-public class Catalog
+public class Category
 {
     public long Id { get; set; }
     public string Name { get; set; }

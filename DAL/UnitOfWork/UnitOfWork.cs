@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
         UserRepository = new UserRepository(userManager);
         RoleRepository = new RoleRepository(userManager, roleManager);
         AuthRepository = new AuthRepository(userManager);
+        CategoryRepository = new CategoryRepository(contextFactory);
         ProductRepository = new ProductRepository(contextFactory);
         ParameterRepository = new ParameterRepository(contextFactory);
         ParameterValueRepository = new ParameterValueRepository(contextFactory);
@@ -24,6 +25,7 @@ public class UnitOfWork : IUnitOfWork
     public IUserRepository UserRepository { get; }
     public IRoleRepository RoleRepository { get; }
     public IAuthRepository AuthRepository { get; }
+    public ICategoryRepository CategoryRepository { get; }
     public IProductRepository ProductRepository { get; }
     public IParameterRepository ParameterRepository { get; }
     public IParameterValueRepository ParameterValueRepository { get; }
