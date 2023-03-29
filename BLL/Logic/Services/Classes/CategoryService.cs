@@ -15,10 +15,11 @@ public sealed class CategoryService : ICategoryService
         this.initialParams = initialParams;
     }
     
-    public async Task CreateAsync(CreateCategoryParameters parameters)
+    public async Task<long> CreateAsync(CreateCategoryParameters parameters)
     {
         var category = parameters.Adapt<Category>();
-
         await initialParams.Repository.CreateAsync(category);
+
+        return category.Id;
     }
 }

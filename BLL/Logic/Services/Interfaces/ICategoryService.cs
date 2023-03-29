@@ -8,5 +8,6 @@ public interface ICategoryService
     /// Создаёт новый каталог
     /// </summary>
     /// <param name="parameters">Параметры для создания новой категории</param>
-    Task CreateAsync(CreateCategoryParameters parameters);
+    /// <returns>Идентификатор новой категории</returns>
+    Task<long> CreateAsync(CreateCategoryParameters parameters);
 }

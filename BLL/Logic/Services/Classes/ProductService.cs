@@ -15,7 +15,7 @@ public sealed class ProductService : IProductService
         this.initialParams = initialParams;
     }
     
-    public async Task CreateProduct(CreateProductParameters parameters)
+    public async Task<long> CreateProduct(CreateProductParameters parameters)
     {
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);
@@ -25,5 +25,7 @@ public sealed class ProductService : IProductService
         
         var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
+
+        return product.Id;
     }
 }
