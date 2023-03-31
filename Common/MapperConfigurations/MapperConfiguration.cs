@@ -2,7 +2,7 @@
 using NucleusModels.Entities;
 using NucleusModels.GraphQl.Data;
 using NucleusModels.GraphQl.Inputs;
-using NucleusModels.GraphQl.SubInputs;
+using NucleusModels.GraphQl.Inputs.SubInputs;
 using NucleusModels.Service.CommonDtos;
 using NucleusModels.Service.Parameters;
 using NucleusModels.Service.Results;

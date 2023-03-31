@@ -1,4 +1,5 @@
-﻿using BLL.Logic.Services.InitialsParams;
+﻿using BLL.Exceptions;
+using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
 using Mapster;
 using NucleusModels.Entities;
@@ -15,7 +16,13 @@ public sealed class ProductService : IProductService
         this.initialParams = initialParams;
     }
     
-    public async Task<long> CreateProduct(CreateProductParameters parameters)
+    public async Task<Product> GetByIdAsync(long productId)
+    {
+        return await initialParams.Repository.FindByIdAsync(productId)
+               ?? throw new ObjectNotFoundException($"Product with productId: {productId} not found");
+    }
+    
+    public async Task<long> CreateProductAsync(CreateProductParameters parameters)
     {
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);

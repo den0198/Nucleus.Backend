@@ -15,9 +15,9 @@ public interface IUserRepository
     /// <summary>
     /// Ишет пользователя по пользовательскому имени
     /// </summary>
-    /// <param name="UserName">Пользовательское имя</param>
+    /// <param name="userName">Пользовательское имя</param>
     /// <returns>Пользователь</returns>
-    Task<User> FindByUserNameAsync(string UserName);
+    Task<User> FindByUserNameAsync(string userName);
 
     /// <summary>
     /// Ишет пользователя по email

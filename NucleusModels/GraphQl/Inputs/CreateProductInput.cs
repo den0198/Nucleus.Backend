@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using HotChocolate.Types;
-using NucleusModels.GraphQl.SubInputs;
+using NucleusModels.GraphQl.Inputs.SubInputs;
 
 namespace NucleusModels.GraphQl.Inputs;
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using HotChocolate.Types;
 
-namespace NucleusModels.GraphQl.SubInputs;
+namespace NucleusModels.GraphQl.Inputs.SubInputs;
 
 public sealed class CreateParameterValueSubInput
 {

@@ -12,6 +12,6 @@ public sealed class ProductMutation : CoreMutation
     {
         var createProductParameters = input.Adapt<CreateProductParameters>();
         
-        return await service.CreateProduct(createProductParameters);
+        return await service.CreateProductAsync(createProductParameters);
     }
 }

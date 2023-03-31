@@ -3,7 +3,7 @@ using API.GraphQl.Queries;
 using HotChocolate.Execution.Configuration;
 using NucleusModels.Entities;
 using NucleusModels.GraphQl.Inputs;
-using NucleusModels.GraphQl.SubInputs;
+using NucleusModels.GraphQl.Inputs.SubInputs;
 
 namespace API.Extensions.Services;
 
@@ -45,7 +45,8 @@ public static class GraphQlExtension
         builder
             .AddQueryType<CoreQuery>()
             .AddTypeExtension<UserQuery>()
-            .AddTypeExtension<AuthQuery>();
+            .AddTypeExtension<AuthQuery>()
+            .AddTypeExtension<SubProductQuery>();
     }
 
     private static void addMutations(IRequestExecutorBuilder builder)

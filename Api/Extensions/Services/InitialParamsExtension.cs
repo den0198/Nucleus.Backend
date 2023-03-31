@@ -14,5 +14,6 @@ public static class InitialParamsExtension
         serviceCollection.AddScoped<ParameterServiceInitialParams>();
         serviceCollection.AddScoped<ParameterValueServiceInitialParams>();
         serviceCollection.AddScoped<AddOnServiceInitialParams>();
+        serviceCollection.AddScoped<SubProductServiceInitialParams>();
     }
 }

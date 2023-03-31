@@ -21,4 +21,14 @@ public sealed class ProductRepository : IProductRepository
         await context.Products.AddAsync(product);
         await context.SaveChangesAsync();
     }
+
+    public async Task<Product> FindByIdAsync(long productId)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        return await context.Products
+            .Include(p => p.Parameters)
+                .ThenInclude(p => p.ParameterValues)
+            .SingleOrDefaultAsync(p => p.Id == productId);
+    }
 }
