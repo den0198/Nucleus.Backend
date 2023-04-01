@@ -16,5 +16,6 @@ public static class ServiceExtension
         serviceCollection.AddScoped<IParameterValueService, ParameterValueService>();
         serviceCollection.AddScoped<IAddOnService, AddOnService>();
         serviceCollection.AddScoped<ISubProductService, SubProductService>();
+        serviceCollection.AddScoped<ISubProductParameterValueService, SubProductParameterValueService>();
     }
 }

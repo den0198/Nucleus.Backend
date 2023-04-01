@@ -8,5 +8,5 @@ public sealed class MixedSubProductParameterValueSubData
 
     public long ParameterValueId { get; init; }
 
-    public string ParameterValueName { get; init; }
+    public string ParameterValueValue { get; init; }
 }

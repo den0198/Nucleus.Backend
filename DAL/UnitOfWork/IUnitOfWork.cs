@@ -12,4 +12,6 @@ public interface IUnitOfWork
     IParameterRepository ParameterRepository { get; }
     IParameterValueRepository ParameterValueRepository { get; }
     IAddOnRepository AddOnRepository { get; }
+    ISubProductRepository SubProductRepository { get; }
+    ISubProductParameterValueRepository SubProductParameterValueRepository { get; }
 }

@@ -1,8 +1,12 @@
-﻿using NucleusModels.GraphQl.Data;
+﻿using NucleusModels.Entities;
 
 namespace BLL.Logic.Services.Interfaces;
 
 public interface ISubProductService
 {
-    Task<GetMixSubProductsAtNewProductData> GetMixSubProductsAtNewProduct(long productId);
+    /// <summary>
+    /// Создаёт новые под-продукты
+    /// </summary>
+    /// <param name="product">Продукт</param>
+    Task CreateRangeAsync(Product product);
 }

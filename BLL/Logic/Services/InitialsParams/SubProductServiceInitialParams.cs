@@ -1,13 +1,18 @@
 ﻿using BLL.Logic.Services.Interfaces;
+using DAL.Repositories.Interfaces;
+using DAL.UnitOfWork;
 
 namespace BLL.Logic.Services.InitialsParams;
 
 public sealed class SubProductServiceInitialParams
 {
-    public SubProductServiceInitialParams(IProductService productService)
+    public SubProductServiceInitialParams(IUnitOfWork unitOfWork, 
+        ISubProductParameterValueService subProductParameterValueService)
     {
-        ProductService = productService;
+        SubProductParameterValueService = subProductParameterValueService;
+        Repository = unitOfWork.SubProductRepository;
     }
 
-    public IProductService ProductService { get; }
+    public ISubProductRepository Repository { get; }
+    public ISubProductParameterValueService SubProductParameterValueService { get; }
 }

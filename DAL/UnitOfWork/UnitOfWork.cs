@@ -20,6 +20,8 @@ public class UnitOfWork : IUnitOfWork
         ParameterRepository = new ParameterRepository(contextFactory);
         ParameterValueRepository = new ParameterValueRepository(contextFactory);
         AddOnRepository = new AddOnRepository(contextFactory);
+        SubProductRepository = new SubProductRepository(contextFactory);
+        SubProductParameterValueRepository = new SubProductParameterValueRepository(contextFactory);
     }
 
     public IUserRepository UserRepository { get; }
@@ -30,4 +32,6 @@ public class UnitOfWork : IUnitOfWork
     public IParameterRepository ParameterRepository { get; }
     public IParameterValueRepository ParameterValueRepository { get; }
     public IAddOnRepository AddOnRepository { get; }
+    public ISubProductRepository SubProductRepository { get; }
+    public ISubProductParameterValueRepository SubProductParameterValueRepository { get; }
 }

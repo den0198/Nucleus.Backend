@@ -33,6 +33,9 @@ public sealed class ProductService : IProductService
         var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
 
+        product = await GetByIdAsync(product.Id);
+        await initialParams.SubProductService.CreateRangeAsync(product);
+
         return product.Id;
     }
 }
