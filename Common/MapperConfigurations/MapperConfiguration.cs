@@ -134,5 +134,14 @@ public static class CoreMapperConfiguration
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName)
             .Map(dest => dest.MiddleName, src => src.MiddleName);
+
+        TypeAdapterConfig<UpdateSubProductsInput, UpdateSubProductsParameters>.NewConfig()
+            .Map(dest => dest.SubProducts, src => src.SubProducts
+                .Select(sp => sp.Adapt<SubProductCommonDto>()));
+
+        TypeAdapterConfig<UpdateSubProductSubInput, SubProductCommonDto>.NewConfig()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.Price, src => src.Price)
+            .Map(dest => dest.Quantity, src => src.Quantity);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
-using Mapster;
 using NucleusModels.Entities;
 using NucleusModels.Service.Parameters;
 
@@ -17,7 +16,8 @@ public sealed class SubProductService : ISubProductService
     
     public async Task CreateRangeAsync(Product product)
     {
-        var parameters = product.Parameters.ToList();
+        var parameters = product.Parameters
+            .ToList();
         var parameterValueCombinations = getAllCombinations(parameters);
         
         foreach (var parameterValueCombination in parameterValueCombinations)
@@ -26,21 +26,33 @@ public sealed class SubProductService : ISubProductService
             {
                 ProductId = product.Id
             };
-            await initialParams.Repository.CreateAsync(subProduct);
+            await initialParams.Repository
+                .CreateAsync(subProduct);
             
             var createSubProductParameterValuesParameters = new CreateSubProductParameterValuesParameters(
                 subProduct.Id, parameterValueCombination);
-            await initialParams.SubProductParameterValueService.CreateRangeAsync(
-                createSubProductParameterValuesParameters);
+            await initialParams.SubProductParameterValueService
+                .CreateRangeAsync(createSubProductParameterValuesParameters);
         }
     }
 
     public async Task UpdateRangeAsync(UpdateSubProductsParameters parameters)
     {
-        var subProducts = parameters.SubProducts
-            .Select(sp => sp.Adapt<SubProduct>());
+        var ids = parameters.SubProducts
+            .Select(sp => sp.Id);
+        var subProducts = await initialParams.Repository
+            .FindAllByIds(ids);
+        foreach (var subProduct in subProducts)
+        {
+            var subProductCommonDto = parameters.SubProducts
+                .First(sp => sp.Id == subProduct.Id);
 
-        await initialParams.Repository.UpdateRange(subProducts);
+            subProduct.Price = subProductCommonDto.Price;
+            subProduct.Quantity = subProductCommonDto.Quantity;
+        }
+
+        await initialParams.Repository
+            .UpdateRange(subProducts);
     }
 
     private List<List<ParameterValue>> getAllCombinations(IReadOnlyCollection<Parameter> parameters)

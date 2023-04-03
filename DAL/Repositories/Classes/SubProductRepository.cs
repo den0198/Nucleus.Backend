@@ -14,6 +14,15 @@ public sealed class SubProductRepository : ISubProductRepository
         this.contextFactory = contextFactory;
     }
 
+    public async Task<IList<SubProduct>> FindAllByIds(IEnumerable<long> ids)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+
+        return await context.SubProducts
+            .Where(sp => ids.Contains(sp.Id))
+            .ToListAsync();
+    }
+
     public async Task CreateAsync(SubProduct subProduct)
     {
         await using var context = await contextFactory.CreateDbContextAsync();

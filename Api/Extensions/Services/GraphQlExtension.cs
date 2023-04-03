@@ -57,7 +57,7 @@ public static class GraphQlExtension
             .AddTypeExtension<UserMutation>()
             .AddTypeExtension<AuthMutation>()
             .AddTypeExtension<CategoryMutation>()
-            .AddTypeExtension<ProductMutation>();
-        //.AddTypeExtension<SubProductMutation>();
+            .AddTypeExtension<ProductMutation>()
+            .AddTypeExtension<SubProductMutation>();
     }
 }
