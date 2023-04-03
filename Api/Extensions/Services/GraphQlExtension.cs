@@ -28,7 +28,8 @@ public static class GraphQlExtension
             .AddType<FindUserByEmailInputType>()
             .AddType<RegisterUserInputType>()
             .AddType<CreateCategoryInputType>()
-            .AddType<CreateProductInputType>();
+            .AddType<CreateProductInputType>()
+            .AddType<UpdateSubProductsInputType>();
     }
 
     private static void addSubInputTypes(IRequestExecutorBuilder builder)
@@ -36,7 +37,8 @@ public static class GraphQlExtension
         builder
             .AddType<CreateParameterSubInputType>()
             .AddType<CreateParameterValueSubInputType>()
-            .AddType<CreateAddOnSubInputType>();
+            .AddType<CreateAddOnSubInputType>()
+            .AddType<UpdateSubProductSubInputType>();
     }
 
     private static void addQueries(IRequestExecutorBuilder builder)
@@ -56,5 +58,6 @@ public static class GraphQlExtension
             .AddTypeExtension<AuthMutation>()
             .AddTypeExtension<CategoryMutation>()
             .AddTypeExtension<ProductMutation>();
+        //.AddTypeExtension<SubProductMutation>();
     }
 }

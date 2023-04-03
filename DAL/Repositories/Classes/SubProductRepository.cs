@@ -21,4 +21,12 @@ public sealed class SubProductRepository : ISubProductRepository
         await context.SubProducts.AddAsync(subProduct);
         await context.SaveChangesAsync();
     }
+
+    public async Task UpdateRange(IEnumerable<SubProduct> subProducts)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+        
+        context.SubProducts.UpdateRange(subProducts);
+        await context.SaveChangesAsync();
+    }
 }

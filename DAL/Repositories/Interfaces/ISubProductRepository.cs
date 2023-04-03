@@ -9,4 +9,10 @@ public interface ISubProductRepository
     /// </summary>
     /// <param name="subProduct">под-продукт</param>
     Task CreateAsync(SubProduct subProduct);
+
+    /// <summary>
+    /// Обновляет под-продукты
+    /// </summary>
+    /// <param name="subProducts">под-продукты</param>
+    Task UpdateRange(IEnumerable<SubProduct> subProducts);
 }

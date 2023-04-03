@@ -1,5 +1,6 @@
 ﻿using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
+using Mapster;
 using NucleusModels.Entities;
 using NucleusModels.Service.Parameters;
 
@@ -33,7 +34,15 @@ public sealed class SubProductService : ISubProductService
                 createSubProductParameterValuesParameters);
         }
     }
-    
+
+    public async Task UpdateRangeAsync(UpdateSubProductsParameters parameters)
+    {
+        var subProducts = parameters.SubProducts
+            .Select(sp => sp.Adapt<SubProduct>());
+
+        await initialParams.Repository.UpdateRange(subProducts);
+    }
+
     private List<List<ParameterValue>> getAllCombinations(IReadOnlyCollection<Parameter> parameters)
     {
         var parameterValueCombinations = new List<List<ParameterValue>>();

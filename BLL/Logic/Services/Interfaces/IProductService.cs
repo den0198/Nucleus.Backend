@@ -15,7 +15,7 @@ public interface IProductService
     /// <summary>
     /// Создаёт новый товар
     /// </summary>
-    /// <param name="parameters">Параметры создания продукта</param>
+    /// <param name="parameters">Параметры для создания продукта</param>
     /// <returns>Идентификатор нового продукта</returns>
     Task<long> CreateProductAsync(CreateProductParameters parameters);
 }
