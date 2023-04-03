@@ -9,11 +9,11 @@ namespace API.GraphQl.Mutations;
 [ExtendObjectType(typeof(CoreMutation))]
 public sealed class UserMutation : CoreMutation
 {
-    public async Task<OkData> RegisterUser(RegisterUserInput input, [Service]IUserService service)
+    public async Task<StatusData> RegisterUser(RegisterUserInput input, [Service]IUserService service)
     {
         var createUserParameters = input.Adapt<CreateUserParameters>();
         await service.CreateAsync(createUserParameters);
 
-        return new OkData();
+        return new StatusData();
     }
 }

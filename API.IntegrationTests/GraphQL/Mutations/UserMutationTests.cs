@@ -33,12 +33,12 @@ public sealed class UserMutationTests : BaseIntegrationTests
             MiddleName = AnyValue.String
         };
 
-        var response = await sendMutationAsync<RegisterUserInput, OkData>(client, "registerUser", request);
+        var response = await sendMutationAsync<RegisterUserInput, StatusData>(client, "registerUser", request);
 
-        var okResponse = new OkData();
+        var okResponse = new StatusData();
         var user = await Context.Users
             .FirstAsync(u => u.Email == request.Email);
-        Assert.Equal(okResponse.Ok, response.Ok);
+        Assert.Equal(okResponse.Status, response.Status);
         Assert.Equal(user.UserName, request.UserName);
         Assert.Equal(user.Email, request.Email);
         Assert.Equal(user.PhoneNumber, request.PhoneNumber);
@@ -67,7 +67,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<RegisterUserInput, OkData>(client, "registerUser", request));
+            await sendMutationAsync<RegisterUserInput, StatusData>(client, "registerUser", request));
 
         AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
@@ -93,7 +93,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<RegisterUserInput, OkData>(client, "registerUser", request));
+            await sendMutationAsync<RegisterUserInput, StatusData>(client, "registerUser", request));
 
         AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }

@@ -44,7 +44,8 @@ public static class GraphQlExtension
         builder
             .AddQueryType<CoreQuery>()
             .AddTypeExtension<UserQuery>()
-            .AddTypeExtension<AuthQuery>();
+            .AddTypeExtension<AuthQuery>()
+            .AddTypeExtension<ProductQuery>();
     }
 
     private static void addMutations(IRequestExecutorBuilder builder)

@@ -29,6 +29,13 @@ public sealed class ProductRepository : IProductRepository
         return await context.Products
             .Include(p => p.Parameters)
                 .ThenInclude(p => p.ParameterValues)
+            .Include(p => p.SubProducts)
+                .ThenInclude(sp => sp.SubProductParameterValues)
+                    .ThenInclude(sppv => sppv.Parameter)
+            .Include(p => p.SubProducts)
+                .ThenInclude(sp => sp.SubProductParameterValues)
+                    .ThenInclude(sppv => sppv.ParameterValue)
+            .Include(p => p.AddOns)
             .SingleOrDefaultAsync(p => p.Id == productId);
     }
 }
