@@ -27,5 +27,13 @@ public sealed class RolesConfiguration : IEntityTypeConfiguration<Role>
         builder
             .Property(r => r.ConcurrencyStamp)
             .HasColumnName(ColumnNames.CONCURRENCY_STAMP);
+        
+        builder
+            .Property(r => r.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(r => r.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
     }
 }

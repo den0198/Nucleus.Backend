@@ -1,30 +1,19 @@
 ﻿using DAL.EntityFramework;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using NucleusModels.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public sealed class ProductRepository : IProductRepository
+public sealed class ProductRepository : Repository, IProductRepository
 {
-    private readonly IDbContextFactory<AppDbContext> contextFactory;
-
-    public ProductRepository(IDbContextFactory<AppDbContext> contextFactory)
+    public ProductRepository(IDbContextFactory<AppDbContext> contextFactory) 
+        : base(contextFactory)
     {
-        this.contextFactory = contextFactory;
     }
-
-    public async Task CreateAsync(Product product)
+    
+    public async Task<NucleusModels.Entities.Product> FindByIdAsync(long productId)
     {
-        await using var context = await contextFactory.CreateDbContextAsync();
-
-        await context.Products.AddAsync(product);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task<Product> FindByIdAsync(long productId)
-    {
-        await using var context = await contextFactory.CreateDbContextAsync();
+        await using var context = await ContextFactory.CreateDbContextAsync();
 
         return await context.Products
             .Include(p => p.Parameters)

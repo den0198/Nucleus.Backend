@@ -26,6 +26,14 @@ public sealed class SubProductsConfiguration : IEntityTypeConfiguration<SubProdu
             .HasColumnName(ColumnNames.QUANTITY);
         
         builder
+            .Property(pv => pv.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(pv => pv.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        
+        builder
             .Property(sp => sp.ProductId)
             .HasColumnName(ColumnNames.PRODUCT_ID);
         

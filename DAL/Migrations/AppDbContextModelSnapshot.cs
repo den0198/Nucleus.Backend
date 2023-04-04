@@ -152,6 +152,14 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
@@ -184,6 +192,14 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
@@ -201,6 +217,14 @@ namespace DAL.Migrations
                         .HasColumnName("parameter_id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
@@ -225,6 +249,14 @@ namespace DAL.Migrations
                         .HasColumnName("parameter_value_id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
 
                     b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
@@ -254,6 +286,14 @@ namespace DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("category_id");
 
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
@@ -278,6 +318,14 @@ namespace DAL.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("concurrency_stamp");
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -308,6 +356,14 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("price");
@@ -335,6 +391,14 @@ namespace DAL.Migrations
                         .HasColumnName("sub_product_parameter_value");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
 
                     b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
@@ -376,6 +440,14 @@ namespace DAL.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("concurrency_stamp");
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
 
                     b.Property<string>("Email")
                         .IsRequired()

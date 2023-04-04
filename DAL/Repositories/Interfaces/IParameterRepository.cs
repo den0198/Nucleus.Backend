@@ -1,12 +1,8 @@
-﻿using NucleusModels.Entities;
+﻿using DAL.Repositories.CrudInterface;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface IParameterRepository
+public interface IParameterRepository : ICreateEntity<Parameter>
 {
-    /// <summary>
-    /// Создаёт новый параметер
-    /// </summary>
-    /// <param name="parameter">Параметер</param>
-    Task CreateAsync(Parameter parameter);
 }

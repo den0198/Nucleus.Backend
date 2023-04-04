@@ -1,12 +1,8 @@
-﻿using NucleusModels.Entities;
+﻿using DAL.Repositories.CrudInterface;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface ICategoryRepository
+public interface ICategoryRepository : ICreateEntity<Category>
 {
-    /// <summary>
-    /// Создаёт новый каталог
-    /// </summary>
-    /// <param name="category">Категория</param>
-    Task CreateAsync(Category category);
 }

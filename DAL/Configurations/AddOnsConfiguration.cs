@@ -30,6 +30,14 @@ public sealed class AddOnsConfiguration : IEntityTypeConfiguration<AddOn>
             .HasColumnType(ColumnTypes.DECIMAL);
         
         builder
+            .Property(ao => ao.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(ao => ao.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        
+        builder
             .Property(ao => ao.ProductId)
             .HasColumnName(ColumnNames.PRODUCT_ID);
     }

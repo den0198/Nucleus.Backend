@@ -1,12 +1,8 @@
-﻿using NucleusModels.Entities;
+﻿using DAL.Repositories.CrudInterface;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface ISubProductParameterValueRepository
+public interface ISubProductParameterValueRepository : ICreateRangeEntities<SubProductParameterValue>
 {
-    /// <summary>
-    /// Создаёт новые значения параметров под-продукта
-    /// </summary>
-    /// <param name="subProductParameterValues">значения параметров под-продукта</param>
-    Task CreateRangeAsync(IEnumerable<SubProductParameterValue> subProductParameterValues);
 }

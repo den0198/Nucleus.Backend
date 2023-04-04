@@ -18,7 +18,36 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
     public DbSet<Parameter> Parameters { get; set; }
     public DbSet<ParameterValue> ParameterValues { get; set; }
     public DbSet<SubProductParameterValue> SubProductParameterValues { get; set; }
+    
+    public override int SaveChanges()
+    {
+        AddTimestamps();
+        return base.SaveChanges();
+    }
 
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        AddTimestamps();
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void AddTimestamps()
+    {
+        var entities = ChangeTracker.Entries()
+            .Where(x => x.Entity is IEntity && x.State is EntityState.Added or EntityState.Modified);
+
+        foreach (var entity in entities)
+        {
+            var now = DateTime.UtcNow;
+
+            if (entity.State == EntityState.Added)
+            {
+                ((IEntity)entity.Entity).DateTimeCreated = now;
+            }
+
+            ((IEntity)entity.Entity).DateTimeModified = now;
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

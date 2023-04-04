@@ -21,6 +21,14 @@ public sealed class ProductsConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName(ColumnNames.NAME);
         
         builder
+            .Property(p => p.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(p => p.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        
+        builder
             .Property(p => p.CategoryId)
             .HasColumnName(ColumnNames.CATEGORY_ID);
 

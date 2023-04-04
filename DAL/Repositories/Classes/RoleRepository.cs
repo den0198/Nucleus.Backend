@@ -30,7 +30,7 @@ public sealed class RoleRepository : IRoleRepository
     {
         var result = await roleManager.CreateAsync(role);
         if(result.Succeeded)
-            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, role.Name));
+            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, role.Name!));
         
         return result;
     }

@@ -23,7 +23,8 @@ public sealed class SubProductParameterValueService : ISubProductParameterValueS
                 SubProductId = parameters.SubProductId, 
                 ParameterId = parameterValue.ParameterId, 
                 ParameterValueId = parameterValue.Id
-            });
+            })
+            .ToList();
 
         await initialParams.Repository.CreateRangeAsync(subProductParameterValues);
     }

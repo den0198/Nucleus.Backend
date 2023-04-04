@@ -1,12 +1,8 @@
-﻿using NucleusModels.Entities;
+﻿using DAL.Repositories.CrudInterface;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface IParameterValueRepository
+public interface IParameterValueRepository : ICreateRangeEntities<ParameterValue>
 {
-    /// <summary>
-    /// Создаёт новые значения параметра
-    /// </summary>
-    /// <param name="parameterValues">Значении параметра</param>
-    Task CreateRangeAsync(IEnumerable<ParameterValue> parameterValues);
 }

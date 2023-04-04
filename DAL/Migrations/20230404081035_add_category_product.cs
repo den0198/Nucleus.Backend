@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -10,13 +11,43 @@ namespace DAL.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<DateTime>(
+                name: "date_time_created",
+                table: "users",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "date_time_modified",
+                table: "users",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "date_time_created",
+                table: "roles",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "date_time_modified",
+                table: "roles",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
             migrationBuilder.CreateTable(
                 name: "category",
                 columns: table => new
                 {
                     category_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,6 +61,8 @@ namespace DAL.Migrations
                     product_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     category_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -51,6 +84,8 @@ namespace DAL.Migrations
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     quantity = table.Column<long>(type: "bigint", nullable: false),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     product_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -71,6 +106,8 @@ namespace DAL.Migrations
                     parameter_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     product_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -92,6 +129,8 @@ namespace DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     quantity = table.Column<long>(type: "bigint", nullable: false),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     product_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -112,6 +151,8 @@ namespace DAL.Migrations
                     parameter_value_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     parameter_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -131,6 +172,8 @@ namespace DAL.Migrations
                 {
                     sub_product_parameter_value = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     sub_product_id = table.Column<long>(type: "bigint", nullable: false),
                     parameter_id = table.Column<long>(type: "bigint", nullable: false),
                     parameter_value_id = table.Column<long>(type: "bigint", nullable: false)
@@ -219,6 +262,22 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "category");
+
+            migrationBuilder.DropColumn(
+                name: "date_time_created",
+                table: "users");
+
+            migrationBuilder.DropColumn(
+                name: "date_time_modified",
+                table: "users");
+
+            migrationBuilder.DropColumn(
+                name: "date_time_created",
+                table: "roles");
+
+            migrationBuilder.DropColumn(
+                name: "date_time_modified",
+                table: "roles");
         }
     }
 }

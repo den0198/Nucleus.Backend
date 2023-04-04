@@ -1,12 +1,8 @@
-﻿using NucleusModels.Entities;
+﻿using DAL.Repositories.CrudInterface;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface IAddOnRepository
+public interface IAddOnRepository : ICreateRangeEntities<AddOn>
 {
-    /// <summary>
-    /// Создаёт новые дополнения
-    /// </summary>
-    /// <param name="addOns">Дополненения</param>
-    Task CreateRangeAsync(IEnumerable<AddOn> addOns);
 }

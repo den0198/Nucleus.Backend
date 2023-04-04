@@ -17,6 +17,14 @@ public sealed class SubProductParameterValuesConfiguration : IEntityTypeConfigur
             .HasColumnName(ColumnNames.SUB_PRODUCT_PARAMETER_VALUE_ID);
         
         builder
+            .Property(sppv => sppv.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(sppv => sppv.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        
+        builder
             .Property(sppv => sppv.SubProductId)
             .HasColumnName(ColumnNames.SUB_PRODUCT_ID);
         

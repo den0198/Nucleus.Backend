@@ -12,6 +12,8 @@ public static class ColumnNames
     public const string CLAIM_VALUE = "claim_value";
     public const string PRICE = "price";
     public const string QUANTITY = "quantity";
+    public const string DATE_TIME_CREATED = "date_time_created";
+    public const string DATE_TIME_MODIFIED = "date_time_modified";
 
     #endregion
 

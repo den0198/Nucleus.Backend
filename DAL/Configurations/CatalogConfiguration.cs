@@ -21,6 +21,14 @@ public sealed class CatalogConfiguration : IEntityTypeConfiguration<Category>
             .HasColumnName(ColumnNames.NAME);
         
         builder
+            .Property(c => c.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(c => c.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        
+        builder
             .HasMany(с => с.Products)
             .WithOne(p => p.Category)
             .HasForeignKey(p => p.CategoryId)

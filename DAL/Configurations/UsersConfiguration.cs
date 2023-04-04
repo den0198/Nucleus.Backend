@@ -85,5 +85,13 @@ public sealed class UsersConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(u => u.MiddleName)
             .HasColumnName(ColumnNames.MIDDLE_NAME);
+        
+        builder
+            .Property(pv => pv.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(pv => pv.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
     }
 }

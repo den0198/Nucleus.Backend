@@ -1,8 +1,9 @@
-﻿using NucleusModels.Entities;
+﻿using DAL.Repositories.CrudInterface;
+using NucleusModels.Entities;
 
 namespace DAL.Repositories.Interfaces;
 
-public interface ISubProductRepository
+public interface ISubProductRepository : ICreateEntity<SubProduct>, IUpdateRangeEntities<SubProduct>
 {
     /// <summary>
     /// Ишет под-продукты по идентификаторам
@@ -10,16 +11,4 @@ public interface ISubProductRepository
     /// <param name="ids">Идентификаторы</param>
     /// <returns>Под-продукты</returns>
     Task<IList<SubProduct>> FindAllByIds(IEnumerable<long> ids);
-    
-    /// <summary>
-    /// Создаёт новый под-продукт
-    /// </summary>
-    /// <param name="subProduct">под-продукт</param>
-    Task CreateAsync(SubProduct subProduct);
-
-    /// <summary>
-    /// Обновляет под-продукты
-    /// </summary>
-    /// <param name="subProducts">под-продукты</param>
-    Task UpdateRange(IEnumerable<SubProduct> subProducts);
 }

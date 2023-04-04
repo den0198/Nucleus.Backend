@@ -5,20 +5,10 @@ using NucleusModels.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public sealed class AddOnRepository : IAddOnRepository
+public sealed class AddOnRepository : Repository, IAddOnRepository
 {
-    private readonly IDbContextFactory<AppDbContext> contextFactory;
-    
     public AddOnRepository(IDbContextFactory<AppDbContext> contextFactory)
+        : base(contextFactory)
     {
-        this.contextFactory = contextFactory;
-    }
-    
-    public async Task CreateRangeAsync(IEnumerable<AddOn> addOns)
-    {
-        await using var context = await contextFactory.CreateDbContextAsync();
-
-        await context.AddRangeAsync(addOns);
-        await context.SaveChangesAsync();
     }
 }

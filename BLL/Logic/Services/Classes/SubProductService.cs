@@ -52,7 +52,7 @@ public sealed class SubProductService : ISubProductService
         }
 
         await initialParams.Repository
-            .UpdateRange(subProducts);
+            .UpdateRangeAsync(subProducts);
     }
 
     private List<List<ParameterValue>> getAllCombinations(IReadOnlyCollection<Parameter> parameters)

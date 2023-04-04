@@ -1,24 +1,13 @@
 ﻿using DAL.EntityFramework;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using NucleusModels.Entities;
 
 namespace DAL.Repositories.Classes;
 
-public sealed class SubProductParameterValueRepository : ISubProductParameterValueRepository
+public sealed class SubProductParameterValueRepository : Repository, ISubProductParameterValueRepository
 {
-    private readonly IDbContextFactory<AppDbContext> contextFactory;
-
     public SubProductParameterValueRepository(IDbContextFactory<AppDbContext> contextFactory)
+        : base(contextFactory)
     {
-        this.contextFactory = contextFactory;
-    }
-    
-    public async Task CreateRangeAsync(IEnumerable<SubProductParameterValue> subProductParameterValues)
-    {
-        await using var context = await contextFactory.CreateDbContextAsync();
-
-        await context.SubProductParameterValues.AddRangeAsync(subProductParameterValues);
-        await context.SaveChangesAsync();
     }
 }
