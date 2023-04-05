@@ -1,6 +1,7 @@
 ﻿using BLL.Exceptions;
 using BLL.Logic.Services.InitialsParams;
 using BLL.Logic.Services.Interfaces;
+using DAL.Transaction;
 using Mapster;
 using NucleusModels.Entities;
 using NucleusModels.Service.Parameters;
@@ -24,18 +25,21 @@ public sealed class ProductService : IProductService
     
     public async Task<long> CreateProductAsync(CreateProductParameters parameters)
     {
+        using var transaction = TransactionHelp.GetTransactionScope();
+        
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);
 
         var createParametersParameters = new CreateParametersParameters(parameters.Parameters, product.Id);
         await initialParams.ParameterService.CreateRangeAsync(createParametersParameters);
-        
+    
         var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
 
         product = await GetByIdAsync(product.Id);
         await initialParams.SubProductService.CreateRangeAsync(product);
 
+        transaction.Complete();
         return product.Id;
     }
 }
