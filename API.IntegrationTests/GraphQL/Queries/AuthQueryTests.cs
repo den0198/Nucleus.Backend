@@ -22,13 +22,14 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     public async Task SignIn_CorrectUserNameAndCorrectPassword_TokenResponse()
     {
         var client = getClient();
-        var request = new SignInInput
+        var input = new SignInInput
         {
             UserName = DefaultSeeds.USER_USER_USERNAME,
             Password = DefaultSeeds.USER_USER_PASSWORD
         };
 
-        var response = await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request);
+        var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
+            "signIn", input);
 
         Assert.NotNull(response.AccessToken);
         Assert.NotNull(response.RefreshToken);
@@ -40,32 +41,34 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     public async Task SignIn_IncorrectUserNameAndAnyPassword_ResponseWithExceptionCodeUserNotFound(bool correctPassword)
     {
         var client = getClient();
-        var request = new SignInInput
+        var input = new SignInInput
         {
             UserName = AnyValue.ShortString,
             Password = correctPassword ? DefaultSeeds.USER_USER_PASSWORD : AnyValue.Password
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request));
+            await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
+                "signIn", input));
 
-        AssertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
     }
 
     [Fact]
     public async Task SignIn_CorrectUserNameAndIncorrectPassword_ResponseWithExceptionCodePasswordIncorrect()
     {
         var client = getClient();
-        var request = new SignInInput
+        var input = new SignInInput
         {
             UserName = DefaultSeeds.USER_USER_USERNAME,
             Password = AnyValue.Password
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request));
+            await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
+                "signIn", input));
 
-        AssertExceptionCode(ExceptionCodesEnum.PasswordIncorrectExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.PasswordIncorrectExceptionCode, exception.Code);
     }
 
     #endregion

@@ -3,7 +3,6 @@ using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
 using NucleusModels.GraphQl.Data;
-using NucleusModels.GraphQl.Inputs;
 using TestsHelpers;
 using Xunit;
 
@@ -21,16 +20,14 @@ public class UserQueryTests : BaseIntegrationTests
     [Fact]
     public async Task GetUsersByEmail_UserFound_UserResponse()
     {
+        var context = await getContext();
         var authClient = await getAuthClientAsync();
-        var expectedUser = await Context.Users
+        var expectedUser = await context.Users
             .FirstAsync();
-        var request = new FindUserByEmailInput
-        {
-            Email = expectedUser.Email
-        };
+        var email = expectedUser.Email!;
 
-        var response = await sendQueryAsync<FindUserByEmailInput, UserData>(authClient,
-            "userByEmail", request);
+        var response = await sendAsync<string, UserData>(authClient,
+            GraphQlQueryTypesEnum.Query, "userByEmail", email, "email");
         
         Assert.Equal(expectedUser.Id, response.UserId);
         Assert.Equal(expectedUser.UserName, response.UserName);
@@ -44,15 +41,13 @@ public class UserQueryTests : BaseIntegrationTests
     public async Task GetUserByEmail_UserNotFound_ResponseWithExceptionCodeUserNotFound()
     {
         var authClient = await getAuthClientAsync();
-        var request = new FindUserByEmailInput
-        {
-            Email = AnyValue.Email
-        };
+        var email = AnyValue.Email;
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
-            await sendQueryAsync<FindUserByEmailInput, UserData>(authClient, "userByEmail", request));
+            await sendAsync<string, UserData>(authClient, GraphQlQueryTypesEnum.Query,
+                "userByEmail", email, "email"));
 
-        AssertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
     }
 
     #endregion

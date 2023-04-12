@@ -16,13 +16,14 @@ public sealed class UserMutationTests : BaseIntegrationTests
     {
     }
 
-    #region Register
+    #region RegisterUser
 
     [Fact]
-    public async Task Register_CorrectRequest_UserAdded()
+    public async Task RegisterUser_CorrectRequest_UserAdded()
     {
+        var context = await getContext();
         var client = getClient();
-        var request = new RegisterUserInput
+        var input = new RegisterUserInput
         {
             UserName = AnyValue.ShortString,
             Password = AnyValue.Password,
@@ -32,30 +33,31 @@ public sealed class UserMutationTests : BaseIntegrationTests
             LastName = AnyValue.String,
             MiddleName = AnyValue.String
         };
-
-        var response = await sendMutationAsync<RegisterUserInput, StatusData>(client, "registerUser", request);
+        var response = await sendAsync<RegisterUserInput, StatusData>(client,
+            GraphQlQueryTypesEnum.Mutation, "registerUser", input);
 
         var okResponse = new StatusData();
-        var user = await Context.Users
-            .FirstAsync(u => u.Email == request.Email);
+        var user = await context.Users
+            .FirstAsync(u => u.Email == input.Email);
         Assert.Equal(okResponse.Status, response.Status);
-        Assert.Equal(user.UserName, request.UserName);
-        Assert.Equal(user.Email, request.Email);
-        Assert.Equal(user.PhoneNumber, request.PhoneNumber);
-        Assert.Equal(user.FirstName, request.FirstName);
-        Assert.Equal(user.LastName, request.LastName);
-        Assert.Equal(user.MiddleName, request.MiddleName);
+        Assert.Equal(user.UserName, input.UserName);
+        Assert.Equal(user.Email, input.Email);
+        Assert.Equal(user.PhoneNumber, input.PhoneNumber);
+        Assert.Equal(user.FirstName, input.FirstName);
+        Assert.Equal(user.LastName, input.LastName);
+        Assert.Equal(user.MiddleName, input.MiddleName);
     }
 
     [Theory]
     [InlineData(true, true)]
     [InlineData(true, false)]
     [InlineData(false, true)]
-    public async Task Register_UserExist_ErrorResponseRegistrationExceptionCode(bool isExistUserName, bool isExistEmail)
+    public async Task RegisterUser_UserExist_ErrorResponseRegistrationExceptionCode(bool isExistUserName, bool isExistEmail)
     {
+        var context = await getContext();
         var client = getClient();
-        var user = await Context.Users.FirstAsync();
-        var request = new RegisterUserInput
+        var user = await context.Users.FirstAsync();
+        var input = new RegisterUserInput
         {
             UserName = isExistUserName ? user.UserName : AnyValue.ShortString,
             Password = AnyValue.Password,
@@ -67,9 +69,10 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<RegisterUserInput, StatusData>(client, "registerUser", request));
+            await sendAsync<RegisterUserInput, StatusData>(client,GraphQlQueryTypesEnum.Mutation,
+                "registerUser", input));
 
-        AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
 
     [Theory]
@@ -78,10 +81,10 @@ public sealed class UserMutationTests : BaseIntegrationTests
     [InlineData("1")]
     [InlineData("b")]
     [InlineData("@")]
-    public async Task Register_IncorrectPassword_ErrorResponseWithCodeRegisterException(string incorrectPassword)
+    public async Task RegisterUser_IncorrectPassword_ErrorResponseWithCodeRegisterException(string incorrectPassword)
     {
         var client = getClient();
-        var request = new RegisterUserInput
+        var input = new RegisterUserInput
         {
             UserName = AnyValue.ShortString,
             Password = incorrectPassword,
@@ -93,9 +96,10 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendMutationAsync<RegisterUserInput, StatusData>(client, "registerUser", request));
+            await sendAsync<RegisterUserInput, StatusData>(client, GraphQlQueryTypesEnum.Mutation,
+                "registerUser", input));
 
-        AssertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
 
     #endregion

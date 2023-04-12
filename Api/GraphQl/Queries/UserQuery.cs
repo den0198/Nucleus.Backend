@@ -2,7 +2,6 @@
 using HotChocolate.Authorization;
 using Mapster;
 using NucleusModels.GraphQl.Data;
-using NucleusModels.GraphQl.Inputs;
 
 namespace API.GraphQl.Queries;
 
@@ -10,9 +9,9 @@ namespace API.GraphQl.Queries;
 public sealed class UserQuery : CoreQuery
 {
     [Authorize]
-    public async Task<UserData> GetUserByEmail(FindUserByEmailInput input,[Service]IUserService service)
+    public async Task<UserData> GetUserByEmail(string email, [Service]IUserService service)
     {
-        var serviceResult = await service.GetByEmailAsync(input.Email);
+        var serviceResult = await service.GetByEmailAsync(email);
 
         return serviceResult.Adapt<UserData>();
     }

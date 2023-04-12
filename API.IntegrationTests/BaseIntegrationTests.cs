@@ -18,6 +18,7 @@ using GraphQL;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NucleusModels.GraphQl;
 using NucleusModels.GraphQl.Data;
@@ -33,11 +34,17 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     protected BaseIntegrationTests(CustomWebApplicationFactory factory)
     {
         this.factory = factory;
-        Context = getContext();
     }
+    
+    protected async Task<AppDbContext> getContext()
+    {
+        var serviceCollection = factory.Services;
+        var scope = serviceCollection.CreateAsyncScope();
 
-    protected AppDbContext Context { get; }
-
+        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
+        return await contextFactory.CreateDbContextAsync();
+    }
+    
     protected async Task<GraphQLHttpClient> getAuthClientAsync()
     {
         var client = getClient();
@@ -46,7 +53,8 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
             UserName = DefaultSeeds.USER_USER_USERNAME,
             Password = DefaultSeeds.USER_USER_PASSWORD
         };
-        var response = await sendQueryAsync<SignInInput, TokenData>(client, "signIn", request);
+        var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
+            "signIn", request);
 
         return getAuthClient(response.AccessToken);
     }
@@ -58,17 +66,33 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
 
         return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
     }
-
-    protected async Task<TResponse> sendQueryAsync<TRequest, TResponse>(GraphQLHttpClient client, string nameMethod, TRequest request)
+    
+    protected async Task<TResponse> sendAsync<TResponse>(IGraphQLClient client, GraphQlQueryTypesEnum type,
+        string name)
     {
-        return await sendAsync<TRequest, TResponse>(client, "query", nameMethod, request);
-    }
+        var query = getGraphQlQuery<TResponse>(type, name);
+        var graphQlRequest = new GraphQLRequest
+        {
+            Query = query,
+        };
 
-    protected async Task<TResponse> sendMutationAsync<TRequest, TResponse>(GraphQLHttpClient client, string nameMethod, TRequest request)
+        return await sendAsync<TResponse>(client, graphQlRequest, name);
+    }
+    
+    protected async Task<TResponse> sendAsync<TInput, TResponse>(IGraphQLClient client, 
+        GraphQlQueryTypesEnum type, string name, TInput input, string? nameInput = "input")
     {
-        return await sendAsync<TRequest, TResponse>(client, "mutation", nameMethod, request);
+        var inputTypeName = input!.GetType().Name;
+        var query = getGraphQlQuery<TResponse>(type, name, inputTypeName, nameInput);
+        var graphQlRequest = new GraphQLRequest
+        {
+            Query = query,
+            Variables = new { input }
+        };
+        
+        return await sendAsync<TResponse>(client, graphQlRequest, name);
     }
-
+    
     protected GraphQLHttpClient getClient()
     {
         var (httpClient, options) = getClientAndOptions();
@@ -76,20 +100,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return new GraphQLHttpClient(options, new SystemTextJsonSerializer(), httpClient);
     }
 
-    protected void AssertExceptionCode(ExceptionCodesEnum expectedCodeEnum, int actualCode)
+    protected static void assertExceptionCode(ExceptionCodesEnum expectedCodeEnum, int actualCode)
     {
-        var intExpectedCode = (int) expectedCodeEnum;
+        var intExpectedCode = (int)expectedCodeEnum;
         Assert.Equal(intExpectedCode, actualCode);
     }
-
-    private AppDbContext getContext()
-    {
-        var serviceCollection = factory.Services;
-        var scope = serviceCollection.CreateAsyncScope();
-
-        return scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    }
-
+    
     private (HttpClient, GraphQLHttpClientOptions) getClientAndOptions()
     {
         var httpClient = factory.CreateClient();
@@ -101,17 +117,34 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return (httpClient, option);
     }
 
-    private static async Task<TResponse> sendAsync<TRequest, TResponse>(IGraphQLClient client, string nameQuery,
-        string nameMethod, TRequest request)
+    private static string getGraphQlQuery<TResponse>(GraphQlQueryTypesEnum type, string name,
+        string? inputTypeName = default, string? nameInput = "input")
     {
-        var graphQlRequestType = getGraphQlStringRequest(request);
-        var graphQlFullRequest = getGraphQlFullRequest<TResponse>(nameQuery, nameMethod, graphQlRequestType);
-
-        var graphQlRequest = new GraphQLRequest {Query = graphQlFullRequest};
+        var responseModelProperties = typeof(IEnumerable).IsAssignableFrom(typeof(TResponse)) 
+            ? typeof(TResponse).GetGenericArguments().First().GetProperties() 
+            : typeof(TResponse).GetProperties();
+        var graphQlResponseType = getGraphQlResponseType(responseModelProperties);
+        var typeName = type.ToString().ToLower();
+        
+        var result = new StringBuilder($"{typeName} {name}");
+        result.Append(inputTypeName == default ? "()" : $"($input: {inputTypeName}!)");
+        result.Append('{');
+        result.Append($"{name}");
+        result.Append(inputTypeName == default ? "()" : $"({nameInput}: $input)");
+        result.Append('{');
+        result.Append(typeof(TResponse).IsPrimitive ? " " :graphQlResponseType);
+        result.Append('}');
+        result.Append('}');
+        
+        return result.ToString();
+    }
+    
+    private static async Task<TResponse> sendAsync<TResponse>(IGraphQLClient client, GraphQLRequest request, string name)
+    {
         try
         {
-            var response = await client.SendQueryAsync(graphQlRequest, () => new ExpandoObject());
-            var responseDictionary = ((IDictionary<string, object>) response.Data!)[nameMethod];
+            var response = await client.SendQueryAsync(request, () => new ExpandoObject());
+            var responseDictionary = ((IDictionary<string, object>) response.Data!)[name];
 
             if (responseDictionary.IsNull())
                 throw new Exception("Response is null!");
@@ -124,40 +157,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
             throw new GraphQlException(errorResponseGraphQl!);
         }
     }
-
-    private static string getGraphQlStringRequest<TRequest>(TRequest request)
-    {
-        var requestModelProperties = typeof(TRequest).GetProperties();
-
-        var graphQlStringRequest = new StringBuilder("input:{");
-        graphQlStringRequest.Append(string.Join(',', requestModelProperties.Select(property =>
-            property.Name.FirstLetterToLower() + ": " + JsonSerializer.Serialize(property.GetValue(request)))));
-        graphQlStringRequest.Append('}');
-
-        return graphQlStringRequest.ToString();
-    }
-
-    private static string getGraphQlFullRequest<TResponse>(string nameQuery, string nameMethod, string graphQlRequestType)
-    {
-        var responseModelProperties = typeof(IEnumerable).IsAssignableFrom(typeof(TResponse)) 
-            ? typeof(TResponse).GetGenericArguments().First().GetProperties() 
-            : typeof(TResponse).GetProperties();
-        var graphQlResponseType = getGraphQlResponseType(responseModelProperties);
-        var graphQlFullRequest = new StringBuilder(nameQuery);
-
-        graphQlFullRequest.Append('{');
-        graphQlFullRequest.Append(nameMethod);
-        graphQlFullRequest.Append('(');
-        graphQlFullRequest.Append(graphQlRequestType);
-        graphQlFullRequest.Append(')');
-        graphQlFullRequest.Append('{');
-        graphQlFullRequest.Append(graphQlResponseType);
-        graphQlFullRequest.Append('}');
-        graphQlFullRequest.Append('}');
-
-        return graphQlFullRequest.ToString();
-    }
-
+    
     private static string getGraphQlResponseType(IEnumerable<PropertyInfo> propertyInfos, string result = "")
     {
         foreach (var propertyInfo in propertyInfos)

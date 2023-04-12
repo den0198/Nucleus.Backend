@@ -7,7 +7,8 @@ namespace API.GraphQl.Queries;
 [ExtendObjectType(typeof(CoreQuery))]
 public sealed class ProductQuery : CoreQuery
 {
-    public async Task<ProductData> GetProductById([Service]IProductService productService, long productId)
+    public async Task<ProductData> GetProductById(long productId,
+        [Service]IProductService productService)
     {
         var serviceResult = await productService.GetByIdAsync(productId);
 
