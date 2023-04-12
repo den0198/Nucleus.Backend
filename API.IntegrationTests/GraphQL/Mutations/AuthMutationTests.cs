@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Common.Constants.DataBase;
+using Common.Constants.GraphQl;
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         };
 
         var response = await sendAsync<NewTokenInput, TokenData>(authClient,
-            GraphQlQueryTypesEnum.Mutation, "newToken", input);
+            GraphQlQueryTypesEnum.Mutation, MutationNames.NEW_TOKEN, input);
 
         var user = await context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_USER_USERNAME);
         var refreshToken = await context.UserTokens.FirstAsync(t => t.UserId == user.Id);
@@ -58,7 +59,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<NewTokenInput, TokenData>(authClient, GraphQlQueryTypesEnum.Mutation,
-                "newToken", input));
+                MutationNames.NEW_TOKEN, input));
 
         assertExceptionCode(ExceptionCodesEnum.AccessTokenIncorrectExceptionCode, exception.Code);
     }
@@ -77,7 +78,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<NewTokenInput, TokenData>(authClient, GraphQlQueryTypesEnum.Mutation,
-                "newToken", input));
+                MutationNames.NEW_TOKEN, input));
 
         assertExceptionCode(ExceptionCodesEnum.RefreshTokenIncorrectExceptionCode, exception.Code);
     }
@@ -93,7 +94,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         };
 
         return await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-            "signIn", input);
+            QueryNames.SIGN_IN, input);
     }
 
     #endregion

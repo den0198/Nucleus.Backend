@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Common.Constants.DataBase;
+using Common.Constants.GraphQl;
 using Common.Enums;
 using Common.GraphQl;
 using NucleusModels.GraphQl.Data;
@@ -29,7 +30,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         };
 
         var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-            "signIn", input);
+            QueryNames.SIGN_IN, input);
 
         Assert.NotNull(response.AccessToken);
         Assert.NotNull(response.RefreshToken);
@@ -49,7 +50,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-                "signIn", input));
+                QueryNames.SIGN_IN, input));
 
         assertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
     }
@@ -65,8 +66,8 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-                "signIn", input));
+            await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query, 
+                QueryNames.SIGN_IN, input));
 
         assertExceptionCode(ExceptionCodesEnum.PasswordIncorrectExceptionCode, exception.Code);
     }

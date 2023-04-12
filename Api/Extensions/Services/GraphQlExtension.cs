@@ -25,7 +25,6 @@ public static class GraphQlExtension
         builder
             .AddType<SignInInputType>()
             .AddType<NewTokenInputType>()
-            .AddType<FindUserByEmailInputType>()
             .AddType<RegisterUserInputType>()
             .AddType<CreateCategoryInputType>()
             .AddType<CreateProductInputType>()

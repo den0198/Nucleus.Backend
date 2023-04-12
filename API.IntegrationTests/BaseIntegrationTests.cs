@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Common.Constants.DataBase;
+using Common.Constants.GraphQl;
 using Common.Enums;
 using Common.Extensions;
 using Common.GraphQl;
@@ -54,7 +55,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
             Password = DefaultSeeds.USER_USER_PASSWORD
         };
         var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-            "signIn", request);
+            QueryNames.SIGN_IN, request);
 
         return getAuthClient(response.AccessToken);
     }
@@ -79,7 +80,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return await sendAsync<TResponse>(client, graphQlRequest, name);
     }
     
-    protected async Task<TResponse> sendAsync<TInput, TResponse>(IGraphQLClient client, 
+    protected static async Task<TResponse> sendAsync<TInput, TResponse>(IGraphQLClient client, 
         GraphQlQueryTypesEnum type, string name, TInput input, string? nameInput = "input")
     {
         var inputTypeName = input!.GetType().Name;

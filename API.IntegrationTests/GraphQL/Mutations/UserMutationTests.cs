@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Common.Constants.GraphQl;
 using Common.Enums;
 using Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
             MiddleName = AnyValue.String
         };
         var response = await sendAsync<RegisterUserInput, StatusData>(client,
-            GraphQlQueryTypesEnum.Mutation, "registerUser", input);
+            GraphQlQueryTypesEnum.Mutation, MutationNames.REGISTER_USER, input);
 
         var okResponse = new StatusData();
         var user = await context.Users
@@ -70,7 +71,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<RegisterUserInput, StatusData>(client,GraphQlQueryTypesEnum.Mutation,
-                "registerUser", input));
+                MutationNames.REGISTER_USER, input));
 
         assertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
@@ -97,7 +98,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<RegisterUserInput, StatusData>(client, GraphQlQueryTypesEnum.Mutation,
-                "registerUser", input));
+                MutationNames.REGISTER_USER, input));
 
         assertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
     }
