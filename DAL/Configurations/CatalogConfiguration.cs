@@ -10,7 +10,7 @@ public sealed class CatalogConfiguration : IEntityTypeConfiguration<Category>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder
-            .ToTable(TablesNames.CATEGORY);
+            .ToTable(TablesNames.CATEGORIES);
         
         builder
             .Property(c => c.Id)

@@ -40,7 +40,7 @@ namespace DAL.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.CreateTable(
-                name: "category",
+                name: "categories",
                 columns: table => new
                 {
                     category_id = table.Column<long>(type: "bigint", nullable: false)
@@ -51,7 +51,7 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_category", x => x.category_id);
+                    table.PrimaryKey("PK_categories", x => x.category_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,9 +69,9 @@ namespace DAL.Migrations
                 {
                     table.PrimaryKey("PK_products", x => x.product_id);
                     table.ForeignKey(
-                        name: "FK_products_category_category_id",
+                        name: "FK_products_categories_category_id",
                         column: x => x.category_id,
-                        principalTable: "category",
+                        principalTable: "categories",
                         principalColumn: "category_id");
                 });
 
@@ -261,7 +261,7 @@ namespace DAL.Migrations
                 name: "products");
 
             migrationBuilder.DropTable(
-                name: "category");
+                name: "categories");
 
             migrationBuilder.DropColumn(
                 name: "date_time_created",
