@@ -57,7 +57,7 @@ public sealed class UserServiceTests : UnitTest
 
         initialParams.Repository.FindByIdAsync(testData.User.Id).ReturnsNull();
 
-        await Assert.ThrowsAsync<UserNotFoundException>(async () =>
+        await Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
             await service.GetByIdAsync(testData.User.Id));
     }
 
@@ -88,7 +88,7 @@ public sealed class UserServiceTests : UnitTest
 
         initialParams.Repository.FindByUserNameAsync(userName).ReturnsNull();
 
-        await Assert.ThrowsAsync<UserNotFoundException>(async () =>
+        await Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
             await service.GetByUserNameAsync(userName));
     }
     
@@ -119,7 +119,7 @@ public sealed class UserServiceTests : UnitTest
 
         initialParams.Repository.FindByEmailAsync(testData.User.Email).ReturnsNull();
 
-        await Assert.ThrowsAsync<UserNotFoundException>(async () =>
+        await Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
             await service.GetByEmailAsync(userName));
     }
     

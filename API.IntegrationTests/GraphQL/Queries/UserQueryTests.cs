@@ -48,7 +48,7 @@ public class UserQueryTests : BaseIntegrationTests
             await sendAsync<string, UserData>(authClient, GraphQlQueryTypesEnum.Query,
                 QueryNames.GET_USER_BY_EMAIL, email, "email"));
 
-        assertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }
 
     #endregion

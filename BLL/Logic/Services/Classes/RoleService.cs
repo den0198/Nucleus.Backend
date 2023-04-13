@@ -18,7 +18,7 @@ public class RoleService : IRoleService
     public async Task<Role> GetByNameAsync(string name)
     {
         return await initialParams.Repository.FindByNameAsync(name)
-               ?? throw new RoleNotFoundException(name);
+               ?? throw new ObjectNotFoundException($"Role with name {name} not found");
     }
 
     public async Task<IEnumerable<Role>> GetUserRolesAsync(User user)

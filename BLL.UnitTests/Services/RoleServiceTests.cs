@@ -50,7 +50,7 @@ public sealed class RoleServiceTests : UnitTest
 
         initialParams.Repository.FindByNameAsync(notExistsRoleName).ReturnsNull();
 
-        await Assert.ThrowsAsync<RoleNotFoundException>(async () => 
+        await Assert.ThrowsAsync<ObjectNotFoundException>(async () => 
             await service.GetByNameAsync(notExistsRoleName));
     }
 

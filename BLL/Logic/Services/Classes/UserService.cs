@@ -20,19 +20,19 @@ public sealed class UserService : IUserService
     public async Task<User> GetByIdAsync(long userId)
     {
         return await initialParams.Repository.FindByIdAsync(userId)
-               ?? throw new UserNotFoundException($"userId: {userId}");
+               ?? throw new ObjectNotFoundException($"User with userId: '{userId}' not found!");
     }
 
     public async Task<User> GetByUserNameAsync(string userName)
     {
         return await initialParams.Repository.FindByUserNameAsync(userName)
-               ?? throw new UserNotFoundException($"userName: {userName}");
+               ?? throw new ObjectNotFoundException($"User with userName: '{userName}' not found!");
     }
 
     public async Task<User> GetByEmailAsync(string email)
     {
         return await initialParams.Repository.FindByEmailAsync(email)
-               ?? throw new UserNotFoundException($"email: {email}");
+               ?? throw new ObjectNotFoundException($"User with email: '{email}' not found!");
     }
 
     public async Task CreateAsync(CreateUserParameters parameters)

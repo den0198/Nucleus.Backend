@@ -133,7 +133,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         result.Append($"{name}");
         result.Append(inputTypeName == default ? "()" : $"({nameInput}: $input)");
         result.Append('{');
-        result.Append(typeof(TResponse).IsPrimitive ? " " :graphQlResponseType);
+        result.Append(typeof(TResponse).IsPrimitive ? " " : graphQlResponseType);
         result.Append('}');
         result.Append('}');
         

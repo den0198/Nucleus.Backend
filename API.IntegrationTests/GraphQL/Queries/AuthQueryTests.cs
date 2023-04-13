@@ -52,7 +52,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
             await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
                 QueryNames.SIGN_IN, input));
 
-        assertExceptionCode(ExceptionCodesEnum.UserNotFoundExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }
 
     [Fact]
