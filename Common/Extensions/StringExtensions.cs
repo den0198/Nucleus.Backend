@@ -12,7 +12,7 @@ public static class StringExtensions
 
     public static bool IsEqual(this string value, string other)
     {
-        return CheckBothIsNull(value, other) || (value.IsNotNull() && string.Equals(value, other, StringComparison.Ordinal));
+        return checkBothIsNull(value, other) || (value != null && string.Equals(value, other, StringComparison.Ordinal));
     }
 
     public static bool IsNotEqual(this string value, string other)
@@ -20,8 +20,8 @@ public static class StringExtensions
         return !value.IsEqual(other);
     }
 
-    private static bool CheckBothIsNull(string value, string other)
+    private static bool checkBothIsNull(string value, string other)
     {
-        return value.IsNull() && other.IsNull();
+        return value == null && other == null;
     }
 }

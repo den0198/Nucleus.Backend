@@ -25,8 +25,10 @@ public sealed class ProductService : IProductService
     
     public async Task<long> CreateProductAsync(CreateProductParameters parameters)
     {
-        using var transaction = TransactionHelp.GetTransactionScope();
+        await initialParams.CategoryService.GetById(parameters.CategoryId);
         
+        using var transaction = TransactionHelp.GetTransactionScope();
+
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);
 

@@ -143,8 +143,11 @@ public sealed class RoleServiceTests : UnitTest
         var rolesNames = testData.Roles.Select(role => role.Name!).ToList();
         var roleName = rolesNames.First();
 
-        initialParams.Repository.FindByNameAsync(roleName).Returns(testData.Roles.First(r => r.Name!.IsEqual(roleName)));
-        initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(rolesNames);
+        initialParams.Repository
+            .FindByNameAsync(roleName)
+            .Returns(testData.Roles.First(r => r.Name!.IsEqual(roleName)));
+        initialParams.Repository
+            .GetUserRolesNamesAsync(testData.User).Returns(rolesNames);
 
         await Assert.ThrowsAsync<UserAlreadyHasThisRoleException>(async () =>
             await service.GiveUserRoleAsync(testData.User, roleName));

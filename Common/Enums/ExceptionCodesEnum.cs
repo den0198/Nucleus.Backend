@@ -3,10 +3,11 @@
 public enum ExceptionCodesEnum
 {
     ObjectNotFoundExceptionCode = 0,
-    UserAlreadyHasThisRoleExceptionCode = 1,
-    AddRoleExceptionCode = 2,
-    AddUserExceptionCode = 3,
-    PasswordIncorrectExceptionCode = 4,
-    RefreshTokenIncorrectExceptionCode = 5,
-    AccessTokenIncorrectExceptionCode = 6,
+    ObjectAlreadyExistsExceptionCode = 1,
+    UserAlreadyHasThisRoleExceptionCode = 2,
+    AddRoleExceptionCode = 3,
+    AddUserExceptionCode = 4,
+    PasswordIncorrectExceptionCode = 5,
+    RefreshTokenIncorrectExceptionCode = 6,
+    AccessTokenIncorrectExceptionCode = 7,
 }
