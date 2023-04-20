@@ -4,8 +4,8 @@ namespace TestsHelpers.MocksData;
 
 public static class SubProductParameterValueMockData
 {
-    public static IList<SubProductParameterValue> GetMany(long subProductId, long parameterId, long parameterValueId, 
-        int count)
+    public static IEnumerable<SubProductParameterValue> GetMany(long subProductId, long parameterId, 
+        long parameterValueId, int count)
     {
         var subProductParameterValues = new List<SubProductParameterValue>();
         for (var i = 0; i < count; i++)

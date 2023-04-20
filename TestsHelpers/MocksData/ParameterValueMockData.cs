@@ -4,7 +4,7 @@ namespace TestsHelpers.MocksData;
 
 public sealed class ParameterValueMockData
 {
-    public static IList<ParameterValue> GetMany(long parameterId, int count)
+    public static IEnumerable<ParameterValue> GetMany(long parameterId, int count)
     {
         var parameterValues = new List<ParameterValue>();
         for (var i = 0; i < count; i++)

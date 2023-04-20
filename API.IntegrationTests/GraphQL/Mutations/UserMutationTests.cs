@@ -53,7 +53,8 @@ public sealed class UserMutationTests : BaseIntegrationTests
     [InlineData(true, true)]
     [InlineData(true, false)]
     [InlineData(false, true)]
-    public async Task RegisterUser_UserExist_ErrorResponseRegistrationExceptionCode(bool isExistUserName, bool isExistEmail)
+    public async Task RegisterUser_UserExist_ErrorResponseRegistrationExceptionCode(bool isExistUserName,
+        bool isExistEmail)
     {
         var context = await getContext();
         var client = getClient();

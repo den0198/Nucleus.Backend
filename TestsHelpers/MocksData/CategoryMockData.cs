@@ -4,7 +4,7 @@ namespace TestsHelpers.MocksData;
 
 public static class CategoryMockData
 {
-    public static IList<Category> GetMany(int count)
+    public static IEnumerable<Category> GetMany(int count)
     {
         var categories = new List<Category>();
         for (var i = 0; i < count; i++)

@@ -4,7 +4,7 @@ namespace TestsHelpers.MocksData;
 
 public static class ProductMockData
 {
-    public static IList<Product> GetMany(long categoryId, int count)
+    public static IEnumerable<Product> GetMany(long categoryId, int count)
     {
         var products = new List<Product>();
         for (var i = 0; i < count; i++)

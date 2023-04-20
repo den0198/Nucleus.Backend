@@ -4,7 +4,7 @@ namespace TestsHelpers.MocksData;
 
 public static class AddOnMockData
 {
-    public static IList<AddOn> GetMany(long productId, int count)
+    public static IEnumerable<AddOn> GetMany(long productId, int count)
     {
         var addOns = new List<AddOn>();
         for (var i = 0; i < count; i++)
