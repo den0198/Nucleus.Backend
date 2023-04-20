@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using API.IntegrationTests.Inputs.Mutations;
 using Common.Constants.GraphQl;
 using Common.Enums;
+using Common.GraphQl;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NucleusModels.GraphQl.Inputs;
+using TestsHelpers;
 using Xunit;
 
 namespace API.IntegrationTests.GraphQL.Mutations;
@@ -76,6 +78,28 @@ public sealed class ProductMutationTests : BaseIntegrationTests
                 Assert.Contains(subProductParameterValue.ParameterValueId, valueIds);
             }
         }
+    }
+
+    [Fact]
+    public async Task CreateProduct_NonExistentCategoryId_ErrorResponseObjectNotFoundExceptionCode()
+    {
+        var context = await getContext();
+        var authClient = await getAuthClientAsync();
+        var inputsData = new ProductMutationInputs();
+        var nonExistentCategoryId = AnyValue.Long;
+        var category = await context.Categories.SingleOrDefaultAsync(c => c.Id == nonExistentCategoryId);
+        while (category != null)
+        {
+            nonExistentCategoryId = AnyValue.Long;
+            category = await context.Categories.SingleOrDefaultAsync(c => c.Id == nonExistentCategoryId);
+        }
+        var input = inputsData.GetCreateProductInput(nonExistentCategoryId);
+        
+        var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
+            await sendAsync<CreateProductInput, long>(authClient,GraphQlQueryTypesEnum.Mutation,
+                MutationNames.CREATE_PRODUCT, input));
+        
+        assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }
 
     #endregion

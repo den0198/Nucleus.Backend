@@ -27,6 +27,6 @@ public sealed class CategoryRepository : Repository, ICategoryRepository
 
         return await context.Categories
             .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.Name.Equals(name));
+            .SingleOrDefaultAsync(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
     }
 }

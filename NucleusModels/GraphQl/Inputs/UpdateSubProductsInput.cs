@@ -1,11 +1,12 @@
 ﻿using HotChocolate.Types;
 using NucleusModels.GraphQl.Inputs.SubInputs;
+using NucleusModels.Service.CommonDtos;
 
 namespace NucleusModels.GraphQl.Inputs;
 
 public sealed class UpdateSubProductsInput
 {
-    public IList<UpdateSubProductSubInput> SubProducts { get; init; }
+    public IEnumerable<SubProductCommonDto> SubProducts { get; init; }
 }
 
 public sealed class UpdateSubProductsInputType : CoreType<UpdateSubProductsInput>
