@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAL.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,8 @@ namespace API.IntegrationTests;
 
 public static class SeedForTest
 {
+    private static readonly Random random = new();
+    
     public static void InitialSeeds(IServiceCollection serviceCollection)
     {
         var sp = serviceCollection.BuildServiceProvider();
@@ -16,36 +19,48 @@ public static class SeedForTest
         using var appContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         
         appContext.Database.EnsureCreated();
-
+        
         #region Seeds
 
-        var category = CategoryMockData.GetOne();
-        var product = ProductMockData.GetOne(category);
-        var parameters = ParameterMockData.GetMany(product, 5);
-        
+        var categories = new List<Category>();
+        var products = new List<Product>();
+        var parameters = new List<Parameter>();
         var parameterValues = new List<ParameterValue>();
-        foreach (var parameter in parameters)
-        {
-            parameterValues.AddRange(ParameterValueMockData.GetMany(parameter.Id, 3));
-        }
-
-        var addOns = AddOnMockData.GetMany(product.Id, 3);
-        var subProducts = SubProductMockData.GetMany(product.Id, 5);
-        
+        var addOns = new List<AddOn>();
+        var subProducts = new List<SubProduct>();
         var subProductParameterValues = new List<SubProductParameterValue>();
-        foreach (var subProduct in subProducts)
+        
+        categories.AddRange(CategoryMockData.GetMany(getRandomNumber()));
+        foreach (var category in categories)
         {
-            var parameter = parameters.First();
-            var parameterId = parameter.Id;
-            var parameterValueId = parameterValues.First().Id;
-            subProductParameterValues.AddRange(SubProductParameterValueMockData.GetMany(subProduct.Id, 
-                parameterId, parameterValueId, 5));
+            products.AddRange(ProductMockData.GetMany(category.Id, getRandomNumber()));
+            foreach (var product in products)
+            {
+                parameters.AddRange(ParameterMockData.GetMany(product.Id, getRandomNumber()));
+                foreach (var parameter in parameters)
+                {
+                    parameterValues.AddRange(ParameterValueMockData.GetMany(parameter.Id, 
+                        getRandomNumber()));
+                }
+                
+                addOns.AddRange(AddOnMockData.GetMany(product.Id, getRandomNumber()));
+                
+                subProducts.AddRange(SubProductMockData.GetMany(product.Id, getRandomNumber()));
+                foreach (var subProduct in subProducts)
+                {
+                    var parameter = parameters.First();
+                    var parameterId = parameter.Id;
+                    var parameterValueId = parameterValues.First().Id;
+                    subProductParameterValues.AddRange(SubProductParameterValueMockData.GetMany(subProduct.Id, 
+                        parameterId, parameterValueId, getRandomNumber()));
+                }
+            }
         }
-
+        
         #endregion
 
-        appContext.Add(category);
-        appContext.Add(product);
+        appContext.AddRange(categories);
+        appContext.AddRange(products);
         appContext.AddRange(parameters);
         appContext.AddRange(parameterValues);
         appContext.AddRange(addOns);
@@ -54,30 +69,6 @@ public static class SeedForTest
 
         appContext.SaveChanges();
     }
-    
-    private static List<List<ParameterValue>> getAllCombinations(ICollection<Parameter> parameters)
-    {
-        var parameterValueCombinations = new List<List<ParameterValue>>();
-        if (parameters.Count == 0)
-        {
-            parameterValueCombinations.Add(new List<ParameterValue>());
-            return parameterValueCombinations;
-        }
 
-        var firstParameter = parameters.First();
-        var remainingParameters = parameters.Skip(1).ToList();
-        var remainingParameterCombinations = getAllCombinations(remainingParameters);
-
-        foreach (var parameterValue in firstParameter.ParameterValues)
-        {
-            foreach (var remainingParameterCombination in remainingParameterCombinations)
-            {
-                var parameterValueCombination = new List<ParameterValue> { parameterValue };
-                parameterValueCombination.AddRange(remainingParameterCombination);
-                parameterValueCombinations.Add(parameterValueCombination);
-            }
-        }
-
-        return parameterValueCombinations;
-    }
+    private static int getRandomNumber() => random.Next(2, 5);
 }

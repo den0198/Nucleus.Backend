@@ -4,13 +4,25 @@ namespace TestsHelpers.MocksData;
 
 public static class ProductMockData
 {
-    public static Product GetOne(Category category)
+    public static IList<Product> GetMany(long categoryId, int count)
+    {
+        var products = new List<Product>();
+        for (var i = 0; i < count; i++)
+        {
+            var product = getOne(categoryId);
+            products.Add(product);
+        }
+
+        return products;
+    }
+    
+    private static Product getOne(long categoryId)
     {
         return new Product
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString,
-            CategoryId = category.Id,
+            CategoryId = categoryId
         };
     }
 }
