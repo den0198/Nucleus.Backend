@@ -1,6 +1,6 @@
-﻿using NucleusModels.Options;
+﻿using Nucleus.Models.Options;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class OptionServiceExtension
 {

@@ -1,11 +1,11 @@
-﻿using BLL.Logic.Services.Interfaces;
-using Common.Constants.GraphQl;
+﻿using Nucleus.BLL.Logic.Services.Interfaces;
+using Nucleus.Common.Constants.GraphQl;
 using Mapster;
-using NucleusModels.GraphQl.Data;
-using NucleusModels.GraphQl.Inputs;
-using NucleusModels.Service.Parameters;
+using Nucleus.Models.GraphQl.Data;
+using Nucleus.Models.GraphQl.Inputs;
+using Nucleus.Models.Service.Parameters;
 
-namespace API.GraphQl.Queries;
+namespace Nucleus.API.GraphQl.Queries;
 
 [ExtendObjectType(typeof(CoreQuery))]
 public sealed class AuthQuery : CoreQuery

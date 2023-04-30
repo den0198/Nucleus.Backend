@@ -3,26 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Api\API.csproj", "{F7034B98-EFC9-4C90-A0BF-B0753ED6CAAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.API", "Api\Nucleus.API.csproj", "{F7034B98-EFC9-4C90-A0BF-B0753ED6CAAC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{F960B490-F17E-4DD7-B067-F8C92B7F5D20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.DAL", "Nucleus.DAL\Nucleus.DAL.csproj", "{F960B490-F17E-4DD7-B067-F8C92B7F5D20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NucleusModels", "NucleusModels\NucleusModels.csproj", "{2DB44166-E56B-493A-9175-DAE58D0DABFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.Models", "Nucleus.Models\Nucleus.Models.csproj", "{2DB44166-E56B-493A-9175-DAE58D0DABFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{AA1B3519-F128-41C1-914F-153613F12C6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.BLL", "Nucleus.BLL\Nucleus.BLL.csproj", "{AA1B3519-F128-41C1-914F-153613F12C6F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{C8A3DE4E-320A-43CF-8629-BDC6A6FF9E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.Common", "Nucleus.Common\Nucleus.Common.csproj", "{C8A3DE4E-320A-43CF-8629-BDC6A6FF9E89}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A4FC654-9E2A-4182-86DC-78DC69AD3023}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.IntegrationTests", "API.IntegrationTests\API.IntegrationTests.csproj", "{0F11FC1A-322C-4EF3-A348-34CA4333DC80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.API.IntegrationTests", "Nucleus.API.IntegrationTests\Nucleus.API.IntegrationTests.csproj", "{0F11FC1A-322C-4EF3-A348-34CA4333DC80}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.UnitTests", "BLL.UnitTests\BLL.UnitTests.csproj", "{D3FC1F9E-B901-49EF-B86C-D582A41578FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.BLL.UnitTests", "Nucleus.BLL.UnitTests\Nucleus.BLL.UnitTests.csproj", "{D3FC1F9E-B901-49EF-B86C-D582A41578FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsHelpers", "TestsHelpers\TestsHelpers.csproj", "{96DCF620-2F4E-4335-B902-5D611957DA28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.TestsHelpers", "Nucleus.TestsHelpers\Nucleus.TestsHelpers.csproj", "{96DCF620-2F4E-4335-B902-5D611957DA28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,10 @@
-﻿using BLL.Exceptions;
-using BLL.Logic.Services.Interfaces;
-using Common.Constants.DataBase;
-using Common.Extensions;
-using NucleusModels.Service.Parameters;
+﻿using Nucleus.BLL.Exceptions;
+using Nucleus.BLL.Logic.Services.Interfaces;
+using Nucleus.Common.Constants.DataBase;
+using Nucleus.Common.Extensions;
+using Nucleus.Models.Service.Parameters;
 
-namespace API.Initialization;
+namespace Nucleus.API.Initialization;
 
 public static class Seeds
 {

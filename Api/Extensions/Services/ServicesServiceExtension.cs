@@ -1,7 +1,7 @@
-﻿using BLL.Logic.Services.Classes;
-using BLL.Logic.Services.Interfaces;
+﻿using Nucleus.BLL.Logic.Services.Classes;
+using Nucleus.BLL.Logic.Services.Interfaces;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class ServicesServiceExtension
 {

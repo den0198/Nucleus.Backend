@@ -1,4 +1,4 @@
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class CorsServiceExtension
 {

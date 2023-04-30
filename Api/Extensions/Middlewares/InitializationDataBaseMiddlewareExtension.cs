@@ -1,6 +1,6 @@
-﻿using API.Initialization;
+﻿using Nucleus.API.Initialization;
 
-namespace API.Extensions.Middlewares;
+namespace Nucleus.API.Extensions.Middlewares;
 
 public static class InitializationDataBaseMiddlewareExtension
 {

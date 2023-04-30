@@ -1,6 +1,6 @@
-﻿using DAL.UnitOfWork;
+﻿using Nucleus.DAL.UnitOfWork;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class UnitOfWorkServiceExtension
 {

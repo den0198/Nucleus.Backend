@@ -1,6 +1,6 @@
-﻿using BLL.Logic.Services.InitialsParams;
+﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class InitialParamsServiceExtension
 {

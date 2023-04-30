@@ -1,8 +1,8 @@
-using API.Extensions.Middlewares;
-using API.Extensions.Services;
-using Common.MapperConfigurations;
+using Nucleus.API.Extensions.Middlewares;
+using Nucleus.API.Extensions.Services;
+using Nucleus.Common.MapperConfigurations;
 
-namespace API;
+namespace Nucleus.API;
 
 public class Program
 {

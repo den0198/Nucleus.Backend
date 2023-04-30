@@ -1,10 +1,10 @@
-﻿using API.GraphQl.Mutations;
-using API.GraphQl.Queries;
-using HotChocolate.Execution.Configuration;
-using NucleusModels.GraphQl.Inputs;
-using NucleusModels.GraphQl.Inputs.SubInputs;
+﻿using HotChocolate.Execution.Configuration;
+using Nucleus.API.GraphQl.Mutations;
+using Nucleus.API.GraphQl.Queries;
+using Nucleus.Models.GraphQl.Inputs;
+using Nucleus.Models.GraphQl.Inputs.SubInputs;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class GraphQlServiceExtension
 {

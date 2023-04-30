@@ -1,9 +1,9 @@
-﻿using Common.Helpers;
+﻿using Nucleus.Common.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using NucleusModels.Options;
+using Nucleus.Models.Options;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class AuthServiceExtension
 {

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <PackageId>Nucleus.Models</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="HotChocolate.Types" Version="14.0.0-tags-13-1-0-preview-3.1" />
+      <PackageReference Include="Mapster" Version="7.4.0-pre06" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Models">
+        <HintPath>..\API.IntegrationTests\bin\Debug\net6.0\Models.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

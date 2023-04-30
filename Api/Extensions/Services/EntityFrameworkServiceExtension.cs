@@ -1,10 +1,10 @@
-﻿using DAL.EntityFramework;
+﻿using Nucleus.DAL.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NucleusModels.Entities;
-using NucleusModels.Options;
+using Nucleus.Models.Entities;
+using Nucleus.Models.Options;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class EntityFrameworkServiceExtension
 {

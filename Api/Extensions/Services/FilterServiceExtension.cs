@@ -1,6 +1,6 @@
-﻿using API.Filters;
+﻿using Nucleus.API.Filters;
 
-namespace API.Extensions.Services;
+namespace Nucleus.API.Extensions.Services;
 
 public static class FilterServiceExtension
 {

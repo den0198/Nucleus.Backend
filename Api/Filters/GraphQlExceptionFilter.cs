@@ -1,6 +1,6 @@
-﻿using BLL.Exceptions;
+﻿using Nucleus.BLL.Exceptions;
 
-namespace API.Filters;
+namespace Nucleus.API.Filters;
 
 public class GraphQlExceptionFilter : IErrorFilter
 {
