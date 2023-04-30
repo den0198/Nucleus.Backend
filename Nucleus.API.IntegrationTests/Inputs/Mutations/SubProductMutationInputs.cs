@@ -12,7 +12,8 @@ public sealed class SubProductMutationInputs
     public UpdateSubProductsInput GetUpdateSubProductsInput(IEnumerable<SubProduct> subProducts)
     {
         var subProductsCommonDto = subProducts
-            .Select(sp => new SubProductCommonDto(sp.Id, AnyValue.Decimal, AnyValue.Long ));
+            .Select(sp => new SubProductCommonDto(sp.Id, AnyValue.Decimal, AnyValue.Long ))
+            .ToList();
 
         return new UpdateSubProductsInput { SubProducts = subProductsCommonDto };
     }

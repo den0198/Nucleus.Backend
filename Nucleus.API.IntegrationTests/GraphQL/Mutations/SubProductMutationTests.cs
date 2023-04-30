@@ -26,6 +26,7 @@ public sealed class SubProductMutationTests : BaseIntegrationTests
         var inputsData = new SubProductMutationInputs();
         var product = await context.Products
             .Include(p => p.SubProducts)
+            .AsNoTracking()
             .FirstAsync(); 
         var input = inputsData.GetUpdateSubProductsInput(product.SubProducts);
         

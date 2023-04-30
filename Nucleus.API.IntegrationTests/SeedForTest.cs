@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Nucleus.DAL.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
 using Nucleus.Models.Entities;
@@ -12,11 +13,9 @@ public static class SeedForTest
 {
     private static readonly Random random = new();
     
-    public static void InitialSeeds(IServiceCollection serviceCollection)
+    public static void InitialSeeds(IDbContextFactory<AppDbContext> dbContextFactory)
     {
-        var sp = serviceCollection.BuildServiceProvider();
-        using var scope = sp.CreateScope();
-        using var appContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        using var appContext = dbContextFactory.CreateDbContext();
         
         appContext.Database.EnsureCreated();
         

@@ -26,7 +26,10 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 options.UseInMemoryDatabase("InMemoryDbForTesting");
                 options.UseInternalServiceProvider(serviceProvider);
             });
-            SeedForTest.InitialSeeds(serviceCollection);
+            
+            using var scope = serviceCollection.BuildServiceProvider().CreateScope();
+            var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
+            SeedForTest.InitialSeeds(contextFactory);
         });
     }
 }
