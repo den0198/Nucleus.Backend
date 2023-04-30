@@ -20,7 +20,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     #region SignIn
 
     [Fact]
-    public async Task SignIn_CorrectUserNameAndCorrectPassword_TokenResponse()
+    public async Task SignIn_CorrectUserNameAndCorrectPassword_TokenData()
     {
         var client = getClient();
         var input = new SignInInput

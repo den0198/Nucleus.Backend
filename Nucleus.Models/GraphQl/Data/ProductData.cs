@@ -12,7 +12,7 @@ public sealed class ProductData
     public string Name { get; init; }
 
     [JsonPropertyName("categoryId")]
-    public string CategoryId { get; set; }
+    public long CategoryId { get; set; }
     
     [JsonPropertyName("parameters")] 
     public List<ParameterSubData> Parameters { get; init; }

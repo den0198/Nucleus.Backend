@@ -19,7 +19,7 @@ public class UserQueryTests : BaseIntegrationTests
     #region GetUserByEmail
 
     [Fact]
-    public async Task GetUsersByEmail_UserFound_UserResponse()
+    public async Task GetUsersByEmail_UserFound_UserData()
     {
         var context = await getContext();
         var authClient = await getAuthClientAsync();
@@ -39,7 +39,7 @@ public class UserQueryTests : BaseIntegrationTests
     }
 
     [Fact]
-    public async Task GetUserByEmail_UserNotFound_ResponseWithExceptionCodeUserNotFound()
+    public async Task GetUserByEmail_UserNotFound_ResponseWithExceptionCodeObjectNotFound()
     {
         var authClient = await getAuthClientAsync();
         var email = AnyValue.Email;

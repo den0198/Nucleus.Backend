@@ -83,7 +83,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     protected static async Task<TResponse> sendAsync<TInput, TResponse>(IGraphQLClient client, 
         GraphQlQueryTypesEnum type, string name, TInput input, string? nameInput = "input")
     {
-        var inputTypeName = input!.GetType().Name;
+        var inputTypeName = GetTypeName(input);
         var query = getGraphQlQuery<TResponse>(type, name, inputTypeName, nameInput);
         var graphQlRequest = new GraphQLRequest
         {
@@ -116,6 +116,12 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         };
 
         return (httpClient, option);
+    }
+    
+    private static string GetTypeName<TInput>(TInput input)
+    {
+        return input!.GetType().Name
+            .Replace("Int64", "Long");
     }
 
     private static string getGraphQlQuery<TResponse>(GraphQlQueryTypesEnum type, string name,
@@ -164,7 +170,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         foreach (var propertyInfo in propertyInfos)
         {
             var propertyType = propertyInfo.PropertyType;
-            if (propertyType == typeof(string) || propertyType.IsPrimitive)
+            if (propertyType == typeof(string) || propertyType == typeof(decimal) || propertyType.IsPrimitive )
             {
                 result += propertyInfo.Name.FirstLetterToLower() + " ";
             }
