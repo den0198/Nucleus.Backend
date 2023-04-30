@@ -6,9 +6,9 @@ using NucleusModels.Options;
 
 namespace API.Extensions.Services;
 
-public static class EntityFrameworkExtension
+public static class EntityFrameworkServiceExtension
 {
-    public static void AddEntityFramework(this IServiceCollection serviceCollection,
+    public static void AddAppEntityFramework(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default")!;

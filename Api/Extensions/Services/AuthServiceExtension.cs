@@ -5,9 +5,9 @@ using NucleusModels.Options;
 
 namespace API.Extensions.Services;
 
-public static class AuthExtension
+public static class AuthServiceExtension
 {
-    public static void AddAuth(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void AddAppAuth(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var authOptions = configuration.GetSection("AuthOptions").Get<AuthOptions>()!;
 

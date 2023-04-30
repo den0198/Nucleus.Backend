@@ -2,9 +2,9 @@
 
 namespace API.Extensions.Services;
 
-public static class InitialParamsExtension
+public static class InitialParamsServiceExtension
 {
-    public static void AddInitialParams(this IServiceCollection serviceCollection)
+    public static void AddAppInitialParams(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<UserServiceInitialParams>();
         serviceCollection.AddScoped<AuthServiceInitialParams>();

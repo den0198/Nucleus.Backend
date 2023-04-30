@@ -2,9 +2,9 @@
 
 namespace API.Extensions.Services;
 
-public static class FilterExtension
+public static class FilterServiceExtension
 {
-    public static void AddFilters(this IServiceCollection serviceCollection)
+    public static void AddAppFilters(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddErrorFilter<GraphQlExceptionFilter>();
     }

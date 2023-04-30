@@ -2,9 +2,9 @@
 
 namespace API.Extensions.Services;
 
-public static class UnitOfWorkExtension
+public static class UnitOfWorkServiceExtension
 {
-    public static void AddUnitOfWork(this IServiceCollection serviceCollection)
+    public static void AddAppUnitOfWork(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
     }

@@ -14,16 +14,16 @@ public class Program
 
         CoreMapperConfiguration.AddConfigurations();
 
-        services.AddMyCors();
+        services.AddAppCors();
         services.AddControllers();
-        services.AddAuth(configuration);
-        services.AddGraphQl();
-        services.AddEntityFramework(configuration);
-        services.AddUnitOfWork();
-        services.AddAllOptions(configuration);
-        services.AddInitialParams();
-        services.AddBllServices();
-        services.AddFilters();
+        services.AddAppAuth(configuration);
+        services.AddAppGraphQl();
+        services.AddAppEntityFramework(configuration);
+        services.AddAppUnitOfWork();
+        services.AddAppOptions(configuration);
+        services.AddAppInitialParams();
+        services.AddAppServices();
+        services.AddAppFilters();
 
         var app = builder.Build();
         

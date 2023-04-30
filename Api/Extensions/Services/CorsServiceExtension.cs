@@ -1,8 +1,8 @@
 namespace API.Extensions.Services;
 
-public static class CorsExtension
+public static class CorsServiceExtension
 {
-    public static void AddMyCors(this IServiceCollection serviceCollection)
+    public static void AddAppCors(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddCors(options =>
         {

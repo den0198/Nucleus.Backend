@@ -31,6 +31,14 @@ public sealed class SubProductMutationTests : BaseIntegrationTests
         
         await sendAsync<UpdateSubProductsInput, StatusData>(authClient,GraphQlQueryTypesEnum.Mutation, 
             MutationNames.UPDATE_SUB_PRODUCTS, input);
+
+        
+        foreach (var subProductCommonDto in input.SubProducts)
+        {
+            var subProduct = await context.SubProducts.FirstAsync(sp => sp.Id == subProductCommonDto.Id);
+            Assert.Equal(subProductCommonDto.Price, subProduct.Price);
+            Assert.Equal(subProductCommonDto.Quantity, subProduct.Quantity);
+        }
     }
 
     #endregion

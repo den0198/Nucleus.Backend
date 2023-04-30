@@ -3,9 +3,9 @@ using BLL.Logic.Services.Interfaces;
 
 namespace API.Extensions.Services;
 
-public static class ServiceExtension
+public static class ServicesServiceExtension
 {
-    public static void AddBllServices(this IServiceCollection serviceCollection)
+    public static void AddAppServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IAuthService, AuthService>();

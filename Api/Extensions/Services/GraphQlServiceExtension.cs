@@ -6,9 +6,9 @@ using NucleusModels.GraphQl.Inputs.SubInputs;
 
 namespace API.Extensions.Services;
 
-public static class GraphQlExtension
+public static class GraphQlServiceExtension
 {
-    public static void AddGraphQl(this IServiceCollection serviceCollection)
+    public static void AddAppGraphQl(this IServiceCollection serviceCollection)
     {
         var builder = serviceCollection.AddGraphQLServer();
         
