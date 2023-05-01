@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
-        <PackageId>Nucleus.Modelslayer</PackageId>
+        <PackageId>Nucleus.ModelsLayer</PackageId>
         <AssemblyName>Nucleus.ModelsLayer</AssemblyName>
         <RootNamespace>Nucleus.ModelsLayer</RootNamespace>
     </PropertyGroup>

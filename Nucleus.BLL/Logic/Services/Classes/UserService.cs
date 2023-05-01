@@ -3,6 +3,7 @@ using Mapster;
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
+using Nucleus.DAL.Transaction;
 using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 
@@ -37,12 +38,16 @@ public sealed class UserService : IUserService
 
     public async Task CreateAsync(CreateUserParameters parameters)
     {
+        using var transaction = TransactionHelp.GetTransactionScope();
+        
         var user = parameters.Adapt<User>();
         var identityResult = await initialParams.Repository.CrateAsync(user, parameters.Password);
         if (!identityResult.Succeeded)
             throw new AddUserException(identityResult.Errors.Select(e => e.Description));
         
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
+        
+        transaction.Complete();
     }
 
     public async Task UpgradeToAdminAsync(long userId)
