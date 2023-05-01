@@ -1,4 +1,5 @@
-﻿using Nucleus.Common.Constants.DataBase;
+﻿using System.Transactions;
+using Nucleus.Common.Constants.DataBase;
 using Mapster;
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
@@ -36,9 +37,9 @@ public sealed class UserService : IUserService
                ?? throw new ObjectNotFoundException($"User with email: '{email}' not found!");
     }
 
-    public async Task CreateAsync(CreateUserParameters parameters)
+    public async Task CreateAsync(CreateUserParameters parameters, TransactionScope? oldTransaction = default)
     {
-        using var transaction = TransactionHelp.GetTransactionScope();
+        using var transaction = oldTransaction ?? TransactionHelp.GetTransactionScope();
         
         var user = parameters.Adapt<User>();
         var identityResult = await initialParams.Repository.CrateAsync(user, parameters.Password);
@@ -47,7 +48,8 @@ public sealed class UserService : IUserService
         
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
         
-        transaction.Complete();
+        if(oldTransaction == default)
+            transaction.Complete();
     }
 
     public async Task UpgradeToAdminAsync(long userId)

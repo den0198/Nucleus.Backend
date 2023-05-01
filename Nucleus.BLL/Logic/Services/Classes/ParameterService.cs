@@ -1,6 +1,8 @@
-﻿using Mapster;
+﻿using System.Transactions;
+using Mapster;
 using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
+using Nucleus.DAL.Transaction;
 using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 
@@ -15,8 +17,11 @@ public sealed class ParameterService : IParameterService
         this.initialParams = initialParams;
     }
 
-    public async Task CreateRangeAsync(CreateParametersParameters parameters)
+    public async Task CreateRangeAsync(CreateParametersParameters parameters, 
+        TransactionScope? oldTransaction = default)
     {
+        using var transaction = oldTransaction ?? TransactionHelp.GetTransactionScope();
+        
         foreach (var parameterCommonDto in parameters.Parameters)
         {
             var parameter = parameterCommonDto.Adapt<Parameter>();
@@ -27,5 +32,8 @@ public sealed class ParameterService : IParameterService
                 parameter.Id);
             await initialParams.ParameterValueService.CreateRangeAsync(createParameterValuesParameters);
         }
+        
+        if(oldTransaction == default)
+            transaction.Complete();
     }
 }

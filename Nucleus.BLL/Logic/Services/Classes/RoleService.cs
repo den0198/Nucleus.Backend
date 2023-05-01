@@ -34,7 +34,7 @@ public class RoleService : IRoleService
         return userRoles;
     }
 
-    public async Task AddAsync(string name)
+    public async Task CreateAsync(string name)
     {
         var identityResult = await initialParams.Repository.CreateAsync(new Role { Name = name });
         if (!identityResult.Succeeded)

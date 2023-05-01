@@ -95,7 +95,7 @@ public sealed class RoleServiceTests : UnitTest
         initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRoleName))
             .Returns(testData.IdentityResultSuccess);
 
-        await service.AddAsync(newRoleName);
+        await service.CreateAsync(newRoleName);
 
         checkReceivedAdd(initialParams, newRoleName);
     }
@@ -109,7 +109,7 @@ public sealed class RoleServiceTests : UnitTest
 
         initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRoleName))
             .Returns(testData.IdentityResultFailed);
-        await Assert.ThrowsAsync<AddRoleException>(async () => await service.AddAsync(newRoleName));
+        await Assert.ThrowsAsync<AddRoleException>(async () => await service.CreateAsync(newRoleName));
 
         checkReceivedAdd(initialParams, newRoleName);
     }

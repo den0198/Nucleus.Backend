@@ -1,4 +1,5 @@
-﻿using Nucleus.DAL.Transaction;
+﻿using System.Transactions;
+using Nucleus.DAL.Transaction;
 using Mapster;
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
@@ -23,11 +24,12 @@ public sealed class ProductService : IProductService
                ?? throw new ObjectNotFoundException($"Product with productId: {productId} not found");
     }
     
-    public async Task<long> CreateProductAsync(CreateProductParameters parameters)
+    public async Task<long> CreateAsync(CreateProductParameters parameters,
+        TransactionScope? oldTransaction = default)
     {
         await initialParams.CategoryService.GetByIdAsync(parameters.CategoryId);
         
-        using var transaction = TransactionHelp.GetTransactionScope();
+        using var transaction = oldTransaction ?? TransactionHelp.GetTransactionScope();
 
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);
@@ -41,7 +43,9 @@ public sealed class ProductService : IProductService
         product = await GetByIdAsync(product.Id);
         await initialParams.SubProductService.CreateRangeAsync(product);
 
-        transaction.Complete();
+        if(oldTransaction == default)
+            transaction.Complete();
+        
         return product.Id;
     }
 }

@@ -22,8 +22,8 @@ public static class Seeds
 
         try
         {
-            await roleService.AddAsync(DefaultSeeds.ADMIN);
-            await roleService.AddAsync(DefaultSeeds.USER);
+            await roleService.CreateAsync(DefaultSeeds.ADMIN);
+            await roleService.CreateAsync(DefaultSeeds.USER);
 
             foreach (var registerUserParameter in usersParameters)
             {

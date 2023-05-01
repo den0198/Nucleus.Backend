@@ -1,4 +1,5 @@
-﻿using Nucleus.ModelsLayer.Entities;
+﻿using System.Transactions;
+using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
@@ -30,7 +31,8 @@ public interface IUserService
     /// Cоздаёт нового пользователя
     /// </summary>
     /// <param name="parameters">Параметры создания пользователя</param>
-    Task CreateAsync(CreateUserParameters parameters);
+    /// <param name="oldTransaction">Транзация</param>
+    Task CreateAsync(CreateUserParameters parameters, TransactionScope? oldTransaction = default);
 
     /// <summary>
     /// Даёт админ роль

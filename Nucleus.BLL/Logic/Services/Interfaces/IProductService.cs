@@ -1,4 +1,5 @@
-﻿using Nucleus.ModelsLayer.Entities;
+﻿using System.Transactions;
+using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
@@ -11,11 +12,12 @@ public interface IProductService
     /// <param name="productId">Идентификатор продукта</param>
     /// <returns>Продукт</returns>
     Task<Product> GetByIdAsync(long productId);
-    
+
     /// <summary>
     /// Создаёт новый товар
     /// </summary>
     /// <param name="parameters">Параметры для создания продукта</param>
+    /// <param name="oldTransaction">Транзация</param>
     /// <returns>Идентификатор нового продукта</returns>
-    Task<long> CreateProductAsync(CreateProductParameters parameters);
+    Task<long> CreateAsync(CreateProductParameters parameters, TransactionScope? oldTransaction = default);
 }
