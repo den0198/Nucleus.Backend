@@ -1,4 +1,4 @@
-﻿using Nucleus.Models.Service.Parameters;
+﻿using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
 

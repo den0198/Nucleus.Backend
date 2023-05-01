@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 using Nucleus.TestsHelpers;
 
 namespace Nucleus.BLL.UnitTests.TestData;

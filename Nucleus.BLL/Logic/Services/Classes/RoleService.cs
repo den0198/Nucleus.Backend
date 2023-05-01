@@ -2,7 +2,7 @@
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.BLL.Logic.Services.Classes;
 

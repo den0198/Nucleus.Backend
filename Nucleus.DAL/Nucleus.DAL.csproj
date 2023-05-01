@@ -20,7 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Nucleus.Common\Nucleus.Common.csproj" />
-      <ProjectReference Include="..\Nucleus.Models\Nucleus.Models.csproj" />
+      <ProjectReference Include="..\Nucleus.ModelsLayer\Nucleus.Modelslayer.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -3,8 +3,8 @@ using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Nucleus.API.IntegrationTests.Inputs.Mutations;
-using Nucleus.Models.GraphQl.Data;
-using Nucleus.Models.GraphQl.Inputs;
+using Nucleus.ModelsLayer.GraphQl.Data;
+using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Xunit;
 
 namespace Nucleus.API.IntegrationTests.GraphQL.Mutations;

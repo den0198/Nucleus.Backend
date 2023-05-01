@@ -2,8 +2,8 @@
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using Nucleus.Common.Constants.DataBase;
-using Nucleus.Models.Entities;
-using Nucleus.Models.Service.Parameters;
+using Nucleus.ModelsLayer.Entities;
+using Nucleus.ModelsLayer.Service.Parameters;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using Nucleus.BLL.Exceptions;

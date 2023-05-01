@@ -21,9 +21,9 @@ using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Nucleus.Models.GraphQl;
-using Nucleus.Models.GraphQl.Data;
-using Nucleus.Models.GraphQl.Inputs;
+using Nucleus.ModelsLayer.GraphQl;
+using Nucleus.ModelsLayer.GraphQl.Data;
+using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Xunit;
 
 namespace Nucleus.API.IntegrationTests;

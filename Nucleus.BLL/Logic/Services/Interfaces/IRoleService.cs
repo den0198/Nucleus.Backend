@@ -1,4 +1,4 @@
-﻿using Nucleus.Models.Entities;
+﻿using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
 

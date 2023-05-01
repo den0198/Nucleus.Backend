@@ -11,7 +11,7 @@ public sealed class ProductRepository : Repository, IProductRepository
     {
     }
     
-    public async Task<Nucleus.Models.Entities.Product> FindByIdAsync(long productId)
+    public async Task<Nucleus.ModelsLayer.Entities.Product> FindByIdAsync(long productId)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 

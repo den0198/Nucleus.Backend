@@ -143,7 +143,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.AddOn", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.AddOn", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -183,7 +183,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("add_ons", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Category", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Category", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,7 +209,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("categories", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Parameter", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Parameter", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -241,7 +241,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("parameters", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.ParameterValue", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.ParameterValue", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,7 +273,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("parameter_values", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Product", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -305,7 +305,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("products", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Role", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Role", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -347,7 +347,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.SubProduct", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.SubProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -383,7 +383,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("sub_products", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.SubProductParameterValue", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.SubProductParameterValue", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -423,7 +423,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("sub_product_parameter_values", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.User", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -530,7 +530,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Role", null)
+                    b.HasOne("Nucleus.Modelslayer.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -539,7 +539,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.User", null)
+                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -548,7 +548,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.User", null)
+                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -557,13 +557,13 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Role", null)
+                    b.HasOne("Nucleus.Modelslayer.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Nucleus.Models.Entities.User", null)
+                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -572,16 +572,16 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.User", null)
+                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.AddOn", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.AddOn", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Product", "Product")
+                    b.HasOne("Nucleus.Modelslayer.Entities.Product", "Product")
                         .WithMany("AddOns")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -590,9 +590,9 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Parameter", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Parameter", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Product", "Product")
+                    b.HasOne("Nucleus.Modelslayer.Entities.Product", "Product")
                         .WithMany("Parameters")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -601,9 +601,9 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.ParameterValue", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.ParameterValue", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Parameter", "Parameter")
+                    b.HasOne("Nucleus.Modelslayer.Entities.Parameter", "Parameter")
                         .WithMany("ParameterValues")
                         .HasForeignKey("ParameterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,9 +612,9 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Parameter");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Product", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Product", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Category", "Category")
+                    b.HasOne("Nucleus.Modelslayer.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -623,9 +623,9 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.SubProduct", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.SubProduct", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Product", "Product")
+                    b.HasOne("Nucleus.Modelslayer.Entities.Product", "Product")
                         .WithMany("SubProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -634,21 +634,21 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.SubProductParameterValue", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.SubProductParameterValue", b =>
                 {
-                    b.HasOne("Nucleus.Models.Entities.Parameter", "Parameter")
+                    b.HasOne("Nucleus.Modelslayer.Entities.Parameter", "Parameter")
                         .WithMany("SubProductParameterValues")
                         .HasForeignKey("ParameterId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Nucleus.Models.Entities.ParameterValue", "ParameterValue")
+                    b.HasOne("Nucleus.Modelslayer.Entities.ParameterValue", "ParameterValue")
                         .WithMany("SubProductParameterValues")
                         .HasForeignKey("ParameterValueId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Nucleus.Models.Entities.SubProduct", "SubProduct")
+                    b.HasOne("Nucleus.Modelslayer.Entities.SubProduct", "SubProduct")
                         .WithMany("SubProductParameterValues")
                         .HasForeignKey("SubProductId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -661,24 +661,24 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("SubProduct");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Category", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Parameter", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Parameter", b =>
                 {
                     b.Navigation("ParameterValues");
 
                     b.Navigation("SubProductParameterValues");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.ParameterValue", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.ParameterValue", b =>
                 {
                     b.Navigation("SubProductParameterValues");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.Product", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Product", b =>
                 {
                     b.Navigation("AddOns");
 
@@ -687,7 +687,7 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("SubProducts");
                 });
 
-            modelBuilder.Entity("Nucleus.Models.Entities.SubProduct", b =>
+            modelBuilder.Entity("Nucleus.Modelslayer.Entities.SubProduct", b =>
                 {
                     b.Navigation("SubProductParameterValues");
                 });

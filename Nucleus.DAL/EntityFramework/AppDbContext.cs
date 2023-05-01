@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.EntityFramework;
 

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Nucleus.BLL.Logic.ServiceHelpers.Classes;
 using Nucleus.BLL.Logic.ServiceHelpers.Interfaces;
 using Nucleus.BLL.Logic.Services.Interfaces;
-using Nucleus.Models.Options;
+using Nucleus.ModelsLayer.Options;
 
 namespace Nucleus.BLL.Logic.Services.InitialsParams;
 

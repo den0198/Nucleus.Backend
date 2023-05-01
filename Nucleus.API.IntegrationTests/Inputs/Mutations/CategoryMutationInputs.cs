@@ -1,4 +1,4 @@
-﻿using Nucleus.Models.GraphQl.Inputs;
+﻿using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Nucleus.TestsHelpers;
 
 namespace Nucleus.API.IntegrationTests.Inputs.Mutations;

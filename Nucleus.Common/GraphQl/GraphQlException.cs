@@ -1,4 +1,4 @@
-﻿using Nucleus.Models.GraphQl;
+﻿using Nucleus.ModelsLayer.GraphQl;
 
 namespace Nucleus.Common.GraphQl;
 

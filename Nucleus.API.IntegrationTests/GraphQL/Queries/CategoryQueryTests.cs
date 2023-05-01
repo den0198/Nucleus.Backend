@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
-using Nucleus.Models.GraphQl.Data;
+using Nucleus.ModelsLayer.GraphQl.Data;
 using Xunit;
 
 namespace Nucleus.API.IntegrationTests.GraphQL.Queries;

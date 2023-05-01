@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Nucleus.Models.GraphQl.Inputs;
-using Nucleus.Models.GraphQl.Inputs.SubInputs;
+using Nucleus.ModelsLayer.GraphQl.Inputs;
+using Nucleus.ModelsLayer.GraphQl.Inputs.SubInputs;
 using Nucleus.TestsHelpers;
 
 namespace Nucleus.API.IntegrationTests.Inputs.Mutations;

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Nucleus.Models.Entities;
-using Nucleus.Models.Service.Parameters;
+using Nucleus.ModelsLayer.Entities;
+using Nucleus.ModelsLayer.Service.Parameters;
 using Nucleus.TestsHelpers;
 
 namespace Nucleus.BLL.UnitTests.TestData;

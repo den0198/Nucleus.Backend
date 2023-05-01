@@ -1,5 +1,5 @@
-﻿using Nucleus.Models.Service.Parameters;
-using Nucleus.Models.Service.Results;
+﻿using Nucleus.ModelsLayer.Service.Parameters;
+using Nucleus.ModelsLayer.Service.Results;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
 

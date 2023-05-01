@@ -1,7 +1,7 @@
 ﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
-using Nucleus.Models.Entities;
-using Nucleus.Models.Service.Parameters;
+using Nucleus.ModelsLayer.Entities;
+using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.BLL.Logic.Services.Classes;
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Nucleus.Models.Entities;
-using Nucleus.Models.GraphQl.Inputs;
-using Nucleus.Models.Service.CommonDtos;
+using Nucleus.ModelsLayer.Entities;
+using Nucleus.ModelsLayer.GraphQl.Inputs;
+using Nucleus.ModelsLayer.Service.CommonDtos;
 using Nucleus.TestsHelpers;
 
 namespace Nucleus.API.IntegrationTests.Inputs.Mutations;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Nucleus.DAL.Repositories.Interfaces;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Repositories.Classes;
 

@@ -7,7 +7,7 @@ using Nucleus.Common.GraphQl;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Nucleus.API.IntegrationTests.Inputs.Mutations;
-using Nucleus.Models.GraphQl.Inputs;
+using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Nucleus.TestsHelpers;
 using Xunit;
 

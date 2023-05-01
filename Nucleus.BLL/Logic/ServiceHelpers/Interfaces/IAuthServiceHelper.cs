@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.BLL.Logic.ServiceHelpers.Interfaces;
 

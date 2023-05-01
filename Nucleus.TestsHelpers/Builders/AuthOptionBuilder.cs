@@ -1,4 +1,4 @@
-﻿using Nucleus.Models.Options;
+﻿using Nucleus.ModelsLayer.Options;
 
 namespace Nucleus.TestsHelpers.Builders;
 

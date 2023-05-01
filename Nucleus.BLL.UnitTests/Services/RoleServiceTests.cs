@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using Nucleus.Common.Extensions;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using Nucleus.BLL.Exceptions;

@@ -3,7 +3,7 @@ using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Nucleus.Models.GraphQl.Data;
+using Nucleus.ModelsLayer.GraphQl.Data;
 using Nucleus.TestsHelpers;
 using Xunit;
 

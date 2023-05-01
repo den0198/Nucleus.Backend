@@ -1,12 +1,12 @@
 ﻿using Mapster;
-using Nucleus.Models.Entities;
-using Nucleus.Models.GraphQl.Data;
-using Nucleus.Models.GraphQl.Data.SubData;
-using Nucleus.Models.GraphQl.Inputs;
-using Nucleus.Models.GraphQl.Inputs.SubInputs;
-using Nucleus.Models.Service.CommonDtos;
-using Nucleus.Models.Service.Parameters;
-using Nucleus.Models.Service.Results;
+using Nucleus.ModelsLayer.Entities;
+using Nucleus.ModelsLayer.GraphQl.Data;
+using Nucleus.ModelsLayer.GraphQl.Data.SubData;
+using Nucleus.ModelsLayer.GraphQl.Inputs;
+using Nucleus.ModelsLayer.GraphQl.Inputs.SubInputs;
+using Nucleus.ModelsLayer.Service.CommonDtos;
+using Nucleus.ModelsLayer.Service.Parameters;
+using Nucleus.ModelsLayer.Service.Results;
 
 namespace Nucleus.Common.MapperConfigurations;
 

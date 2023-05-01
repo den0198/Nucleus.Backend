@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Repositories.Interfaces;
 

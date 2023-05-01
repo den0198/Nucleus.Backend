@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Nucleus.DAL.EntityFramework;
 using Nucleus.DAL.Repositories.Classes;
 using Nucleus.DAL.Repositories.Interfaces;
-using Nucleus.Models.Entities;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.UnitOfWork;
 
