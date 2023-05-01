@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nucleus.DAL\Nucleus.DAL.csproj" />
-    <ProjectReference Include="..\Nucleus.ModelsLayer\Nucleus.Modelslayer.csproj" />
+    <ProjectReference Include="..\Nucleus.ModelsLayer\Nucleus.ModelsLayer.csproj" />
   </ItemGroup>
 
 </Project>

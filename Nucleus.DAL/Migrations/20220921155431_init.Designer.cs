@@ -146,7 +146,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Modelslayer.Entities.Role", b =>
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Role", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -180,7 +180,7 @@ namespace Nucleus.DAL.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("Nucleus.Modelslayer.Entities.User", b =>
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -279,7 +279,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("Nucleus.Modelslayer.Entities.Role", null)
+                    b.HasOne("Nucleus.ModelsLayer.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -288,7 +288,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
+                    b.HasOne("Nucleus.ModelsLayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -297,7 +297,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
+                    b.HasOne("Nucleus.ModelsLayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -306,13 +306,13 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("Nucleus.Modelslayer.Entities.Role", null)
+                    b.HasOne("Nucleus.ModelsLayer.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
+                    b.HasOne("Nucleus.ModelsLayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -321,7 +321,7 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("Nucleus.Modelslayer.Entities.User", null)
+                    b.HasOne("Nucleus.ModelsLayer.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

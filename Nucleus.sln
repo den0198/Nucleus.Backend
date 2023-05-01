@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.TestsHelpers", "Nuc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nucleus.API", "Nucleus.API\Nucleus.API.csproj", "{92A899F1-DF50-47DA-BC3E-1199F2C32226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nucleus.Modelslayer", "Nucleus.ModelsLayer\Nucleus.Modelslayer.csproj", "{0EA02E1C-3D30-4130-9232-AE61632F57F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nucleus.ModelsLayer", "Nucleus.ModelsLayer\Nucleus.ModelsLayer.csproj", "{0EA02E1C-3D30-4130-9232-AE61632F57F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
