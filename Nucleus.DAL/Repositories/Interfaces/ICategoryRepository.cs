@@ -10,12 +10,18 @@ public interface ICategoryRepository : ICreateEntity<Category>
     /// </summary>
     /// <param name="id">идентификатор</param>
     /// <returns>Категория</returns>
-    Task<Category> FindById(long id);
+    Task<Category> FindByIdAsync(long id);
     
     /// <summary>
     /// Ишет категорию по имени
     /// </summary>
     /// <param name="name">Имя</param>
     /// <returns>Категория</returns>
-    Task<Category> FindByName(string name);
+    Task<Category> FindByNameAsync(string name);
+
+    /// <summary>
+    /// Получает все категории
+    /// </summary>
+    /// <returns>Все категории</returns>
+    Task<IEnumerable<Category>> GetAllAsync();
 }

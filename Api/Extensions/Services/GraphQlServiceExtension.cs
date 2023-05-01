@@ -46,6 +46,7 @@ public static class GraphQlServiceExtension
             .AddQueryType<CoreQuery>()
             .AddTypeExtension<UserQuery>()
             .AddTypeExtension<AuthQuery>()
+            .AddTypeExtension<CategoryQuery>()
             .AddTypeExtension<ProductQuery>();
     }
 

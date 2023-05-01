@@ -10,7 +10,13 @@ public interface ICategoryService
     /// </summary>
     /// <param name="id">идентификатор</param>
     /// <returns>Категория</returns>
-    Task<Category> GetById(long id);
+    Task<Category> GetByIdAsync(long id);
+    
+    /// <summary>
+    /// Получает все категории
+    /// </summary>
+    /// <returns>Все категории</returns>
+    Task<IEnumerable<Category>> GetAllAsync();
     
     /// <summary>
     /// Создаёт новый каталог

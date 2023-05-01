@@ -16,12 +16,17 @@ public sealed class CategoryService : ICategoryService
         this.initialParams = initialParams;
     }
 
-    public async Task<Category> GetById(long id)
+    public async Task<Category> GetByIdAsync(long id)
     {
-        return await initialParams.Repository.FindById(id) 
+        return await initialParams.Repository.FindByIdAsync(id) 
                ?? throw new ObjectNotFoundException($"Category with categoryId: {id} not found");
     }
-    
+
+    public async Task<IEnumerable<Category>> GetAllAsync()
+    {
+        return await initialParams.Repository.GetAllAsync();
+    }
+
     public async Task<long> CreateAsync(CreateCategoryParameters parameters)
     {
         var category = await findByName(parameters.Name);
@@ -36,6 +41,6 @@ public sealed class CategoryService : ICategoryService
     
     private async Task<Category> findByName(string name)
     {
-        return await initialParams.Repository.FindByName(name);
+        return await initialParams.Repository.FindByNameAsync(name);
     }
 }

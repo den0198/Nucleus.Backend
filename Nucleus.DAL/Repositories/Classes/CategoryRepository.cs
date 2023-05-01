@@ -12,7 +12,7 @@ public sealed class CategoryRepository : Repository, ICategoryRepository
     {
     }
 
-    public async Task<Category> FindById(long id)
+    public async Task<Category> FindByIdAsync(long id)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 
@@ -21,12 +21,20 @@ public sealed class CategoryRepository : Repository, ICategoryRepository
             .SingleOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<Category> FindByName(string name)
+    public async Task<Category> FindByNameAsync(string name)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 
         return await context.Categories
             .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            .SingleOrDefaultAsync(c => c.Name.ToLower() == name.ToLower());
+    }
+
+    public async Task<IEnumerable<Category>> GetAllAsync()
+    {
+        await using var context = await ContextFactory.CreateDbContextAsync();
+        return await context.Categories
+            .AsNoTracking()
+            .ToListAsync();
     }
 }

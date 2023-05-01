@@ -63,6 +63,10 @@ public static class CoreMapperConfiguration
             .Ignore(dest => dest.Parameters)
             .Ignore(dest => dest.AddOns)
             .Ignore(dest => dest.SubProducts);
+
+        TypeAdapterConfig<Category, CategoryData>.NewConfig()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.Name, src => src.Name);
         
         TypeAdapterConfig<NewTokenInput, NewTokenParameters>.NewConfig()
             .Map(dest => dest.AccessToken, src => src.AccessToken)
