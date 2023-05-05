@@ -33,10 +33,10 @@ public static class Seeds
             var user = await userService.GetByUserNameAsync(usersParameters.First().UserName);
             await userService.UpgradeToAdminAsync(user.Id);
         }
-        catch (AddRoleException)
+        catch (CreateRoleException)
         {
         }
-        catch (AddUserException)
+        catch (CreateUserException)
         {
         }
     }

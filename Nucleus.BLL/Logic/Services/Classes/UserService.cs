@@ -44,7 +44,7 @@ public sealed class UserService : IUserService
         var user = parameters.Adapt<User>();
         var identityResult = await initialParams.Repository.CrateAsync(user, parameters.Password);
         if (!identityResult.Succeeded)
-            throw new AddUserException(identityResult.Errors.Select(e => e.Description));
+            throw new CreateUserException(identityResult.Errors.Select(e => e.Description));
         
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
         

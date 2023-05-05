@@ -74,7 +74,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
             await sendAsync<RegisterUserInput, StatusData>(client,GraphQlQueryTypesEnum.Mutation,
                 MutationNames.REGISTER_USER, input));
 
-        assertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.CreateUserExceptionCode, exception.Code);
     }
 
     [Theory]
@@ -101,7 +101,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
             await sendAsync<RegisterUserInput, StatusData>(client, GraphQlQueryTypesEnum.Mutation,
                 MutationNames.REGISTER_USER, input));
 
-        assertExceptionCode(ExceptionCodesEnum.AddUserExceptionCode, exception.Code);
+        assertExceptionCode(ExceptionCodesEnum.CreateUserExceptionCode, exception.Code);
     }
 
     #endregion

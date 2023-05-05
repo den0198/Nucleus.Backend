@@ -4,6 +4,7 @@ using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
+using Nucleus.API.IntegrationTests.Inputs.Mutations;
 using Nucleus.ModelsLayer.GraphQl.Data;
 using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Nucleus.TestsHelpers;
@@ -24,14 +25,10 @@ public sealed class AuthMutationTests : BaseIntegrationTests
     public async Task NewToken_CorrectOldToken_NewToken()
     {
         var context = await getContext();
-        var oldToken = await getOldTokenAsync();
+        var inputsData = new AuthMutationInputs();
+        var oldToken = await getOldTokenAsync(inputsData);
         var authClient = getAuthClient(oldToken.AccessToken);
-
-        var input = new NewTokenInput
-        {
-            AccessToken = oldToken.AccessToken,
-            RefreshToken = oldToken.RefreshToken,
-        };
+        var input = inputsData.GetNewTokenInput(oldToken.AccessToken, oldToken.RefreshToken);
 
         var response = await sendAsync<NewTokenInput, TokenData>(authClient,
             GraphQlQueryTypesEnum.Mutation, MutationNames.NEW_TOKEN, input);
@@ -49,13 +46,10 @@ public sealed class AuthMutationTests : BaseIntegrationTests
     public async Task NewToken_IncorrectOldAccessTokenAndAnyRefreshToken_ResponseWithCodeExceptionAccessTokenIncorrect(bool correctRefreshToken)
     {
         var authClient = await getAuthClientAsync();
-        var oldToken = await getOldTokenAsync();
-
-        var input = new NewTokenInput
-        {
-            AccessToken = AnyValue.String,
-            RefreshToken = correctRefreshToken ? oldToken.RefreshToken : AnyValue.String,
-        };
+        var inputsData = new AuthMutationInputs();
+        var oldToken = await getOldTokenAsync(inputsData);
+        var refreshToken = correctRefreshToken ? oldToken.RefreshToken : AnyValue.String;
+        var input = inputsData.GetNewTokenInput(AnyValue.String, refreshToken); 
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<NewTokenInput, TokenData>(authClient, GraphQlQueryTypesEnum.Mutation,
@@ -68,13 +62,10 @@ public sealed class AuthMutationTests : BaseIntegrationTests
     public async Task NewToken_IncorrectOldRefreshToken_ResponseWithCodeExceptionRefreshTokenIncorrect()
     {
         var authClient = await getAuthClientAsync();
-        var oldToken = await getOldTokenAsync();
-
-        var input = new NewTokenInput
-        {
-            AccessToken = oldToken.AccessToken,
-            RefreshToken = AnyValue.ShortString,
-        };
+        var inputsData = new AuthMutationInputs();
+        var oldToken = await getOldTokenAsync(inputsData);
+        
+        var input = inputsData.GetNewTokenInput(oldToken.AccessToken, AnyValue.ShortString);
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<NewTokenInput, TokenData>(authClient, GraphQlQueryTypesEnum.Mutation,
@@ -83,15 +74,10 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         assertExceptionCode(ExceptionCodesEnum.RefreshTokenIncorrectExceptionCode, exception.Code);
     }
 
-    private async Task<TokenData> getOldTokenAsync()
+    private async Task<TokenData> getOldTokenAsync(AuthMutationInputs inputsData)
     {
         var client = getClient();
-
-        var input = new SignInInput
-        {
-            UserName = DefaultSeeds.USER_USER_USERNAME,
-            Password = DefaultSeeds.USER_USER_PASSWORD
-        };
+        var input = inputsData.GetSignInInput();
 
         return await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
             QueryNames.SIGN_IN, input);

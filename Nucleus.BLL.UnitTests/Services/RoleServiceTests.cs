@@ -43,7 +43,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task GetByName_RoleNotFound_RoleNotFoundException()
+    public async Task GetByName_ObjectNotFound_RoleNotFoundException()
     {
         var service = getService(out var initialParams);
         var notExistsRoleName = AnyValue.ShortString;
@@ -101,7 +101,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task Add_ErrorAddRole_AddRoleException()
+    public async Task Add_ErrorAddRole_CreateRoleException()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
@@ -109,7 +109,7 @@ public sealed class RoleServiceTests : UnitTest
 
         initialParams.Repository.CreateAsync(Arg.Is<Role>(role => role.Name == newRoleName))
             .Returns(testData.IdentityResultFailed);
-        await Assert.ThrowsAsync<AddRoleException>(async () => await service.CreateAsync(newRoleName));
+        await Assert.ThrowsAsync<CreateRoleException>(async () => await service.CreateAsync(newRoleName));
 
         checkReceivedAdd(initialParams, newRoleName);
     }

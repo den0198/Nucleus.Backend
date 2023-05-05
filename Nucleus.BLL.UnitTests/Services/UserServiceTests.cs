@@ -50,7 +50,7 @@ public sealed class UserServiceTests : UnitTest
     }
     
     [Fact]
-    public async Task GetById_UserNotFound_UserNotFoundException()
+    public async Task GetById_UserNotFound_ObjectNotFoundException()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -80,7 +80,7 @@ public sealed class UserServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task GetByUserName_UserNotFound_UserNotFoundException()
+    public async Task GetByUserName_UserNotFound_ObjectNotFoundException()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -111,7 +111,7 @@ public sealed class UserServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task GetByEmail_UserNotFound_UserNotFoundException()
+    public async Task GetByEmail_UserNotFound_ObjectNotFoundException()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -137,7 +137,7 @@ public sealed class UserServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task Add_CorrectParams_UserAdded()
+    public async Task Add_CorrectParams_UserCreated()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -152,7 +152,7 @@ public sealed class UserServiceTests : UnitTest
     }
     
     [Fact]
-    public async Task Add_ErrorAddNewUser_RegistrationException()
+    public async Task Add_ErrorAddNewUser_CreateUserException()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -160,7 +160,7 @@ public sealed class UserServiceTests : UnitTest
         initialParams.Repository.CrateAsync(Arg.Any<User>(), testData.CreateUserParameters.Password)
             .Returns(testData.IdentityResultFailed);
 
-        await Assert.ThrowsAsync<AddUserException>(async () =>
+        await Assert.ThrowsAsync<CreateUserException>(async () =>
             await service.CreateAsync(testData.CreateUserParameters));
 
         await checkReceivedAddUser(initialParams, testData.CreateUserParameters);
