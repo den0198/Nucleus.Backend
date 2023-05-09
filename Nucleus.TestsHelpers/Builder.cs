@@ -15,5 +15,6 @@ public static class Builder
     public static CreateUserParametersBuilder CreateUserParameters => new ();
     public static CreateParameterValuesParametersBuilder RegisterUserParameters => new ();
     public static ParameterValueCommonDtoBuilder ParameterValueCommonDto => new();
-
+    public static CreateParametersParametersBuilder CreateParametersParameters => new();
+    public static ParameterCommonDtoBuilder ParameterCommonDto => new();
 }
