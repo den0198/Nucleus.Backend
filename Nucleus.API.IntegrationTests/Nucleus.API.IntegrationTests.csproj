@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api\Nucleus.API.csproj" />
+    <ProjectReference Include="..\Nucleus.API\Nucleus.API.csproj" />
     <ProjectReference Include="..\Nucleus.TestsHelpers\Nucleus.TestsHelpers.csproj" />
   </ItemGroup>
 

@@ -21,8 +21,8 @@ internal sealed class AuthTestData
         {
             Builder.Claim.Build()
         };
-        SignInParameters = Builder.SignInParameter.Build();
-        NewTokenParameters = Builder.NewTokenParameter.Build();
+        SignInParameters = Builder.SignInParameters.Build();
+        NewTokenParameters = Builder.NewTokenParameters.Build();
 
     }
 

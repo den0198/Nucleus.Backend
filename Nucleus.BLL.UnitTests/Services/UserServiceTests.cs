@@ -125,9 +125,9 @@ public sealed class UserServiceTests : UnitTest
     
     #endregion
 
-    #region Add
+    #region Crate
 
-    private async Task checkReceivedAddUser(UserServiceInitialParams initialParams, CreateUserParameters createUserParameters)
+    private async Task checkReceivedCrateUser(UserServiceInitialParams initialParams, CreateUserParameters createUserParameters)
     {
         await initialParams.Repository.Received(1).CrateAsync(Arg.Is<User>(u =>
                 u.UserName == createUserParameters.UserName
@@ -137,7 +137,7 @@ public sealed class UserServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task Add_CorrectParams_UserCreated()
+    public async Task Crate_CorrectParams_UserCreated()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -147,12 +147,12 @@ public sealed class UserServiceTests : UnitTest
 
         await service.CreateAsync(testData.CreateUserParameters);
 
-        await checkReceivedAddUser(initialParams, testData.CreateUserParameters);
+        await checkReceivedCrateUser(initialParams, testData.CreateUserParameters);
         await initialParams.RoleService.Received(1).GiveUserRoleAsync(Arg.Any<User>(), DefaultSeeds.USER);
     }
     
     [Fact]
-    public async Task Add_ErrorAddNewUser_CreateUserException()
+    public async Task Crate_ErrorAddNewUser_CreateUserException()
     {
         var service = getService(out var initialParams);
         var testData = new UserTestData();
@@ -163,7 +163,7 @@ public sealed class UserServiceTests : UnitTest
         await Assert.ThrowsAsync<CreateUserException>(async () =>
             await service.CreateAsync(testData.CreateUserParameters));
 
-        await checkReceivedAddUser(initialParams, testData.CreateUserParameters);
+        await checkReceivedCrateUser(initialParams, testData.CreateUserParameters);
     }
 
     #endregion

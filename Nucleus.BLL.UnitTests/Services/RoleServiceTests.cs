@@ -43,7 +43,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task GetByName_ObjectNotFound_RoleNotFoundException()
+    public async Task GetByName_ObjectNotFound_ObjectNotFoundException()
     {
         var service = getService(out var initialParams);
         var notExistsRoleName = AnyValue.ShortString;

@@ -2,9 +2,9 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class RegisterUserParameterBuilder : CoreBuilder<CreateUserParameters>
+public class CreateUserParametersBuilder : CoreBuilder<CreateUserParameters>
 {
-    public RegisterUserParameterBuilder()
+    public CreateUserParametersBuilder()
     {
         Entity = new CreateUserParameters(
             AnyValue.String,

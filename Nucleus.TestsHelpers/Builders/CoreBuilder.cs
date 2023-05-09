@@ -4,7 +4,7 @@ namespace Nucleus.TestsHelpers.Builders;
 
 public abstract class CoreBuilder<TEntity>
 {
-    protected TEntity? Entity { get; set; }
+    protected TEntity? Entity { get; init; }
 
     public TEntity Build() => Entity!;
 
@@ -29,9 +29,8 @@ public abstract class CoreBuilder<TEntity>
         if (expression.NodeType != ExpressionType.MemberAccess)
             return string.Empty;
 
-        if (expression.Expression is not MemberExpression subExpression)
-            return expression.Member.Name;
-
-        return $"{propertyFullName(subExpression)}.{expression.Member.Name}";
+        return expression.Expression is not MemberExpression subExpression 
+            ? expression.Member.Name 
+            : $"{propertyFullName(subExpression)}.{expression.Member.Name}";
     }
 }

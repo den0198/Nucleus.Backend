@@ -2,9 +2,9 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class NewTokenParameterBuilder : CoreBuilder<NewTokenParameters>
+public class NewTokenParametersBuilder : CoreBuilder<NewTokenParameters>
 {
-    public NewTokenParameterBuilder()
+    public NewTokenParametersBuilder()
     {
         Entity = new NewTokenParameters(
             AnyValue.String, 
