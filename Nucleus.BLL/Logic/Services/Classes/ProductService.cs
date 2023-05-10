@@ -35,13 +35,13 @@ public sealed class ProductService : IProductService
         await initialParams.Repository.CreateAsync(product);
 
         var createParametersParameters = new CreateParametersParameters(parameters.Parameters, product.Id);
-        await initialParams.ParameterService.CreateRangeAsync(createParametersParameters);
+        await initialParams.ParameterService.CreateRangeAsync(createParametersParameters, transaction);
     
         var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
 
         product = await GetByIdAsync(product.Id);
-        await initialParams.SubProductService.CreateRangeAsync(product);
+        await initialParams.SubProductService.CreateRangeAsync(product, transaction);
 
         if(oldTransaction == default)
             transaction.Complete();

@@ -22,7 +22,10 @@ public static class EntityFrameworkServiceExtension
     private static void addOptions(IServiceCollection serviceCollection, string connectionString)
     {
         serviceCollection.AddDbContextFactory<AppDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        {
+            options.UseSqlServer(connectionString, 
+                o => o.CommandTimeout(180));
+        });
     }
 
     private static void addIdentity(IServiceCollection serviceCollection, AuthOptions authOptions, 
