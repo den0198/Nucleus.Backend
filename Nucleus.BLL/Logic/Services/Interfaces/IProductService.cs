@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Nucleus.ModelsLayer.Entities;
+﻿using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
@@ -17,7 +16,7 @@ public interface IProductService
     /// Создаёт новый товар
     /// </summary>
     /// <param name="parameters">Параметры для создания продукта</param>
-    /// <param name="oldTransaction">Транзация</param>
+    /// <param name="isExistTransaction">Сушествует ли транзакция</param>
     /// <returns>Идентификатор нового продукта</returns>
-    Task<long> CreateAsync(CreateProductParameters parameters, TransactionScope? oldTransaction = default);
+    Task<long> CreateAsync(CreateProductParameters parameters, bool isExistTransaction = false);
 }

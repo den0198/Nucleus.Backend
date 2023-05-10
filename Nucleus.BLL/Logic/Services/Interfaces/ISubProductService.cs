@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Nucleus.ModelsLayer.Entities;
+﻿using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
@@ -10,8 +9,8 @@ public interface ISubProductService
     /// Создаёт новые под-продукты
     /// </summary>
     /// <param name="product">Продукт</param>
-    /// <param name="oldTransaction">Транзация</param>
-    Task CreateRangeAsync(Product product, TransactionScope? oldTransaction = default);
+    /// <param name="isExistTransaction">Сушествует ли транзакция</param>
+    Task CreateRangeAsync(Product product, bool isExistTransaction = false);
     
     /// <summary>
     /// Создаёт новые под-продукты

@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Nucleus.BLL.Logic.Services.InitialsParams;
+﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.DAL.Transaction;
 using Nucleus.ModelsLayer.Entities;
@@ -16,9 +15,9 @@ public sealed class SubProductService : ISubProductService
         this.initialParams = initialParams;
     }
     
-    public async Task CreateRangeAsync(Product product, TransactionScope? oldTransaction = default)
+    public async Task CreateRangeAsync(Product product, bool isExistTransaction = false)
     {
-        using var transaction = oldTransaction ?? TransactionHelp.GetTransactionScope();
+        using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
         
         var parameters = product.Parameters
             .ToList();
@@ -39,8 +38,7 @@ public sealed class SubProductService : ISubProductService
                 .CreateRangeAsync(createSubProductParameterValuesParameters);
         }
         
-        if(oldTransaction == default)
-            transaction.Complete();
+        transaction?.Complete();
     }
 
     public async Task UpdateRangeAsync(UpdateSubProductsParameters parameters)

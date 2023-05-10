@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Nucleus.DAL.Transaction;
+﻿using Nucleus.DAL.Transaction;
 using Mapster;
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
@@ -25,27 +24,25 @@ public sealed class ProductService : IProductService
     }
     
     public async Task<long> CreateAsync(CreateProductParameters parameters,
-        TransactionScope? oldTransaction = default)
+        bool isExistTransaction = false)
     {
         await initialParams.CategoryService.GetByIdAsync(parameters.CategoryId);
         
-        using var transaction = oldTransaction ?? TransactionHelp.GetTransactionScope();
+        using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
 
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);
 
         var createParametersParameters = new CreateParametersParameters(parameters.Parameters, product.Id);
-        await initialParams.ParameterService.CreateRangeAsync(createParametersParameters, transaction);
+        await initialParams.ParameterService.CreateRangeAsync(createParametersParameters, true);
     
         var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
 
         product = await GetByIdAsync(product.Id);
-        await initialParams.SubProductService.CreateRangeAsync(product, transaction);
-
-        if(oldTransaction == default)
-            transaction.Complete();
+        await initialParams.SubProductService.CreateRangeAsync(product, true);
         
+        transaction?.Complete();
         return product.Id;
     }
 }
