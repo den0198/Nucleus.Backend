@@ -17,6 +17,8 @@ public static class GraphQlServiceExtension
         addQueries(builder);
         addMutations(builder);
 
+        builder.SetRequestOptions(_ => new HotChocolate.Execution.Options.RequestExecutorOptions
+            { ExecutionTimeout = TimeSpan.FromMinutes(3) });
         builder.AddAuthorization();
     }
 
