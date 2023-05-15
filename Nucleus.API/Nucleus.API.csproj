@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
         <AssemblyName>Nucleus.API</AssemblyName>
         <RootNamespace>Nucleus.API</RootNamespace>
         <TargetFramework>net7.0</TargetFramework>
@@ -33,12 +33,6 @@
       <ProjectReference Include="..\Nucleus.BLL\Nucleus.BLL.csproj" />
       <ProjectReference Include="..\Nucleus.Common\Nucleus.Common.csproj" />
       <ProjectReference Include="..\Nucleus.DAL\Nucleus.DAL.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Extensions\Middlewares\" />
-      <Folder Include="GraphQl\Mutations\" />
-      <Folder Include="Filters\" />
     </ItemGroup>
 
 </Project>
