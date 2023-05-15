@@ -21,7 +21,7 @@ public sealed class RoleRepository : IRoleRepository
         return await userManager.GetRolesAsync(user);
     }
 
-    public async Task<Role> FindByNameAsync(string name)
+    public async Task<Role?> FindByNameAsync(string name)
     {
         return await roleManager.FindByNameAsync(name);
     }

@@ -49,6 +49,6 @@ public class RoleService : IRoleService
         if (!userRoles.All(ur => ur.IsNotEqual(name)))
             throw new UserAlreadyHasThisRoleException();
         
-        await initialParams.Repository.GiveUserRoleAsync(user, role.Name);
+        await initialParams.Repository.GiveUserRoleAsync(user, role.Name!);
     }
 }

@@ -39,7 +39,7 @@ public sealed class CategoryService : ICategoryService
         return newCategory.Id;
     }
     
-    private async Task<Category> findByName(string name)
+    private async Task<Category?> findByName(string name)
     {
         return await initialParams.Repository.FindByNameAsync(name);
     }

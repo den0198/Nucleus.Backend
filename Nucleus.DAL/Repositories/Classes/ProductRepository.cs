@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nucleus.DAL.EntityFramework;
 using Nucleus.DAL.Repositories.Interfaces;
+using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Repositories.Classes;
 
@@ -11,7 +12,7 @@ public sealed class ProductRepository : Repository, IProductRepository
     {
     }
     
-    public async Task<Nucleus.ModelsLayer.Entities.Product> FindByIdAsync(long productId)
+    public async Task<Product?> FindByIdAsync(long productId)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 

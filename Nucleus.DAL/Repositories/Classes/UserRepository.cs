@@ -13,17 +13,17 @@ public sealed class UserRepository : IUserRepository
         this.userManager = userManager;
     }
 
-    public async Task<User> FindByIdAsync(long userId)
+    public async Task<User?> FindByIdAsync(long userId)
     {
         return await userManager.FindByIdAsync(userId.ToString());
     }
 
-    public async Task<User> FindByUserNameAsync(string userName)
+    public async Task<User?> FindByUserNameAsync(string userName)
     {
         return await userManager.FindByNameAsync(userName);
     }
 
-    public async Task<User> FindByEmailAsync(string email)
+    public async Task<User?> FindByEmailAsync(string email)
     {
         return await userManager.FindByEmailAsync(email);
     }

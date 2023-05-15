@@ -12,7 +12,7 @@ public sealed class CategoryRepository : Repository, ICategoryRepository
     {
     }
 
-    public async Task<Category> FindByIdAsync(long id)
+    public async Task<Category?> FindByIdAsync(long id)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 
@@ -21,7 +21,7 @@ public sealed class CategoryRepository : Repository, ICategoryRepository
             .SingleOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<Category> FindByNameAsync(string name)
+    public async Task<Category?> FindByNameAsync(string name)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 

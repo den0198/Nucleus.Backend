@@ -17,7 +17,7 @@ public interface IRoleRepository
     /// </summary>
     /// <param name="name">Названия</param>
     /// <returns>Роль</returns>
-    Task<Role> FindByNameAsync(string name);
+    Task<Role?> FindByNameAsync(string name);
 
     /// <summary>
     /// Создаёт новую роль

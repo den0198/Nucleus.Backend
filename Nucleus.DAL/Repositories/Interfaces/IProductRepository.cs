@@ -10,5 +10,5 @@ public interface IProductRepository : ICreateEntity<Product>
     /// </summary>
     /// <param name="productId">Идентификатор продукта</param>
     /// <returns>Продукт</returns>
-    Task<Product> FindByIdAsync(long productId);
+    Task<Product?> FindByIdAsync(long productId);
 }

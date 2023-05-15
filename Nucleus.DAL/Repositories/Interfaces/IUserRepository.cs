@@ -10,21 +10,21 @@ public interface IUserRepository
     /// </summary>
     /// <param name ="userId">Идентификатор акаунта</param>
     /// <returns>Пользователь</returns>
-    Task<User> FindByIdAsync(long userId);
+    Task<User?> FindByIdAsync(long userId);
 
     /// <summary>
     /// Ишет пользователя по пользовательскому имени
     /// </summary>
     /// <param name="userName">Пользовательское имя</param>
     /// <returns>Пользователь</returns>
-    Task<User> FindByUserNameAsync(string userName);
+    Task<User?> FindByUserNameAsync(string userName);
 
     /// <summary>
     /// Ишет пользователя по email
     /// </summary>
     /// <param name="email">Email</param>
     /// <returns>Пользователь</returns>
-    Task<User> FindByEmailAsync(string email);
+    Task<User?> FindByEmailAsync(string email);
 
 
     /// <summary>
