@@ -34,7 +34,7 @@ public sealed class RoleServiceTests : UnitTest
         var testData = new RoleTestData();
         var role = testData.Roles.First();
 
-        initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
+        initialParams.Repository.FindByNameAsync(role.Name!).Returns(role);
 
         var result = await service.GetByNameAsync(role.Name!);
 
@@ -63,12 +63,12 @@ public sealed class RoleServiceTests : UnitTest
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
-        var rolesNames = testData.Roles.Select(role => role.Name).ToList();
+        var rolesNames = testData.Roles.Select(role => role.Name!).ToList();
 
         initialParams.Repository.GetUserRolesNamesAsync(testData.User).Returns(rolesNames);
         foreach (var role in testData.Roles)
         {
-            initialParams.Repository.FindByNameAsync(role.Name).Returns(role);
+            initialParams.Repository.FindByNameAsync(role.Name!).Returns(role);
         }
 
         var result = await service.GetUserRolesAsync(testData.User);
@@ -132,7 +132,7 @@ public sealed class RoleServiceTests : UnitTest
 
         await service.GiveUserRoleAsync(testData.User, newRoleName);
 
-        await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.User, role.Name);
+        await initialParams.Repository.Received(1).GiveUserRoleAsync(testData.User, role.Name!);
     }
 
     [Fact]

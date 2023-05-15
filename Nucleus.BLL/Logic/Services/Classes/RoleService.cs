@@ -27,7 +27,7 @@ public class RoleService : IRoleService
         var userRoles = new List<Role>();
         foreach (var roleName in userRolesNames)
         {
-            var role = await initialParams.Repository.FindByNameAsync(roleName);
+            var role = await GetRoleByNameAsync(roleName);
             userRoles.Add(role);
         }
 
@@ -51,4 +51,10 @@ public class RoleService : IRoleService
         
         await initialParams.Repository.GiveUserRoleAsync(user, role.Name!);
     }
+
+    private async Task<Role> GetRoleByNameAsync(string name)
+    {
+        return await initialParams.Repository.FindByNameAsync(name)
+               ?? throw new ObjectNotFoundException($"Role with RoleName: '{name}' not found!");
+    } 
 }

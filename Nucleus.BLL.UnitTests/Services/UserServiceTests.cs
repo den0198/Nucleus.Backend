@@ -117,7 +117,7 @@ public sealed class UserServiceTests : UnitTest
         var testData = new UserTestData();
         var userName = testData.User.UserName!;
 
-        initialParams.Repository.FindByEmailAsync(testData.User.Email).ReturnsNull();
+        initialParams.Repository.FindByEmailAsync(testData.User.Email!).ReturnsNull();
 
         await Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
             await service.GetByEmailAsync(userName));
