@@ -7,7 +7,7 @@ public abstract class CoreBuilder<TEntity>
     protected TEntity? Entity { get; init; }
 
     public TEntity Build() => Entity!;
-
+    
     public CoreBuilder<TEntity> With<T>(Expression<Func<TEntity, T>> field, object value)
     {
         var propertyName = this.propertyName(field);

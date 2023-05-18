@@ -1,6 +1,6 @@
 ﻿namespace Nucleus.TestsHelpers.Builders;
 
-public class UserBuilder : CoreBuilder<ModelsLayer.Entities.User>
+public sealed class UserBuilder : CoreBuilder<ModelsLayer.Entities.User>
 {
     public UserBuilder()
     {

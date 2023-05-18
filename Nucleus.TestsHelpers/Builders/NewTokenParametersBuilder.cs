@@ -2,7 +2,7 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class NewTokenParametersBuilder : CoreBuilder<NewTokenParameters>
+public sealed class NewTokenParametersBuilder : CoreBuilder<NewTokenParameters>
 {
     public NewTokenParametersBuilder()
     {

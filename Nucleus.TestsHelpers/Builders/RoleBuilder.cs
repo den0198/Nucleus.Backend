@@ -1,6 +1,6 @@
 ﻿namespace Nucleus.TestsHelpers.Builders;
 
-public class RoleBuilder : CoreBuilder<ModelsLayer.Entities.Role>
+public sealed class RoleBuilder : CoreBuilder<ModelsLayer.Entities.Role>
 {
     public RoleBuilder()
     {

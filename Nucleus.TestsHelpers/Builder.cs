@@ -17,4 +17,8 @@ public static class Builder
     public static ParameterValueCommonDtoBuilder ParameterValueCommonDto => new();
     public static CreateParametersParametersBuilder CreateParametersParameters => new();
     public static ParameterCommonDtoBuilder ParameterCommonDto => new();
+    public static CreateSubProductParameterValuesParametersBuilder CreateSubProductParameterValuesParameters => new();
+    public static ParameterBuilder Parameter(long productId) => new(productId);
+    public static ParameterValueBuilder ParameterValue(long parameterId = default) => new(parameterId);
+    public static ProductBuilder Product => new();
 }

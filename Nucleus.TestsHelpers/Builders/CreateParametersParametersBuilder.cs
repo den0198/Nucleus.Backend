@@ -17,7 +17,6 @@ public sealed class CreateParametersParametersBuilder : CoreBuilder<CreateParame
         {
             result.Add(Builder.ParameterCommonDto.Build());
         }
-
         return result;
     }
 }

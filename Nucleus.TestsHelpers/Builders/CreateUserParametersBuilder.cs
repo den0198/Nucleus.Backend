@@ -2,7 +2,7 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class CreateUserParametersBuilder : CoreBuilder<CreateUserParameters>
+public sealed class CreateUserParametersBuilder : CoreBuilder<CreateUserParameters>
 {
     public CreateUserParametersBuilder()
     {

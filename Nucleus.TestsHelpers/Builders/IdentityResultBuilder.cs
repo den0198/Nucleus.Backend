@@ -2,7 +2,7 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class IdentityResultBuilder : CoreBuilder<Task<IdentityResult>>
+public sealed class IdentityResultBuilder : CoreBuilder<Task<IdentityResult>>
 {
     public IdentityResultBuilder(bool isSuccess)
     {

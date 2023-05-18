@@ -2,7 +2,7 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class ClaimBuilder : CoreBuilder<Claim>
+public sealed class ClaimBuilder : CoreBuilder<Claim>
 {
     public ClaimBuilder()
     {

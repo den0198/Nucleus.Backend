@@ -2,7 +2,7 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class AuthOptionBuilder : CoreBuilder<AuthOptions>
+public sealed class AuthOptionBuilder : CoreBuilder<AuthOptions>
 {
     public AuthOptionBuilder()
     {
