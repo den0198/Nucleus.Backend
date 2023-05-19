@@ -3,5 +3,5 @@
 namespace Nucleus.ModelsLayer.Service.Parameters;
 
 public sealed record CreateAddOnsParameters(
-    IList<AddOnCommonDto> AddOns,
-    long ProductId);
+    long ProductId,
+    IList<AddOnCommonDto> AddOns);

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
@@ -50,5 +51,35 @@ public sealed class SubProductServiceTests : UnitTest
                 x.ParameterValues.All(pv => parametersValueIds.Contains(pv.Id))));
     }
     
+    #endregion
+    
+    #region UpdateRange
+
+    [Fact]
+    public async Task UpdateRange_CorrectParams_SubProductsUpdated()
+    {
+        var service = getService(out var initialParams);
+        var testData = new SubProductServiceTestData();
+        var subProductIds = testData.SubProducts
+            .Select(sp => sp.Id);
+        var updateSubProductsParameters = testData.UpdateSubProductsParameters;
+
+        initialParams.Repository
+            .FindAllByIds(subProductIds)
+            .Returns(testData.SubProducts);
+
+        await service
+            .UpdateRangeAsync(updateSubProductsParameters);
+
+        var newPrices = updateSubProductsParameters.SubProducts
+            .Select(sp => sp.Price);
+        var newQuantities = updateSubProductsParameters.SubProducts
+            .Select(sp => sp.Quantity);
+        await initialParams.Repository
+            .Received(1)
+            .UpdateRangeAsync(Arg.Is<IEnumerable<SubProduct>>(sps => 
+                sps.All(sp => newPrices.Contains(sp.Price) && newQuantities.Contains(sp.Quantity))));
+    }
+
     #endregion
 }

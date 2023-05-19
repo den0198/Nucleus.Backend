@@ -21,4 +21,12 @@ public static class Builder
     public static ParameterBuilder Parameter(long productId) => new(productId);
     public static ParameterValueBuilder ParameterValue(long parameterId = default) => new(parameterId);
     public static ProductBuilder Product => new();
+    public static UpdateSubProductsParametersBuilder UpdateSubProductsParameters => new();
+    public static SubProductCommonDtoBuilder SubProductCommonDto => new();
+    public static SubProductBuilder SubProduct => new();
+    public static CreateAddOnsParametersBuilder CreateAddOnsParameters => new();
+    public static AddOnCommonDtoBuilder AddOnCommonDto => new();
+    public static CreateProductParametersBuilder CreateProductParameters => new();
+    public static CategoryBuilder Category => new();
+    public static CreateCategoryParametersBuilder CreateCategoryParameters => new();
 }
