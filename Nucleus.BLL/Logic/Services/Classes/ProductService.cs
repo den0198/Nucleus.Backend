@@ -33,12 +33,12 @@ public sealed class ProductService : IProductService
         var product = parameters.Adapt<Product>();
         await initialParams.Repository.CreateAsync(product);
 
-        var createParametersParameters = new CreateParametersParameters(parameters.Parameters, product.Id);
+        var createParametersParameters = new CreateParametersParameters(product.Id, parameters.Parameters);
         await initialParams.ParameterService.CreateRangeAsync(createParametersParameters, true);
     
-        var createAddOnsParameters = new CreateAddOnsParameters(parameters.AddOns, product.Id);
+        var createAddOnsParameters = new CreateAddOnsParameters(product.Id, parameters.AddOns);
         await initialParams.AddOnService.CreateRangeAsync(createAddOnsParameters);
-
+        
         product = await GetByIdAsync(product.Id);
         await initialParams.SubProductService.CreateRangeAsync(product, true);
         

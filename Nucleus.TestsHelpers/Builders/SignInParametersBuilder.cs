@@ -2,7 +2,7 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class SignInParametersBuilder : CoreBuilder<SignInParameters>
+public sealed class SignInParametersBuilder : CoreBuilder<SignInParameters>
 {
     public SignInParametersBuilder()
     {

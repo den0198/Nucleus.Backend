@@ -7,7 +7,7 @@ public sealed class CreateParametersParametersBuilder : CoreBuilder<CreateParame
 {
     public CreateParametersParametersBuilder()
     {
-        Entity = new CreateParametersParameters(getParameterCommonDtos(), AnyValue.Long);
+        Entity = new CreateParametersParameters(AnyValue.Long, getParameterCommonDtos());
     }
     
     private List<ParameterCommonDto> getParameterCommonDtos()
@@ -17,7 +17,6 @@ public sealed class CreateParametersParametersBuilder : CoreBuilder<CreateParame
         {
             result.Add(Builder.ParameterCommonDto.Build());
         }
-
         return result;
     }
 }

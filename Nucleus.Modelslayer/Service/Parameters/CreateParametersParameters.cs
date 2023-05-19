@@ -3,5 +3,5 @@
 namespace Nucleus.ModelsLayer.Service.Parameters;
 
 public sealed record CreateParametersParameters(
-    IList<ParameterCommonDto> Parameters,
-    long ProductId);
+    long ProductId,
+    IList<ParameterCommonDto> Parameters);
