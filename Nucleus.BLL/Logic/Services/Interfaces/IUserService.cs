@@ -31,11 +31,5 @@ public interface IUserService
     /// </summary>
     /// <param name="parameters">Параметры создания пользователя</param>
     /// <param name="isExistTransaction">Сушествует ли транзакция</param>
-    Task CreateAsync(CreateUserParameters parameters, bool isExistTransaction = false);
-
-    /// <summary>
-    /// Даёт админ роль
-    /// </summary>
-    /// <param name ="userId">Идентификатор</param>
-    Task UpgradeToAdminAsync(long userId);
+    Task<long> CreateAsync(CreateUserParameters parameters, bool isExistTransaction = false);
 }

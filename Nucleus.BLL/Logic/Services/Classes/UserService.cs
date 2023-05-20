@@ -36,7 +36,7 @@ public sealed class UserService : IUserService
                ?? throw new ObjectNotFoundException($"User with email: '{email}' not found!");
     }
 
-    public async Task CreateAsync(CreateUserParameters parameters, bool isExistTransaction = false)
+    public async Task<long> CreateAsync(CreateUserParameters parameters, bool isExistTransaction = false)
     {
         using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
         
@@ -48,11 +48,6 @@ public sealed class UserService : IUserService
         await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
         
         transaction?.Complete();
-    }
-
-    public async Task UpgradeToAdminAsync(long userId)
-    {
-        var user = await GetByIdAsync(userId);
-        await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.ADMIN);
+        return user.Id;
     }
 }

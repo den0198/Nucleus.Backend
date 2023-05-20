@@ -34,13 +34,11 @@ public sealed class UserMutationTests : BaseIntegrationTests
             LastName = AnyValue.String,
             MiddleName = AnyValue.String
         };
-        var response = await sendAsync<RegisterUserInput, StatusData>(client,
+        var userId = await sendAsync<RegisterUserInput, long>(client,
             GraphQlQueryTypesEnum.Mutation, MutationNames.REGISTER_USER, input);
-
-        var okResponse = new StatusData();
+        
         var user = await context.Users
-            .FirstAsync(u => u.Email == input.Email);
-        Assert.Equal(okResponse.Status, response.Status);
+            .FirstAsync(u => u.Id == userId);
         Assert.Equal(user.UserName, input.UserName);
         Assert.Equal(user.Email, input.Email);
         Assert.Equal(user.PhoneNumber, input.PhoneNumber);
@@ -71,7 +69,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendAsync<RegisterUserInput, StatusData>(client,GraphQlQueryTypesEnum.Mutation,
+            await sendAsync<RegisterUserInput, long>(client,GraphQlQueryTypesEnum.Mutation,
                 MutationNames.REGISTER_USER, input));
 
         assertExceptionCode(ExceptionCodesEnum.CreateUserExceptionCode, exception.Code);
@@ -98,7 +96,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
         };
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
-            await sendAsync<RegisterUserInput, StatusData>(client, GraphQlQueryTypesEnum.Mutation,
+            await sendAsync<RegisterUserInput, long>(client, GraphQlQueryTypesEnum.Mutation,
                 MutationNames.REGISTER_USER, input));
 
         assertExceptionCode(ExceptionCodesEnum.CreateUserExceptionCode, exception.Code);

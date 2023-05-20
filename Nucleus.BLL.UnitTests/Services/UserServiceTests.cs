@@ -167,21 +167,4 @@ public sealed class UserServiceTests : UnitTest
     }
 
     #endregion
-
-    #region UpgrateToAdmin
-
-    [Fact]
-    public async Task UpgradeToAdmin_UpgradeToAdmin_Success()
-    {
-        var service = getService(out var initialParams);
-        var testData = new UserTestData();
-
-        initialParams.Repository.FindByIdAsync(testData.User.Id).Returns(testData.User);
-
-        await service.UpgradeToAdminAsync(testData.User.Id);
-
-        await initialParams.RoleService.Received(1).GiveUserRoleAsync(testData.User, DefaultSeeds.ADMIN);
-    }
-
-    #endregion
 }

@@ -43,7 +43,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task GetByName_ObjectNotFound_ObjectNotFoundException()
+    public async Task GetByName_UserNotFound_ObjectNotFoundException()
     {
         var service = getService(out var initialParams);
         var notExistsRoleName = AnyValue.ShortString;
@@ -59,7 +59,7 @@ public sealed class RoleServiceTests : UnitTest
     #region GetUserRoles
 
     [Fact]
-    public async Task GetUserRoles_UserRoleFound_Roles()
+    public async Task GetUserRoles_UserRoleFound_UserRoles()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
@@ -78,7 +78,7 @@ public sealed class RoleServiceTests : UnitTest
 
     #endregion
 
-    #region Add
+    #region Create
 
     private async void checkReceivedAdd(RoleServiceInitialParams initialParams, string newRoleName)
     {
@@ -86,7 +86,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task Add_RoleNotExists_Success()
+    public async Task Create_RoleNotExists_RoleCreated()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
@@ -101,7 +101,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task Add_ErrorAddRole_CreateRoleException()
+    public async Task Create_ErrorAddRole_CreateRoleException()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
@@ -119,7 +119,7 @@ public sealed class RoleServiceTests : UnitTest
     #region GiveUserRole
 
     [Fact]
-    public async Task GiveUserRole_GiveUserRole_Success()
+    public async Task GiveUserRole_GiveUserRole_UserAssignedRole()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
@@ -136,7 +136,7 @@ public sealed class RoleServiceTests : UnitTest
     }
 
     [Fact]
-    public async Task GiveUserRole__UserAlreadyHasThisRole_UserAlreadyHasThisRoleException()
+    public async Task GiveUserRole_UserAlreadyHasThisRole_UserAlreadyHasThisRoleException()
     {
         var service = getService(out var initialParams);
         var testData = new RoleTestData();
