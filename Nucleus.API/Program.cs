@@ -2,13 +2,14 @@ using NLog;
 using NLog.Web;
 using Nucleus.API.Extensions.Middlewares;
 using Nucleus.API.Extensions.Services;
+using Nucleus.API.Initialization;
 using Nucleus.Common.MapperConfigurations;
 
 namespace Nucleus.API;
 
 public class Program
 {
-    public static void Main(string [] args)
+    public static async Task Main(string [] args)
     {
         var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
         logger.Debug("init main");
@@ -39,12 +40,13 @@ public class Program
             var app = builder.Build();
         
             app.UseCors("MyAllowAllHeadersPolicy");
-            app.UseInitializationDataBase();
             app.MapGraphQL("/");
             app.UseRouting();
             app.UseAuth();
+            
+            await Seeds.InitialSeeds(app);
 
-            app.Run();
+            await app.RunAsync();
         }
         catch (Exception exception)
         {
