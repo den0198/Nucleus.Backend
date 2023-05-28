@@ -39,8 +39,8 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
     
     protected async Task<AppDbContext> getContext()
     {
-        var serviceCollection = factory.Services;
-        var scope = serviceCollection.CreateAsyncScope();
+        var serviceProvider = factory.Services;
+        await using var scope = serviceProvider.CreateAsyncScope();
 
         var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
         return await contextFactory.CreateDbContextAsync();

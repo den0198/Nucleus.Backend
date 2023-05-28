@@ -4,6 +4,7 @@ using Nucleus.API.Extensions.Middlewares;
 using Nucleus.API.Extensions.Services;
 using Nucleus.API.Initialization;
 using Nucleus.Common.MapperConfigurations;
+using Nucleus.Jobs;
 
 namespace Nucleus.API;
 
@@ -17,7 +18,7 @@ public class Program
         try
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             builder.Logging.ClearProviders();
             builder.Host.UseNLog();
             
@@ -38,6 +39,7 @@ public class Program
             services.AddAppFilters();
 
             var app = builder.Build();
+            var environmentName = app.Environment.EnvironmentName;
         
             app.UseCors("MyAllowAllHeadersPolicy");
             app.MapGraphQL("/");
@@ -45,6 +47,11 @@ public class Program
             app.UseAuth();
             
             await Seeds.InitialSeeds(app);
+
+            if (environmentName != "Test")
+            {
+                await JobsRun.Start(app.Services);
+            }
 
             await app.RunAsync();
         }

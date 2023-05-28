@@ -33,6 +33,7 @@
       <ProjectReference Include="..\Nucleus.BLL\Nucleus.BLL.csproj" />
       <ProjectReference Include="..\Nucleus.Common\Nucleus.Common.csproj" />
       <ProjectReference Include="..\Nucleus.DAL\Nucleus.DAL.csproj" />
+      <ProjectReference Include="..\Nucleus.Jobs\Nucleus.Jobs.csproj" />
     </ItemGroup>
 
 </Project>
