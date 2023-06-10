@@ -49,7 +49,8 @@ public static class GraphQlServiceExtension
             .AddTypeExtension<UserQuery>()
             .AddTypeExtension<AuthQuery>()
             .AddTypeExtension<CategoryQuery>()
-            .AddTypeExtension<ProductQuery>();
+            .AddTypeExtension<ProductQuery>()
+            .AddTypeExtension<EnumQuery>();
     }
 
     private static void addMutations(IRequestExecutorBuilder builder)

@@ -1,6 +1,6 @@
 ﻿namespace Nucleus.ModelsLayer.Entities;
 
-public class SubProductParameterValue : IEntity
+public sealed class SubProductParameterValue : IEntity
 {
     public long Id { get; set; }
     public DateTime DateTimeCreated { get; set; }

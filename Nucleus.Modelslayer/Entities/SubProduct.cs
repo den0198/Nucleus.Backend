@@ -1,6 +1,6 @@
 ﻿namespace Nucleus.ModelsLayer.Entities;
 
-public class SubProduct : IEntity
+public sealed class SubProduct : IEntity
 {
     public long Id { get; set; }
     public decimal Price { get; set; }
@@ -10,5 +10,5 @@ public class SubProduct : IEntity
     
     public long ProductId { get; set; }
     public Product Product { get; set; }
-    public virtual ICollection<SubProductParameterValue> SubProductParameterValues { get; set; }
+    public IEnumerable<SubProductParameterValue> SubProductParameterValues { get; set; }
 }

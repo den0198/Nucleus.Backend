@@ -13,6 +13,13 @@ public interface IProductService
     Task<Product> GetByIdAsync(long productId);
 
     /// <summary>
+    /// Получает все продоваемые продукты из кэша
+    /// </summary>
+    /// <param name="isUpdatedCache">Обновить ли кэш</param>
+    /// <returns>Продоваемые продукты</returns>
+    Task<IList<Product>> GetAllWithIsSellAsync(bool isUpdatedCache = false);
+
+    /// <summary>
     /// Создаёт новый товар
     /// </summary>
     /// <param name="parameters">Параметры для создания продукта</param>

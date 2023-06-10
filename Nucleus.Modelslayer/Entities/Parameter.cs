@@ -1,6 +1,6 @@
 ﻿namespace Nucleus.ModelsLayer.Entities;
 
-public class Parameter : IEntity
+public sealed class Parameter : IEntity
 {
     public long Id { get; set; }
     public string Name { get; set; }
@@ -9,6 +9,6 @@ public class Parameter : IEntity
 
     public long ProductId { get; set; }
     public Product Product { get; set; }
-    public virtual ICollection<ParameterValue> ParameterValues { get; set; }
-    public virtual ICollection<SubProductParameterValue> SubProductParameterValues { get; set; }
+    public IEnumerable<ParameterValue> ParameterValues { get; set; }
+    public IEnumerable<SubProductParameterValue> SubProductParameterValues { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Nucleus.ModelsLayer.Entities;
+﻿using System.Collections.Generic;
+using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
 using Nucleus.TestsHelpers;
 
@@ -11,9 +12,21 @@ public sealed class ProductTestData
         CreateProductParameters = Builder.CreateProductParameters.Build();
         Category = Builder.Category.Build();
         Product = Builder.Product.Build();
+        Products = getProducts();
     }
 
     public CreateProductParameters CreateProductParameters { get; }
     public Category Category { get; }
     public Product Product { get; }
+    public ICollection<Product> Products { get; }
+    
+    private ICollection<Product> getProducts()
+    {
+        var result = new List<Product>();
+        for (var i = 0; i < AnyValue.Random(2, 5); i++)
+        {
+            result.Add(Builder.Product.Build());
+        }
+        return result;
+    }
 }

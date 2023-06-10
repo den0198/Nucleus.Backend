@@ -38,7 +38,7 @@ public sealed class SubProductServiceTests : UnitTest
 
         var parameters = product.Parameters;
         var countCombinationSubProduct = parameters
-            .Aggregate(1, (current, parameter) => current * parameter.ParameterValues.Count);
+            .Aggregate(1, (current, parameter) => current * parameter.ParameterValues.Count());
         var parametersValueIds = parameters
             .SelectMany(p => p.ParameterValues.Select(x => x.Id));
 

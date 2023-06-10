@@ -14,7 +14,8 @@ public sealed class ProductRepository : Repository, IProductRepository
     
     public async Task<Product?> FindByIdAsync(long productId)
     {
-        await using var context = await ContextFactory.CreateDbContextAsync();
+        await using var context = await ContextFactory
+            .CreateDbContextAsync();
 
         return await context.Products
             .Include(p => p.Parameters)
@@ -27,5 +28,14 @@ public sealed class ProductRepository : Repository, IProductRepository
                     .ThenInclude(sppv => sppv.ParameterValue)
             .Include(p => p.AddOns)
             .SingleOrDefaultAsync(p => p.Id == productId);
+    }
+
+    public async Task<ICollection<Product>> GetAllWithIsSaleAsync()
+    {
+        await using var context = await ContextFactory
+            .CreateDbContextAsync();
+
+        return await context.Products
+            .ToListAsync();
     }
 }

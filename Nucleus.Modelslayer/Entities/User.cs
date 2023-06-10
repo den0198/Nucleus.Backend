@@ -2,7 +2,7 @@
 
 namespace Nucleus.ModelsLayer.Entities;
 
-public class User : IdentityUser<long>, IEntity
+public sealed class User : IdentityUser<long>, IEntity
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

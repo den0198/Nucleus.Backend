@@ -1,6 +1,6 @@
 ﻿namespace Nucleus.ModelsLayer.Entities;
 
-public class AddOn : IEntity
+public sealed class AddOn : IEntity
 {
     public long Id { get; set; }
     public string Name { get; set; }

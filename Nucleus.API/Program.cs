@@ -37,6 +37,7 @@ public class Program
             services.AddAppInitialParams();
             services.AddAppServices();
             services.AddAppFilters();
+            services.AddMemoryCache();
 
             var app = builder.Build();
             var environmentName = app.Environment.EnvironmentName;

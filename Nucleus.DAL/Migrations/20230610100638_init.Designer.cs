@@ -12,8 +12,8 @@ using Nucleus.DAL.EntityFramework;
 namespace Nucleus.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230505132445_InitialApp")]
-    partial class InitialApp
+    [Migration("20230610100638_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

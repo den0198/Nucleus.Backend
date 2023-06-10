@@ -68,7 +68,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         
         var subProducts = product.SubProducts;
         var parameterIds = parameters.Select(p => p.Id).ToList();
-        Assert.Equal(countCombinationSubProduct, subProducts.Count);
+        Assert.Equal(countCombinationSubProduct, subProducts.Count());
         foreach (var subProduct in subProducts)
         {
             var subProductParameterValues = subProduct.SubProductParameterValues;

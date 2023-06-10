@@ -4,7 +4,7 @@ using Quartz;
 
 namespace Nucleus.Jobs.Jobs;
 
-public class GetSalableProductsJob : IJob
+public class UpdateCacheSalableProductsJob : IJob
 {
     public async Task Execute(IJobExecutionContext context)
     {
@@ -12,7 +12,6 @@ public class GetSalableProductsJob : IJob
         await using var scope = serviceProvider.CreateAsyncScope();
         var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
         
-        
-        var product = await productService.GetByIdAsync(1);
+        await productService.GetAllWithIsSellAsync(true);
     }
 }

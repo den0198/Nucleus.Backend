@@ -18,7 +18,7 @@ public static class JobsRun
             .GetResult();
         serviceProvider = sp;
         
-        registerJob<GetSalableProductsJob>(6000);
+        registerJob<UpdateCacheSalableProductsJob>(6000);
             
         await scheduler.Start();
     }

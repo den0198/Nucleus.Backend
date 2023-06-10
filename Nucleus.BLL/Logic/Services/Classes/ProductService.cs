@@ -1,5 +1,6 @@
 ﻿using Nucleus.DAL.Transaction;
 using Mapster;
+using Microsoft.Extensions.Caching.Memory;
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
@@ -22,7 +23,20 @@ public sealed class ProductService : IProductService
         return await initialParams.Repository.FindByIdAsync(productId)
                ?? throw new ObjectNotFoundException($"Product with productId: {productId} not found");
     }
-    
+
+    public async Task<IList<Product>> GetAllWithIsSellAsync(bool isUpdatedCache = false)
+    {
+        const string nameCache = "ProductsWithIsSale";
+        
+        if (!isUpdatedCache && initialParams.MemoryCache.TryGetValue(nameCache, out var productsFromCache))
+            return (List<Product>)productsFromCache!;
+
+        var products = (await initialParams.Repository.GetAllWithIsSaleAsync()).ToList();
+        initialParams.MemoryCache.Set(nameCache, products);
+
+        return products;
+    }
+
     public async Task<long> CreateAsync(CreateProductParameters parameters,
         bool isExistTransaction = false)
     {
