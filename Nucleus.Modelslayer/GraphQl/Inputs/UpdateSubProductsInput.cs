@@ -1,8 +1,8 @@
-﻿using Nucleus.ModelsLayer.Service.CommonDtos;
+﻿using Nucleus.ModelsLayer.GraphQl.Inputs.SubInputs;
 
 namespace Nucleus.ModelsLayer.GraphQl.Inputs;
 
 public sealed class UpdateSubProductsInput
 {
-    public IEnumerable<SubProductCommonDto> SubProducts { get; init; }
+    public IEnumerable<UpdateSubProductSubInput> SubProducts { get; init; }
 }

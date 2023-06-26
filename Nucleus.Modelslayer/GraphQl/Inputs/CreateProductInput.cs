@@ -6,14 +6,14 @@ namespace Nucleus.ModelsLayer.GraphQl.Inputs;
 public sealed class CreateProductInput
 {
     [Required]
-    public string Name { get; set; }
+    public string Name { get; init; }
 
     [Required] 
-    public long CategoryId { get; set; }
+    public long CategoryId { get; init; }
 
     [Required]
-    public IList<CreateParameterSubInput> Parameters { get; set; }
+    public IList<CreateParameterSubInput> Parameters { get; init; }
 
     [Required] 
-    public IList<CreateAddOnSubInput> AddOns { get; set; }
+    public IList<CreateAddOnSubInput> AddOns { get; init; }
 }
