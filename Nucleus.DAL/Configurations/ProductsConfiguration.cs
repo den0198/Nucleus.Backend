@@ -45,6 +45,10 @@ public sealed class ProductsConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
         
         builder
+            .Property(p => p.StoreId)
+            .HasColumnName(ColumnNames.STORE_ID);
+        
+        builder
             .Property(p => p.CategoryId)
             .HasColumnName(ColumnNames.CATEGORY_ID);
 

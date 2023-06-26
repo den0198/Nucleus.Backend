@@ -12,8 +12,8 @@ using Nucleus.DAL.EntityFramework;
 namespace Nucleus.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230610100638_init")]
-    partial class init
+    [Migration("20230626172012_InitialProject")]
+    partial class InitialProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -289,6 +289,18 @@ namespace Nucleus.DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("category_id");
 
+                    b.Property<long>("CountDislike")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_dislike");
+
+                    b.Property<long>("CountLike")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_like");
+
+                    b.Property<long>("CountSale")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_sale");
+
                     b.Property<DateTime>("DateTimeCreated")
                         .HasColumnType("datetime2")
                         .HasColumnName("date_time_created");
@@ -297,13 +309,23 @@ namespace Nucleus.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("date_time_modified");
 
+                    b.Property<bool>("IsSale")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_sale");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("store_id");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("products", (string)null);
                 });
@@ -348,6 +370,64 @@ namespace Nucleus.DAL.Migrations
                         .HasFilter("[normalized_name] IS NOT NULL");
 
                     b.ToTable("roles", (string)null);
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Seller", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("seller_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("sellers", (string)null);
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Store", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("store_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
+
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<long>("SellerId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("seller_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("stores", (string)null);
                 });
 
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.SubProduct", b =>
@@ -508,6 +588,10 @@ namespace Nucleus.DAL.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("security_stamp");
 
+                    b.Property<long?>("SellerId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("seller_id");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit")
                         .HasColumnName("two_factor_enabled");
@@ -527,6 +611,10 @@ namespace Nucleus.DAL.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[normalized_username] IS NOT NULL");
+
+                    b.HasIndex("SellerId")
+                        .IsUnique()
+                        .HasFilter("[seller_id] IS NOT NULL");
 
                     b.ToTable("users", (string)null);
                 });
@@ -623,7 +711,26 @@ namespace Nucleus.DAL.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Nucleus.ModelsLayer.Entities.Store", "Store")
+                        .WithMany("Products")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Store", b =>
+                {
+                    b.HasOne("Nucleus.ModelsLayer.Entities.Seller", "Seller")
+                        .WithMany("Stores")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.SubProduct", b =>
@@ -664,6 +771,15 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("SubProduct");
                 });
 
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.User", b =>
+                {
+                    b.HasOne("Nucleus.ModelsLayer.Entities.Seller", "Seller")
+                        .WithOne("User")
+                        .HasForeignKey("Nucleus.ModelsLayer.Entities.User", "SellerId");
+
+                    b.Navigation("Seller");
+                });
+
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -688,6 +804,18 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Parameters");
 
                     b.Navigation("SubProducts");
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Seller", b =>
+                {
+                    b.Navigation("Stores");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Store", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.SubProduct", b =>

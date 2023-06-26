@@ -87,11 +87,20 @@ public sealed class UsersConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName(ColumnNames.MIDDLE_NAME);
         
         builder
-            .Property(pv => pv.DateTimeCreated)
+            .Property(u => u.DateTimeCreated)
             .HasColumnName(ColumnNames.DATE_TIME_CREATED);
         
         builder
-            .Property(pv => pv.DateTimeModified)
+            .Property(u => u.DateTimeModified)
             .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        
+        builder
+            .Property(u => u.SellerId)
+            .HasColumnName(ColumnNames.SELLER_ID);
+
+        builder
+            .HasOne(u => u.Seller)
+            .WithOne(s => s.User)
+            .HasForeignKey<User>(u => u.SellerId);
     }
 }

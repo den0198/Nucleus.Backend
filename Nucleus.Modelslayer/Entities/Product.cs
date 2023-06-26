@@ -10,7 +10,9 @@ public sealed class Product : IEntity
     public long CountDislike { get; set; } 
     public DateTime DateTimeCreated { get; set; }
     public DateTime DateTimeModified { get; set; }
-    
+
+    public long StoreId { get; set; }
+    public Store Store { get; set; }
     public long CategoryId { get; set; }
     public Category Category { get; set; }
     public IEnumerable<Parameter> Parameters { get; set; }

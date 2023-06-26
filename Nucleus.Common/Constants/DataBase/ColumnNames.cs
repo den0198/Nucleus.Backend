@@ -60,6 +60,18 @@ public static class ColumnNames
 
     #endregion
 
+    #region Store
+
+    public const string STORE_ID = "store_id";
+
+    #endregion
+    
+    #region Seller
+
+    public const string SELLER_ID = "seller_id";
+
+    #endregion
+
     #region Catalog
     
     public const string CATEGORY_ID = "category_id";
