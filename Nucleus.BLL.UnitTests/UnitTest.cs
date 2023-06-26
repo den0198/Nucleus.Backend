@@ -6,6 +6,6 @@ public abstract class UnitTest
 {
     protected UnitTest()
     {
-        CoreMapperConfiguration.AddConfigurations();
+        MapperConfiguration.AddConfigurations();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Nucleus.ModelsLayer.GraphQl.Data;
@@ -18,6 +17,8 @@ public class ProductQueryTests : BaseIntegrationTests
     }
     
     #region GetProductById
+
+    private const string get_product_by_id = "productById";
     
     [Fact]
     public async Task GetProductById_ProductFound_ProductData()
@@ -39,7 +40,7 @@ public class ProductQueryTests : BaseIntegrationTests
         var productId = product.Id;
         
         var productData = await sendAsync<long, ProductData>(client,
-            GraphQlQueryTypesEnum.Query, QueryNames.GET_PRODUCT_BY_ID, productId, "productId");
+            GraphQlQueryTypesEnum.Query, get_product_by_id, productId, "productId");
         
         Assert.Equal(product.Id, productData.Id);
         Assert.Equal(product.Name, productData.Name);
@@ -105,7 +106,7 @@ public class ProductQueryTests : BaseIntegrationTests
         
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
             await sendAsync<long, ProductData>(client, GraphQlQueryTypesEnum.Query,
-                QueryNames.GET_PRODUCT_BY_ID, notExistentProductId, "productId"));
+                get_product_by_id, notExistentProductId, "productId"));
         
         assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }

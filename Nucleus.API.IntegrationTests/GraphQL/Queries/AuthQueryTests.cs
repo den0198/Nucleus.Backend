@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Nucleus.Common.Constants.DataBase;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Nucleus.ModelsLayer.GraphQl.Data;
@@ -18,6 +17,8 @@ public sealed class AuthQueryTests : BaseIntegrationTests
     }
 
     #region SignIn
+    
+    private const string sign_in = "signIn";
 
     [Fact]
     public async Task SignIn_CorrectUserNameAndCorrectPassword_TokenData()
@@ -30,7 +31,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
         };
 
         var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-            QueryNames.SIGN_IN, input);
+            sign_in, input);
 
         Assert.NotNull(response.AccessToken);
         Assert.NotNull(response.RefreshToken);
@@ -50,7 +51,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-                QueryNames.SIGN_IN, input));
+                sign_in, input));
 
         assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }
@@ -67,7 +68,7 @@ public sealed class AuthQueryTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query, 
-                QueryNames.SIGN_IN, input));
+                sign_in, input));
 
         assertExceptionCode(ExceptionCodesEnum.PasswordIncorrectExceptionCode, exception.Code);
     }

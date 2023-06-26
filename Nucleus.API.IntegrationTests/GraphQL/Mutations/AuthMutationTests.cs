@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Nucleus.Common.Constants.DataBase;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +20,9 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
     #region NewToken
 
+    private const string new_token = "newToken";
+    private const string sign_in = "signIn";
+
     [Fact]
     public async Task NewToken_CorrectOldToken_NewToken()
     {
@@ -31,7 +33,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         var input = inputsData.GetNewTokenInput(oldToken.AccessToken, oldToken.RefreshToken);
 
         var response = await sendAsync<NewTokenInput, TokenData>(authClient,
-            GraphQlQueryTypesEnum.Mutation, MutationNames.NEW_TOKEN, input);
+            GraphQlQueryTypesEnum.Mutation, new_token, input);
 
         var user = await context.Users.FirstAsync(u => u.UserName == DefaultSeeds.USER_USER_USERNAME);
         var refreshToken = await context.UserTokens.FirstAsync(t => t.UserId == user.Id);
@@ -53,7 +55,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<NewTokenInput, TokenData>(authClient, GraphQlQueryTypesEnum.Mutation,
-                MutationNames.NEW_TOKEN, input));
+                new_token, input));
 
         assertExceptionCode(ExceptionCodesEnum.AccessTokenIncorrectExceptionCode, exception.Code);
     }
@@ -69,7 +71,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<NewTokenInput, TokenData>(authClient, GraphQlQueryTypesEnum.Mutation,
-                MutationNames.NEW_TOKEN, input));
+                new_token, input));
 
         assertExceptionCode(ExceptionCodesEnum.RefreshTokenIncorrectExceptionCode, exception.Code);
     }
@@ -80,7 +82,7 @@ public sealed class AuthMutationTests : BaseIntegrationTests
         var input = inputsData.GetSignInInput();
 
         return await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-            QueryNames.SIGN_IN, input);
+            sign_in, input);
     }
 
     #endregion

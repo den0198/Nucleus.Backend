@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,8 @@ public sealed class CategoryMutationTests : BaseIntegrationTests
     }
 
     #region CreateCategory
+    
+    private const string create_category = "createCategory";
 
     [Fact]
     public async Task CreateCategory_CorrectRequest_CreateCategory()
@@ -27,7 +28,7 @@ public sealed class CategoryMutationTests : BaseIntegrationTests
         var input = inputsData.GetCreateCategoryInput();
 
         var categoryId = await sendAsync<CreateCategoryInput, long>(authClient, GraphQlQueryTypesEnum.Mutation,
-            MutationNames.CREATE_CATEGORY, input);
+            create_category, input);
 
         var category = await context.Categories.SingleAsync(c => c.Id == categoryId);
         Assert.Equal(input.Name, category.Name);
@@ -44,7 +45,7 @@ public sealed class CategoryMutationTests : BaseIntegrationTests
         
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<CreateCategoryInput, long>(authClient,GraphQlQueryTypesEnum.Mutation,
-                MutationNames.CREATE_CATEGORY, input));
+                create_category, input));
         
         assertExceptionCode(ExceptionCodesEnum.ObjectAlreadyExistsExceptionCode, exception.Code);
     }

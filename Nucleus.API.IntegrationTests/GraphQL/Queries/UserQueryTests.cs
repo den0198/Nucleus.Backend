@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,8 @@ public class UserQueryTests : BaseIntegrationTests
     }
 
     #region GetUserByEmail
+    
+    private const string get_user_by_email = "userByEmail";
 
     [Fact]
     public async Task GetUsersByEmail_UserFound_UserData()
@@ -28,7 +29,7 @@ public class UserQueryTests : BaseIntegrationTests
         var email = expectedUser.Email!;
 
         var response = await sendAsync<string, UserData>(authClient,
-            GraphQlQueryTypesEnum.Query, QueryNames.GET_USER_BY_EMAIL, email, "email");
+            GraphQlQueryTypesEnum.Query, get_user_by_email, email, "email");
         
         Assert.Equal(expectedUser.Id, response.UserId);
         Assert.Equal(expectedUser.UserName, response.UserName);
@@ -46,7 +47,7 @@ public class UserQueryTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
             await sendAsync<string, UserData>(authClient, GraphQlQueryTypesEnum.Query,
-                QueryNames.GET_USER_BY_EMAIL, email, "email"));
+                get_user_by_email, email, "email"));
 
         assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }

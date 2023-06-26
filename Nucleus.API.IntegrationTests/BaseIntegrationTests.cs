@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Nucleus.Common.Constants.DataBase;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.Extensions;
 using Nucleus.Common.GraphQl;
@@ -55,7 +54,7 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
             Password = DefaultSeeds.USER_USER_PASSWORD
         };
         var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
-            QueryNames.SIGN_IN, request);
+            "signIn", request);
 
         return getAuthClient(response.AccessToken);
     }

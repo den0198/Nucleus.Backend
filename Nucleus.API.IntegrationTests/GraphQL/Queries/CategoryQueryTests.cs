@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.ModelsLayer.GraphQl.Data;
 using Xunit;
@@ -17,6 +16,8 @@ public sealed class CategoryQueryTests : BaseIntegrationTests
     }
     
     #region GetAllCategories
+    
+    private const string get_all_categories = "allCategories";
 
     [Fact]
     public async Task GetAllCategories_GetAllCategories_CategoriesData()
@@ -25,7 +26,7 @@ public sealed class CategoryQueryTests : BaseIntegrationTests
         var client = getClient();
         
         var categoriesData = await sendAsync<List<CategoryData>>(client,
-            GraphQlQueryTypesEnum.Query, QueryNames.GET_ALL_CATEGORIES);
+            GraphQlQueryTypesEnum.Query, get_all_categories);
 
         var categories = await context.Categories
             .AsNoTracking()

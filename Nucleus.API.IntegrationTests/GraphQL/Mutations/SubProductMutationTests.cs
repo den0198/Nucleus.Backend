@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Nucleus.API.IntegrationTests.Inputs.Mutations;
@@ -17,6 +16,8 @@ public sealed class SubProductMutationTests : BaseIntegrationTests
     }
 
     #region UpdateSubProducts
+    
+    private const string update_sub_products = "updateSubProducts";
 
     [Fact]
     public async Task UpdateSubProducts_CorrectRequest_UpdateSubProducts()
@@ -31,7 +32,7 @@ public sealed class SubProductMutationTests : BaseIntegrationTests
         var input = inputsData.GetUpdateSubProductsInput(product.SubProducts);
         
         await sendAsync<UpdateSubProductsInput, StatusData>(authClient,GraphQlQueryTypesEnum.Mutation, 
-            MutationNames.UPDATE_SUB_PRODUCTS, input);
+            update_sub_products, input);
 
         
         foreach (var subProductCommonDto in input.SubProducts)

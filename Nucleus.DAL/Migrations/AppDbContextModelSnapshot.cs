@@ -286,6 +286,18 @@ namespace Nucleus.DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("category_id");
 
+                    b.Property<long>("CountDislike")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_dislike");
+
+                    b.Property<long>("CountLike")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_like");
+
+                    b.Property<long>("CountSale")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_sale");
+
                     b.Property<DateTime>("DateTimeCreated")
                         .HasColumnType("datetime2")
                         .HasColumnName("date_time_created");
@@ -293,6 +305,10 @@ namespace Nucleus.DAL.Migrations
                     b.Property<DateTime>("DateTimeModified")
                         .HasColumnType("datetime2")
                         .HasColumnName("date_time_modified");
+
+                    b.Property<bool>("IsSale")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_sale");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")

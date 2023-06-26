@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using FluentAssertions;
@@ -21,6 +20,8 @@ public sealed class ProductMutationTests : BaseIntegrationTests
     }
 
     #region CreateProduct
+    
+    private const string create_product = "createProduct";
 
     [Fact]
     public async Task CreateProduct_CorrectRequest_CreateProduct()
@@ -32,7 +33,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         var input = inputsData.GetCreateProductInput(category.Id);
         
         var productId = await sendAsync<CreateProductInput, long>(authClient, 
-            GraphQlQueryTypesEnum.Mutation, MutationNames.CREATE_PRODUCT, input);
+            GraphQlQueryTypesEnum.Mutation, create_product, input);
 
         var product = await context.Products
             .Include(p => p.Parameters)
@@ -101,7 +102,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<CreateProductInput, long>(authClient,GraphQlQueryTypesEnum.Mutation,
-                MutationNames.CREATE_PRODUCT, input));
+                create_product, input));
         
         assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using HotChocolate.Types;
 
 namespace Nucleus.ModelsLayer.GraphQl.Inputs.SubInputs;
 
@@ -13,27 +12,4 @@ public sealed class CreateAddOnSubInput
     
     [Required]
     public long Quantity { get; set; }
-}
-
-public sealed class CreateAddOnSubInputType : CoreType<CreateAddOnSubInput>
-{
-    protected override void Configure(IObjectTypeDescriptor<CreateAddOnSubInput> descriptor)
-    {
-        base.Configure(descriptor);
-        
-        descriptor
-            .Field(nti => nti.Name)
-            .Name("name")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(nti => nti.Price)
-            .Name("price")
-            .Type<DecimalType>();
-        
-        descriptor
-            .Field(nti => nti.Quantity)
-            .Name("quantity")
-            .Type<LongType>();
-    }
 }

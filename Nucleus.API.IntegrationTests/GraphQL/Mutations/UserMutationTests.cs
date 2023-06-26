@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Nucleus.Common.Constants.GraphQl;
 using Nucleus.Common.Enums;
 using Nucleus.Common.GraphQl;
 using Microsoft.EntityFrameworkCore;
-using Nucleus.ModelsLayer.GraphQl.Data;
 using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Nucleus.TestsHelpers;
 using Xunit;
@@ -18,6 +16,8 @@ public sealed class UserMutationTests : BaseIntegrationTests
     }
 
     #region RegisterUser
+    
+    private const string register_user = "registerUser";
 
     [Fact]
     public async Task RegisterUser_CorrectRequest_UserAdded()
@@ -35,7 +35,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
             MiddleName = AnyValue.String
         };
         var userId = await sendAsync<RegisterUserInput, long>(client,
-            GraphQlQueryTypesEnum.Mutation, MutationNames.REGISTER_USER, input);
+            GraphQlQueryTypesEnum.Mutation, register_user, input);
         
         var user = await context.Users
             .FirstAsync(u => u.Id == userId);
@@ -70,7 +70,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<RegisterUserInput, long>(client,GraphQlQueryTypesEnum.Mutation,
-                MutationNames.REGISTER_USER, input));
+                register_user, input));
 
         assertExceptionCode(ExceptionCodesEnum.CreateUserExceptionCode, exception.Code);
     }
@@ -97,7 +97,7 @@ public sealed class UserMutationTests : BaseIntegrationTests
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<RegisterUserInput, long>(client, GraphQlQueryTypesEnum.Mutation,
-                MutationNames.REGISTER_USER, input));
+                register_user, input));
 
         assertExceptionCode(ExceptionCodesEnum.CreateUserExceptionCode, exception.Code);
     }

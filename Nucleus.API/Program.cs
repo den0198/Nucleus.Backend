@@ -25,7 +25,7 @@ public class Program
             var services = builder.Services;
             var configuration = builder.Configuration;
 
-            CoreMapperConfiguration.AddConfigurations();
+            MapperConfiguration.AddConfigurations();
 
             services.AddAppCors();
             services.AddControllers();

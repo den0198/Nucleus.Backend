@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using HotChocolate.Types;
 
 namespace Nucleus.ModelsLayer.GraphQl.Inputs;
 
@@ -24,47 +23,4 @@ public sealed class RegisterUserInput
     public string LastName { get; init; }
     
     public string MiddleName { get; init; }
-}
-
-public sealed class RegisterUserInputType : CoreType<RegisterUserInput>
-{
-    protected override void Configure(IObjectTypeDescriptor<RegisterUserInput> descriptor)
-    {
-        base.Configure(descriptor);
-
-        descriptor
-            .Field(rui => rui.UserName)
-            .Name("userName")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(rui => rui.Password)
-            .Name("password")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(rui => rui.Email)
-            .Name("email")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(rui => rui.PhoneNumber)
-            .Name("phoneNumber")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(rui => rui.FirstName)
-            .Name("firstName")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(rui => rui.LastName)
-            .Name("lastName")
-            .Type<StringType>();
-        
-        descriptor
-            .Field(rui => rui.MiddleName)
-            .Name("middleName")
-            .Type<StringType>();
-    }
 }
