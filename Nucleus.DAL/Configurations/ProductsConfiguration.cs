@@ -21,6 +21,22 @@ public sealed class ProductsConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName(ColumnNames.NAME);
         
         builder
+            .Property(p => p.IsSale)
+            .HasColumnName(ColumnNames.IS_SALE);
+        
+        builder
+            .Property(p => p.CountSale)
+            .HasColumnName(ColumnNames.COUNT_SALE);
+        
+        builder
+            .Property(p => p.CountLike)
+            .HasColumnName(ColumnNames.COUNT_LIKE);
+        
+        builder
+            .Property(p => p.CountDislike)
+            .HasColumnName(ColumnNames.COUNT_DISLIKE);
+        
+        builder
             .Property(p => p.DateTimeCreated)
             .HasColumnName(ColumnNames.DATE_TIME_CREATED);
         

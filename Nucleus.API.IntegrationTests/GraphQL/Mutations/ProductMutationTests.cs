@@ -44,6 +44,10 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         
         Assert.Equal(input.Name, product.Name);
         Assert.Equal(input.CategoryId, product.CategoryId);
+        Assert.False(product.IsSale);
+        Assert.Equal(0, product.CountSale);
+        Assert.Equal(0, product.CountLike);
+        Assert.Equal(0, product.CountDislike);
         
         var countCombinationSubProduct = 1;
         var valueIds = new List<long>();

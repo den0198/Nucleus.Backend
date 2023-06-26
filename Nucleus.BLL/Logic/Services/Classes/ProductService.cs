@@ -45,6 +45,10 @@ public sealed class ProductService : IProductService
         using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
 
         var product = parameters.Adapt<Product>();
+        product.IsSale = false;
+        /*product.CountSale = 0;
+        product.CountLike = 0;
+        product.CountDislike = 0;*/
         await initialParams.Repository.CreateAsync(product);
 
         var createParametersParameters = new CreateParametersParameters(product.Id, parameters.Parameters);

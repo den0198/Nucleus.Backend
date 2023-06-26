@@ -30,7 +30,8 @@ public static class GraphQlServiceExtension
             .AddType<RegisterUserInputType>()
             .AddType<CreateCategoryInputType>()
             .AddType<CreateProductInputType>()
-            .AddType<UpdateSubProductsInputType>();
+            .AddType<UpdateSubProductsInputType>()
+            .AddType<GetProductsInputType>();
     }
 
     private static void addSubInputTypes(IRequestExecutorBuilder builder)

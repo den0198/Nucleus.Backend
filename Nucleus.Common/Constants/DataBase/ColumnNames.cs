@@ -2,7 +2,7 @@
 
 public static class ColumnNames
 {
-    #region Nucleus.Common
+    #region Common
 
     public const string NAME = "name";
     public const string NORMALIZED_NAME = "normalized_name";
@@ -69,6 +69,10 @@ public static class ColumnNames
     #region Product
 
     public const string PRODUCT_ID = "product_id";
+    public const string IS_SALE = "is_sale";
+    public const string COUNT_SALE = "count_sale";
+    public const string COUNT_LIKE = "count_like";
+    public const string COUNT_DISLIKE = "count_dislike";
 
     #endregion
 
