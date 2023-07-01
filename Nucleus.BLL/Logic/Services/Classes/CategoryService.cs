@@ -1,5 +1,4 @@
-﻿using Mapster;
-using Nucleus.BLL.Exceptions;
+﻿using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.ModelsLayer.Entities;
@@ -33,7 +32,10 @@ public sealed class CategoryService : ICategoryService
         if (category != null)
             throw new ObjectAlreadyExistException($"Category with name: '{parameters.Name}' already exist");
         
-        var newCategory = parameters.Adapt<Category>();
+        var newCategory = new Category
+        {
+            Name = parameters.Name
+        };
         await initialParams.Repository.CreateAsync(newCategory);
 
         return newCategory.Id;

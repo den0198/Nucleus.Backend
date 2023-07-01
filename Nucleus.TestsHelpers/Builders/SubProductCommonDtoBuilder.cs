@@ -2,10 +2,10 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class SubProductCommonDtoBuilder : CoreBuilder<SubProductCommonDto>
+public sealed class SubProductCommonDtoBuilder : IBuilder<SubProductCommonDto>
 {
-    public SubProductCommonDtoBuilder()
+    public SubProductCommonDto Build()
     {
-        Entity = new SubProductCommonDto(AnyValue.Long, AnyValue.Decimal, AnyValue.Long);
-    }   
+        return new SubProductCommonDto(AnyValue.Long, AnyValue.Decimal, AnyValue.Long);
+    }
 }

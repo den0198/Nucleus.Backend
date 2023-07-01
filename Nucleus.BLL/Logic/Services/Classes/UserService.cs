@@ -39,15 +39,23 @@ public sealed class UserService : IUserService
     public async Task<long> CreateAsync(CreateUserParameters parameters, bool isExistTransaction = false)
     {
         using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
-        
-        var user = parameters.Adapt<User>();
-        var identityResult = await initialParams.Repository.CrateAsync(user, parameters.Password);
+
+        var newUser = new User
+        {
+            UserName = parameters.UserName,
+            Email = parameters.Email,
+            PhoneNumber = parameters.PhoneNumber,
+            FirstName = parameters.FirstName,
+            LastName = parameters.LastName,
+            MiddleName = parameters.MiddleName
+        };
+        var identityResult = await initialParams.Repository.CrateAsync(newUser, parameters.Password);
         if (!identityResult.Succeeded)
             throw new CreateUserException(identityResult.Errors.Select(e => e.Description));
         
-        await initialParams.RoleService.GiveUserRoleAsync(user, DefaultSeeds.USER);
+        await initialParams.RoleService.GiveUserRoleAsync(newUser, DefaultSeeds.USER);
         
         transaction?.Complete();
-        return user.Id;
+        return newUser.Id;
     }
 }

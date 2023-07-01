@@ -2,27 +2,17 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class ProductBuilder : CoreBuilder<Product>
+public sealed class ProductBuilder : IBuilder<Product>
 {
-    public ProductBuilder()
+    public Product Build()
     {
-        var id = AnyValue.Long;
-        Entity = new Product
+        return new Product
         {
-            Id = id,
+            Id = AnyValue.Long,
             Name = AnyValue.ShortString,
+            StoreId = AnyValue.Long,
             CategoryId = AnyValue.Long,
-            Parameters = getParameters(id)
+            Parameters = Builder.Parameter().BuildMany()
         };
-    }
-    
-    private List<Parameter> getParameters(long productId)
-    {
-        var result = new List<Parameter>();
-        for (var i = 0; i < AnyValue.Random(2, 5); i++)
-        {
-            result.Add(Builder.Parameter(productId).Build());
-        }
-        return result;
     }
 }

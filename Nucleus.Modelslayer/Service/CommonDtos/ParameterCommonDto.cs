@@ -2,4 +2,4 @@
 
 public sealed record ParameterCommonDto(
     string Name,
-    IList<ParameterValueCommonDto> Values);
+    IEnumerable<ParameterValueCommonDto> Values);

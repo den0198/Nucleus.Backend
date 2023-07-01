@@ -2,10 +2,17 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class IdentityResultBuilder : CoreBuilder<Task<IdentityResult>>
+public sealed class IdentityResultBuilder : IBuilder<Task<IdentityResult>>
 {
+    private readonly bool isSuccess;
+    
     public IdentityResultBuilder(bool isSuccess)
     {
-        Entity = Task.FromResult(isSuccess ? IdentityResult.Success : IdentityResult.Failed());
+        this.isSuccess = isSuccess;
+    }
+
+    public Task<IdentityResult> Build()
+    {
+        return Task.FromResult(isSuccess ? IdentityResult.Success : IdentityResult.Failed());
     }
 }

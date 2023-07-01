@@ -6,6 +6,5 @@ public static partial class MapperConfiguration
     {
         AddInputsInParametersAndDtosConfigurations();
         AddEntitiesAndResultsInDataConfigurations();
-        AddParametersAndDtosInEntitiesConfigurations();
     }
 }

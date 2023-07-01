@@ -2,13 +2,12 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class SignInParametersBuilder : CoreBuilder<SignInParameters>
+public sealed class SignInParametersBuilder : IBuilder<SignInParameters>
 {
-    public SignInParametersBuilder()
+    public SignInParameters Build()
     {
-        Entity = new SignInParameters(
+        return new SignInParameters(
             AnyValue.String,
             AnyValue.Password);
     }
-
 }

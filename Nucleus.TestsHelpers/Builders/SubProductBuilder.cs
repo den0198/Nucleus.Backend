@@ -2,11 +2,11 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public class SubProductBuilder : CoreBuilder<SubProduct>
+public class SubProductBuilder : IBuilder<SubProduct>
 {
-    public SubProductBuilder()
+    public SubProduct Build()
     {
-        Entity = new SubProduct
+        return new SubProduct
         {
             Id = AnyValue.Long,
             Price = AnyValue.Decimal,

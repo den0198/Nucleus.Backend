@@ -3,5 +3,5 @@
 namespace Nucleus.ModelsLayer.Service.Parameters;
 
 public sealed record CreateParameterValuesParameters(
-    IList<ParameterValueCommonDto> Values,
-    long ParameterId);
+    long ParameterId,
+    IEnumerable<ParameterValueCommonDto> Values);

@@ -2,11 +2,11 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class CreateUserParametersBuilder : CoreBuilder<CreateUserParameters>
+public sealed class CreateUserParametersBuilder : IBuilder<CreateUserParameters>
 {
-    public CreateUserParametersBuilder()
+    public CreateUserParameters Build()
     {
-        Entity = new CreateUserParameters(
+        return new CreateUserParameters(
             AnyValue.String,
             AnyValue.Email,
             AnyValue.String,

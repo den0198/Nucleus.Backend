@@ -1,10 +1,12 @@
-﻿namespace Nucleus.TestsHelpers.Builders;
+﻿using Nucleus.ModelsLayer.Entities;
 
-public sealed class RoleBuilder : CoreBuilder<ModelsLayer.Entities.Role>
+namespace Nucleus.TestsHelpers.Builders;
+
+public sealed class RoleBuilder : IBuilder<Role>
 {
-    public RoleBuilder()
+    public Role Build()
     {
-        Entity = new ModelsLayer.Entities.Role
+        return new Role
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString

@@ -2,11 +2,11 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class NewTokenParametersBuilder : CoreBuilder<NewTokenParameters>
+public sealed class NewTokenParametersBuilder : IBuilder<NewTokenParameters>
 {
-    public NewTokenParametersBuilder()
+    public NewTokenParameters Build()
     {
-        Entity = new NewTokenParameters(
+        return new NewTokenParameters(
             AnyValue.String, 
             AnyValue.String);
     }

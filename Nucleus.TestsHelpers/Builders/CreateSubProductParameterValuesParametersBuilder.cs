@@ -1,22 +1,13 @@
-﻿using Nucleus.ModelsLayer.Entities;
-using Nucleus.ModelsLayer.Service.Parameters;
+﻿using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class CreateSubProductParameterValuesParametersBuilder : CoreBuilder<CreateSubProductParameterValuesParameters>
+public sealed class CreateSubProductParameterValuesParametersBuilder 
+    : IBuilder<CreateSubProductParameterValuesParameters>
 {
-    public CreateSubProductParameterValuesParametersBuilder()
+    public CreateSubProductParameterValuesParameters Build()
     {
-        Entity = new CreateSubProductParameterValuesParameters(AnyValue.Long, getParameterValues());
-    }
-    
-    private List<ParameterValue> getParameterValues()
-    {
-        var result = new List<ParameterValue>();
-        for (var i = 0; i < AnyValue.Random(2, 5); i++)
-        {
-            result.Add(Builder.ParameterValue().Build());
-        }
-        return result;
+        return new CreateSubProductParameterValuesParameters(AnyValue.Long, 
+            Builder.ParameterValue().BuildMany());
     }
 }

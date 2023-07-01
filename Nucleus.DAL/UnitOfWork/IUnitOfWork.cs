@@ -7,6 +7,8 @@ public interface IUnitOfWork
     IUserRepository UserRepository { get; }
     IRoleRepository RoleRepository { get; }
     IAuthRepository AuthRepository { get; }
+    ISellerRepository SellerRepository { get; }
+    IStoreRepository StoreRepository { get; }
     ICategoryRepository CategoryRepository { get; }
     IProductRepository ProductRepository { get; }
     IParameterRepository ParameterRepository { get; }

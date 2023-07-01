@@ -1,5 +1,4 @@
-﻿using Nucleus.Common.Extensions;
-using Nucleus.BLL.Exceptions;
+﻿using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.ModelsLayer.Entities;
@@ -45,8 +44,8 @@ public class RoleService : IRoleService
     {
         var role = await GetByNameAsync(name);
         var userRoles = await initialParams.Repository.GetUserRolesNamesAsync(user);
-
-        if (!userRoles.All(ur => ur.IsNotEqual(name)))
+        
+        if(userRoles.Contains(name))
             throw new UserAlreadyHasThisRoleException();
         
         await initialParams.Repository.GiveUserRoleAsync(user, role.Name!);

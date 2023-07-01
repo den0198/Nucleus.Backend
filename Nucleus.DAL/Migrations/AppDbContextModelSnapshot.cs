@@ -392,6 +392,9 @@ namespace Nucleus.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("sellers", (string)null);
                 });
 
@@ -585,10 +588,6 @@ namespace Nucleus.DAL.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("security_stamp");
 
-                    b.Property<long?>("SellerId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("seller_id");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit")
                         .HasColumnName("two_factor_enabled");
@@ -608,10 +607,6 @@ namespace Nucleus.DAL.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[normalized_username] IS NOT NULL");
-
-                    b.HasIndex("SellerId")
-                        .IsUnique()
-                        .HasFilter("[seller_id] IS NOT NULL");
 
                     b.ToTable("users", (string)null);
                 });
@@ -719,6 +714,17 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("Store");
                 });
 
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Seller", b =>
+                {
+                    b.HasOne("Nucleus.ModelsLayer.Entities.User", "User")
+                        .WithOne("Seller")
+                        .HasForeignKey("Nucleus.ModelsLayer.Entities.Seller", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Store", b =>
                 {
                     b.HasOne("Nucleus.ModelsLayer.Entities.Seller", "Seller")
@@ -768,15 +774,6 @@ namespace Nucleus.DAL.Migrations
                     b.Navigation("SubProduct");
                 });
 
-            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.User", b =>
-                {
-                    b.HasOne("Nucleus.ModelsLayer.Entities.Seller", "Seller")
-                        .WithOne("User")
-                        .HasForeignKey("Nucleus.ModelsLayer.Entities.User", "SellerId");
-
-                    b.Navigation("Seller");
-                });
-
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -806,8 +803,6 @@ namespace Nucleus.DAL.Migrations
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Seller", b =>
                 {
                     b.Navigation("Stores");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.Store", b =>
@@ -818,6 +813,11 @@ namespace Nucleus.DAL.Migrations
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.SubProduct", b =>
                 {
                     b.Navigation("SubProductParameterValues");
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.Entities.User", b =>
+                {
+                    b.Navigation("Seller");
                 });
 #pragma warning restore 612, 618
         }

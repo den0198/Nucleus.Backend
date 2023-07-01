@@ -3,4 +3,4 @@
 namespace Nucleus.ModelsLayer.Service.Parameters;
 
 public sealed record UpdateSubProductsParameters(
-    IList<SubProductCommonDto> SubProducts);
+    IEnumerable<SubProductCommonDto> SubProducts);

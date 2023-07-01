@@ -19,7 +19,9 @@ public static class SeedForTest
         appContext.Database.EnsureCreated();
         
         #region Seeds
-
+        
+        var sellers = new List<Seller>();
+        var stores = new List<Store>();
         var categories = new List<Category>();
         var products = new List<Product>();
         var parameters = new List<Parameter>();
@@ -28,35 +30,42 @@ public static class SeedForTest
         var subProducts = new List<SubProduct>();
         var subProductParameterValues = new List<SubProductParameterValue>();
         
-        categories.AddRange(CategoryMockData.GetMany(getRandomNumber()));
-        foreach (var category in categories)
+        sellers.AddRange(SellerMockData.GetMany( getRandomNumber(1, 3)));
+        foreach (var seller in sellers)
         {
-            products.AddRange(ProductMockData.GetMany(category.Id, getRandomNumber()));
-            foreach (var product in products)
+            stores.AddRange(StoreMockData.GetMany(seller.Id, getRandomNumber(1, 3)));
+            categories.AddRange(CategoryMockData.GetMany(getRandomNumber()));
+            foreach (var category in categories)
             {
-                parameters.AddRange(ParameterMockData.GetMany(product.Id, getRandomNumber()));
-                foreach (var parameter in parameters)
+                products.AddRange(ProductMockData.GetMany(category.Id, getRandomNumber()));
+                foreach (var product in products)
                 {
-                    parameterValues.AddRange(ParameterValueMockData.GetMany(parameter.Id, 
-                        getRandomNumber()));
-                }
+                    parameters.AddRange(ParameterMockData.GetMany(product.Id, getRandomNumber()));
+                    foreach (var parameter in parameters)
+                    {
+                        parameterValues.AddRange(ParameterValueMockData.GetMany(parameter.Id, 
+                            getRandomNumber()));
+                    }
                 
-                addOns.AddRange(AddOnMockData.GetMany(product.Id, getRandomNumber()));
+                    addOns.AddRange(AddOnMockData.GetMany(product.Id, getRandomNumber()));
                 
-                subProducts.AddRange(SubProductMockData.GetMany(product.Id, getRandomNumber()));
-                foreach (var subProduct in subProducts)
-                {
-                    var parameter = parameters.First();
-                    var parameterId = parameter.Id;
-                    var parameterValueId = parameterValues.First().Id;
-                    subProductParameterValues.AddRange(SubProductParameterValueMockData.GetMany(subProduct.Id, 
-                        parameterId, parameterValueId, getRandomNumber()));
+                    subProducts.AddRange(SubProductMockData.GetMany(product.Id, getRandomNumber()));
+                    foreach (var subProduct in subProducts)
+                    {
+                        var parameter = parameters.First();
+                        var parameterId = parameter.Id;
+                        var parameterValueId = parameterValues.First().Id;
+                        subProductParameterValues.AddRange(SubProductParameterValueMockData.GetMany(subProduct.Id, 
+                            parameterId, parameterValueId, getRandomNumber()));
+                    }
                 }
             }
         }
         
         #endregion
-
+        
+        appContext.AddRange(sellers);
+        appContext.AddRange(stores);
         appContext.AddRange(categories);
         appContext.AddRange(products);
         appContext.AddRange(parameters);
@@ -68,5 +77,5 @@ public static class SeedForTest
         appContext.SaveChanges();
     }
 
-    private static int getRandomNumber() => random.Next(2, 5);
+    private static int getRandomNumber(int min = 2, int max = 5) => random.Next(min, max);
 }

@@ -31,8 +31,9 @@ public sealed class SellersConfiguration : IEntityTypeConfiguration<Seller>
         builder
             .HasOne(s => s.User)
             .WithOne(u => u.Seller)
-            .HasForeignKey<Seller>(s => s.UserId);
-        
+            .HasForeignKey<Seller>(s => s.UserId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         builder
             .HasMany(s => s.Stores)
             .WithOne(s => s.Seller)

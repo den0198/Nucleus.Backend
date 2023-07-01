@@ -93,14 +93,11 @@ public sealed class UsersConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(u => u.DateTimeModified)
             .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
-        
-        builder
-            .Property(u => u.SellerId)
-            .HasColumnName(ColumnNames.SELLER_ID);
 
         builder
             .HasOne(u => u.Seller)
             .WithOne(s => s.User)
-            .HasForeignKey<User>(u => u.SellerId);
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

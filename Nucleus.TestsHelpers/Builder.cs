@@ -1,32 +1,39 @@
-﻿using Nucleus.TestsHelpers.Builders;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using Nucleus.ModelsLayer.Entities;
+using Nucleus.ModelsLayer.Options;
+using Nucleus.ModelsLayer.Service.CommonDtos;
+using Nucleus.ModelsLayer.Service.Parameters;
+using Nucleus.TestsHelpers.Builders;
 
 namespace Nucleus.TestsHelpers;
 
 public static class Builder
 {
-    public static AuthOptionBuilder AuthOption => new();
-    public static SignInParametersBuilder SignInParameters => new();
-    public static NewTokenParametersBuilder NewTokenParameters => new();
-    public static ClaimBuilder Claim => new();
-    public static IdentityResultBuilder IdentityResultSuccess => new(true);
-    public static IdentityResultBuilder IdentityResultFailed => new(false);
-    public static RoleBuilder Role => new();
-    public static UserBuilder User => new();
-    public static CreateUserParametersBuilder CreateUserParameters => new ();
-    public static CreateParameterValuesParametersBuilder RegisterUserParameters => new ();
-    public static ParameterValueCommonDtoBuilder ParameterValueCommonDto => new();
-    public static CreateParametersParametersBuilder CreateParametersParameters => new();
-    public static ParameterCommonDtoBuilder ParameterCommonDto => new();
-    public static CreateSubProductParameterValuesParametersBuilder CreateSubProductParameterValuesParameters => new();
-    public static ParameterBuilder Parameter(long productId) => new(productId);
-    public static ParameterValueBuilder ParameterValue(long parameterId = default) => new(parameterId);
-    public static ProductBuilder Product => new();
-    public static UpdateSubProductsParametersBuilder UpdateSubProductsParameters => new();
-    public static SubProductCommonDtoBuilder SubProductCommonDto => new();
-    public static SubProductBuilder SubProduct => new();
-    public static CreateAddOnsParametersBuilder CreateAddOnsParameters => new();
-    public static AddOnCommonDtoBuilder AddOnCommonDto => new();
-    public static CreateProductParametersBuilder CreateProductParameters => new();
-    public static CategoryBuilder Category => new();
-    public static CreateCategoryParametersBuilder CreateCategoryParameters => new();
+    public static IBuilder<AuthOptions> AuthOptions => new AuthOptionsBuilder();
+    public static IBuilder<SignInParameters> SignInParameters => new SignInParametersBuilder();
+    public static IBuilder<NewTokenParameters> NewTokenParameters => new NewTokenParametersBuilder();
+    public static IBuilder<Claim> Claim => new ClaimBuilder();
+    public static IBuilder<Task<IdentityResult>> IdentityResult(bool isSuccess) => new IdentityResultBuilder(isSuccess);
+    public static IBuilder<Role> Role => new RoleBuilder();
+    public static IBuilder<User> User => new UserBuilder();
+    public static IBuilder<CreateUserParameters> CreateUserParameters => new CreateUserParametersBuilder();
+    public static IBuilder<CreateParameterValuesParameters> RegisterUserParameters => new CreateParameterValuesParametersBuilder();
+    public static IBuilder<Store> Store => new StoreBuilder(); 
+    public static IBuilder<ParameterValueCommonDto> ParameterValueCommonDto => new ParameterValueCommonDtoBuilder();
+    public static IBuilder<CreateParametersParameters> CreateParametersParameters => new CreateParametersParametersBuilder();
+    public static IBuilder<ParameterCommonDto> ParameterCommonDto => new ParameterCommonDtoBuilder();
+    public static IBuilder<CreateSubProductParameterValuesParameters> CreateSubProductParameterValuesParameters => new CreateSubProductParameterValuesParametersBuilder();
+    public static IBuilder<Parameter> Parameter() => new ParameterBuilder();
+    public static IBuilder<ParameterValue> ParameterValue() => new ParameterValueBuilder();
+    public static IBuilder<Product> Product => new ProductBuilder();
+    public static IBuilder<UpdateSubProductsParameters> UpdateSubProductsParameters => new UpdateSubProductsParametersBuilder();
+    public static IBuilder<SubProductCommonDto> SubProductCommonDto => new SubProductCommonDtoBuilder();
+    public static IBuilder<SubProduct> SubProduct => new SubProductBuilder();
+    public static IBuilder<CreateAddOnsParameters> CreateAddOnsParameters => new CreateAddOnsParametersBuilder();
+    public static IBuilder<AddOnCommonDto> AddOnCommonDto => new AddOnCommonDtoBuilder();
+    public static IBuilder<CreateProductParameters> CreateProductParameters => new CreateProductParametersBuilder();
+    public static IBuilder<Category> Category => new CategoryBuilder();
+    public static IBuilder<CreateCategoryParameters> CreateCategoryParameters => new CreateCategoryParametersBuilder();
+    
 }

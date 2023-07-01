@@ -10,10 +10,55 @@ public static partial class MapperConfiguration
 {
     private static void AddInputsInParametersAndDtosConfigurations()
     {
+        #region RegisterUserInput
+
+        TypeAdapterConfig<RegisterUserInput, CreateUserParameters>.NewConfig()
+            .Map(dest => dest.UserName, src => src.UserName)
+            .Map(dest => dest.Password, src => src.Password)
+            .Map(dest => dest.Email, src => src.Email)
+            .Map(dest => dest.PhoneNumber, src => src.PhoneNumber)
+            .Map(dest => dest.FirstName, src => src.FirstName)
+            .Map(dest => dest.LastName, src => src.LastName)
+            .Map(dest => dest.MiddleName, src => src.MiddleName);
+
+        #endregion
+        
+        #region SignInInput
+
+        TypeAdapterConfig<SignInInput, SignInParameters>.NewConfig()
+            .Map(dest => dest.UserName, src => src.UserName)
+            .Map(dest => dest.Password, src => src.Password);
+
+        #endregion
+        
+        #region NewTokenInput
+
+        TypeAdapterConfig<NewTokenInput, NewTokenParameters>.NewConfig()
+            .Map(dest => dest.AccessToken, src => src.AccessToken)
+            .Map(dest => dest.RefreshToken, src => src.RefreshToken);
+
+        #endregion
+
+        #region CreateSellerInput
+
+        TypeAdapterConfig<CreateSellerInput, CreateSellerParameters>.NewConfig()
+            .Map(dest => dest.UserId, src => src.UserId);
+
+        #endregion
+
+        #region CreateStoreInput
+
+        TypeAdapterConfig<CreateStoreInput, CreateStoreParameters>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.SellerId, src => src.SellerId);
+
+        #endregion
+        
         #region CreateProductInput
 
         TypeAdapterConfig<CreateProductInput, CreateProductParameters>.NewConfig()
             .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.StoreId, src => src.StoreId)
             .Map(dest => dest.CategoryId, src => src.CategoryId)
             .Map(dest => dest.Parameters,
                 src => src.Parameters.Select(p => p.Adapt<ParameterCommonDto>()))
@@ -35,35 +80,6 @@ public static partial class MapperConfiguration
 
         #endregion
 
-        #region NewTokenInput
-
-        TypeAdapterConfig<NewTokenInput, NewTokenParameters>.NewConfig()
-            .Map(dest => dest.AccessToken, src => src.AccessToken)
-            .Map(dest => dest.RefreshToken, src => src.RefreshToken);
-
-        #endregion
-
-        #region RegisterUserInput
-
-        TypeAdapterConfig<RegisterUserInput, CreateUserParameters>.NewConfig()
-            .Map(dest => dest.UserName, src => src.UserName)
-            .Map(dest => dest.Password, src => src.Password)
-            .Map(dest => dest.Email, src => src.Email)
-            .Map(dest => dest.PhoneNumber, src => src.PhoneNumber)
-            .Map(dest => dest.FirstName, src => src.FirstName)
-            .Map(dest => dest.LastName, src => src.LastName)
-            .Map(dest => dest.MiddleName, src => src.MiddleName);
-
-        #endregion
-
-        #region SignInInput
-
-        TypeAdapterConfig<SignInInput, SignInParameters>.NewConfig()
-            .Map(dest => dest.UserName, src => src.UserName)
-            .Map(dest => dest.Password, src => src.Password);
-
-        #endregion
-        
         #region UpdateSubProductsInput
 
         TypeAdapterConfig<UpdateSubProductsInput, UpdateSubProductsParameters>.NewConfig()

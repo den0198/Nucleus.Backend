@@ -30,6 +30,7 @@ public sealed class ProductRepository : Repository, IProductRepository
             .SingleOrDefaultAsync(p => p.Id == productId);
     }
 
+    //TODO:Дописать условия когда додавлю условия продажи
     public async Task<ICollection<Product>> GetAllWithIsSaleAsync()
     {
         await using var context = await ContextFactory

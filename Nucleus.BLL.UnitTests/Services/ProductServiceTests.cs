@@ -98,6 +98,8 @@ public sealed class ProductServiceTests : UnitTest
     
     #region Create
 
+    //TODO:Дописвть тесты
+    
     [Fact]
     public async Task Create_CorrectParams_ProductCreated()
     {
@@ -106,6 +108,9 @@ public sealed class ProductServiceTests : UnitTest
         var parameters = testData.CreateProductParameters;
         var product = testData.Product;
 
+        initialParams.StoreService
+            .GetByIdAsync(parameters.StoreId)
+            .Returns(testData.Store);
         initialParams.CategoryService
             .GetByIdAsync(parameters.CategoryId)
             .Returns(testData.Category);

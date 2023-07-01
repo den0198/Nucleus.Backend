@@ -1,5 +1,4 @@
 ﻿using Nucleus.DAL.Transaction;
-using Mapster;
 using Microsoft.Extensions.Caching.Memory;
 using Nucleus.BLL.Exceptions;
 using Nucleus.BLL.Logic.Services.InitialsParams;
@@ -24,6 +23,11 @@ public sealed class ProductService : IProductService
                ?? throw new ObjectNotFoundException($"Product with productId: {productId} not found");
     }
 
+    public async Task<IList<Product>> GetAllWithIsSellByParametersAsync()
+    {
+        return await GetAllWithIsSellAsync();
+    }
+
     public async Task<IList<Product>> GetAllWithIsSellAsync(bool isUpdatedCache = false)
     {
         const string nameCache = "ProductsWithIsSale";
@@ -40,15 +44,21 @@ public sealed class ProductService : IProductService
     public async Task<long> CreateAsync(CreateProductParameters parameters,
         bool isExistTransaction = false)
     {
-        await initialParams.CategoryService.GetByIdAsync(parameters.CategoryId);
+        var store = await initialParams.StoreService.GetByIdAsync(parameters.StoreId);
+        var category = await initialParams.CategoryService.GetByIdAsync(parameters.CategoryId);
         
         using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
-
-        var product = parameters.Adapt<Product>();
-        product.IsSale = false;
-        /*product.CountSale = 0;
-        product.CountLike = 0;
-        product.CountDislike = 0;*/
+        
+        var product = new Product
+        {
+            Name = parameters.Name,
+            CountSale = 0,
+            CountLike = 0,
+            CountDislike = 0,
+            IsSale = false,
+            StoreId = store.Id,
+            CategoryId = category.Id
+        };
         await initialParams.Repository.CreateAsync(product);
 
         var createParametersParameters = new CreateParametersParameters(product.Id, parameters.Parameters);

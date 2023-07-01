@@ -1,16 +1,19 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Nucleus.DAL.EntityFramework;
 using Nucleus.DAL.Repositories.Interfaces;
 using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Repositories.Classes;
 
-public sealed class AuthRepository : IAuthRepository
+public sealed class AuthRepository : Repository, IAuthRepository
 {
     private readonly UserManager<User> userManager;
     private const string refresh_token = "RefreshToken";
 
-    public AuthRepository(UserManager<User> userManager)
+    public AuthRepository(IDbContextFactory<AppDbContext> contextFactory, UserManager<User> userManager) 
+        : base(contextFactory)
     {
         this.userManager = userManager;
     }

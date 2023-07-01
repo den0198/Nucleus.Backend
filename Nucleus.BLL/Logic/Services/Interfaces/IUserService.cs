@@ -31,5 +31,6 @@ public interface IUserService
     /// </summary>
     /// <param name="parameters">Параметры создания пользователя</param>
     /// <param name="isExistTransaction">Сушествует ли транзакция</param>
+    /// <returns>Идентификатор нового пользователя</returns>
     Task<long> CreateAsync(CreateUserParameters parameters, bool isExistTransaction = false);
 }

@@ -11,7 +11,7 @@ internal sealed class AuthTestData
 {
     public AuthTestData()
     {
-        AuthOptions = Builder.AuthOption.Build();
+        AuthOptions = Builder.AuthOptions.Build();
         User = Builder.User.Build();
         Roles = new[]
         {

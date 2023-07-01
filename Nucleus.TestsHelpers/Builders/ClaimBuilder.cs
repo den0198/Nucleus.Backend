@@ -2,10 +2,10 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class ClaimBuilder : CoreBuilder<Claim>
+public sealed class ClaimBuilder : IBuilder<Claim>
 {
-    public ClaimBuilder()
+    public Claim Build()
     {
-        Entity = new Claim(AnyValue.ShortString, AnyValue.String);
+        return new Claim(AnyValue.ShortString, AnyValue.String);
     }
 }

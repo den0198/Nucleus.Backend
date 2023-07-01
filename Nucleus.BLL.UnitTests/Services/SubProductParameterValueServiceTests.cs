@@ -37,7 +37,7 @@ public sealed class SubProductParameterValueServiceTests : UnitTest
         await initialParams.Repository
             .Received(1)
             .CreateRangeAsync(Arg.Is<IEnumerable<SubProductParameterValue>>(sppvs =>
-                sppvs.Count() == createSubProductParameterValuesParameters.ParameterValues.Count &&
+                sppvs.Count() == createSubProductParameterValuesParameters.ParameterValues.Count() &&
                 sppvs.All(spv =>
                     spv.SubProductId == createSubProductParameterValuesParameters.SubProductId &&
                     createSubProductParameterValuesParameters.ParameterValues.Any(pv =>

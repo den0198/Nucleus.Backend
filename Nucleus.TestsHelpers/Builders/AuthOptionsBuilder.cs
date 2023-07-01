@@ -2,11 +2,11 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class AuthOptionBuilder : CoreBuilder<AuthOptions>
+public sealed class AuthOptionsBuilder : IBuilder<AuthOptions>
 {
-    public AuthOptionBuilder()
+    public AuthOptions Build()
     {
-        Entity = new AuthOptions
+        return new AuthOptions
         {
             Audience = AnyValue.String,
             Issuer = AnyValue.String,

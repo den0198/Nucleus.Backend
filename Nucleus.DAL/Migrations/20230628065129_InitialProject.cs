@@ -44,18 +44,34 @@ namespace Nucleus.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "sellers",
+                name: "users",
                 columns: table => new
                 {
-                    seller_id = table.Column<long>(type: "bigint", nullable: false)
+                    user_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    first_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    last_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    middle_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    user_id = table.Column<long>(type: "bigint", nullable: false)
+                    username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    normalized_username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    normalized_email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    email_confirmed = table.Column<bool>(type: "bit", nullable: false),
+                    password_hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    security_stamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    concurrency_stamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    phone_number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    phone_number_confirmed = table.Column<bool>(type: "bit", nullable: false),
+                    two_factor_enabled = table.Column<bool>(type: "bit", nullable: false),
+                    lockout_end = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    is_lockout = table.Column<bool>(type: "bit", nullable: false),
+                    access_failed_count = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_sellers", x => x.seller_id);
+                    table.PrimaryKey("PK_users", x => x.user_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,93 +96,23 @@ namespace Nucleus.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "stores",
+                name: "sellers",
                 columns: table => new
                 {
-                    store_id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     seller_id = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_stores", x => x.store_id);
-                    table.ForeignKey(
-                        name: "FK_stores_sellers_seller_id",
-                        column: x => x.seller_id,
-                        principalTable: "sellers",
-                        principalColumn: "seller_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "users",
-                columns: table => new
-                {
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     user_id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    first_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    last_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    middle_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    seller_id = table.Column<long>(type: "bigint", nullable: true),
-                    username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    normalized_username = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    normalized_email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    email_confirmed = table.Column<bool>(type: "bit", nullable: false),
-                    password_hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    security_stamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    concurrency_stamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phone_number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phone_number_confirmed = table.Column<bool>(type: "bit", nullable: false),
-                    two_factor_enabled = table.Column<bool>(type: "bit", nullable: false),
-                    lockout_end = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    is_lockout = table.Column<bool>(type: "bit", nullable: false),
-                    access_failed_count = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.user_id);
+                    table.PrimaryKey("PK_sellers", x => x.seller_id);
                     table.ForeignKey(
-                        name: "FK_users_sellers_seller_id",
-                        column: x => x.seller_id,
-                        principalTable: "sellers",
-                        principalColumn: "seller_id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "products",
-                columns: table => new
-                {
-                    product_id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    is_sale = table.Column<bool>(type: "bit", nullable: false),
-                    count_sale = table.Column<long>(type: "bigint", nullable: false),
-                    count_like = table.Column<long>(type: "bigint", nullable: false),
-                    count_dislike = table.Column<long>(type: "bigint", nullable: false),
-                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    store_id = table.Column<long>(type: "bigint", nullable: false),
-                    category_id = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_products", x => x.product_id);
-                    table.ForeignKey(
-                        name: "FK_products_categories_category_id",
-                        column: x => x.category_id,
-                        principalTable: "categories",
-                        principalColumn: "category_id");
-                    table.ForeignKey(
-                        name: "FK_products_stores_store_id",
-                        column: x => x.store_id,
-                        principalTable: "stores",
-                        principalColumn: "store_id",
+                        name: "FK_sellers_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "user_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -252,6 +198,60 @@ namespace Nucleus.DAL.Migrations
                         column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "user_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "stores",
+                columns: table => new
+                {
+                    store_id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    seller_id = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_stores", x => x.store_id);
+                    table.ForeignKey(
+                        name: "FK_stores_sellers_seller_id",
+                        column: x => x.seller_id,
+                        principalTable: "sellers",
+                        principalColumn: "seller_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "products",
+                columns: table => new
+                {
+                    product_id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    is_sale = table.Column<bool>(type: "bit", nullable: false),
+                    count_sale = table.Column<long>(type: "bigint", nullable: false),
+                    count_like = table.Column<long>(type: "bigint", nullable: false),
+                    count_dislike = table.Column<long>(type: "bigint", nullable: false),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    store_id = table.Column<long>(type: "bigint", nullable: false),
+                    category_id = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_products", x => x.product_id);
+                    table.ForeignKey(
+                        name: "FK_products_categories_category_id",
+                        column: x => x.category_id,
+                        principalTable: "categories",
+                        principalColumn: "category_id");
+                    table.ForeignKey(
+                        name: "FK_products_stores_store_id",
+                        column: x => x.store_id,
+                        principalTable: "stores",
+                        principalColumn: "store_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -416,6 +416,12 @@ namespace Nucleus.DAL.Migrations
                 filter: "[normalized_name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_sellers_user_id",
+                table: "sellers",
+                column: "user_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_stores_seller_id",
                 table: "stores",
                 column: "seller_id");
@@ -461,13 +467,6 @@ namespace Nucleus.DAL.Migrations
                 column: "normalized_email");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_seller_id",
-                table: "users",
-                column: "seller_id",
-                unique: true,
-                filter: "[seller_id] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "users",
                 column: "normalized_username",
@@ -509,9 +508,6 @@ namespace Nucleus.DAL.Migrations
                 name: "roles");
 
             migrationBuilder.DropTable(
-                name: "users");
-
-            migrationBuilder.DropTable(
                 name: "parameters");
 
             migrationBuilder.DropTable(
@@ -525,6 +521,9 @@ namespace Nucleus.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "sellers");
+
+            migrationBuilder.DropTable(
+                name: "users");
         }
     }
 }

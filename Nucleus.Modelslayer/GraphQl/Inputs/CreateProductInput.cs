@@ -9,11 +9,13 @@ public sealed class CreateProductInput
     public string Name { get; init; }
 
     [Required] 
+    public long StoreId { get; init; }
+    
+    [Required]
     public long CategoryId { get; init; }
 
     [Required]
     public IList<CreateParameterSubInput> Parameters { get; init; }
-
-    [Required] 
+    
     public IList<CreateAddOnSubInput> AddOns { get; init; }
 }

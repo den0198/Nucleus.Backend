@@ -2,15 +2,15 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class ParameterValueBuilder : CoreBuilder<ParameterValue>
+public sealed class ParameterValueBuilder : IBuilder<ParameterValue>
 {
-    public ParameterValueBuilder(long parameterId)
+    public ParameterValue Build()
     {
-        Entity = new ParameterValue
+        return new ParameterValue
         {   
             Id = AnyValue.Long,
             Value = AnyValue.ShortString,
-            ParameterId = parameterId
+            ParameterId = AnyValue.Long
         };
     }
 }

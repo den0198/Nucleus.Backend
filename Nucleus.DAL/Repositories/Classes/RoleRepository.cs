@@ -1,16 +1,20 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Nucleus.DAL.EntityFramework;
 using Nucleus.DAL.Repositories.Interfaces;
 using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Repositories.Classes;
 
-public sealed class RoleRepository : IRoleRepository
+public sealed class RoleRepository : Repository, IRoleRepository
 {
     private readonly UserManager<User> userManager;
     private readonly RoleManager<Role> roleManager;
     
-    public RoleRepository(UserManager<User> userManager, RoleManager<Role> roleManager)
+    public RoleRepository(IDbContextFactory<AppDbContext> contextFactory, UserManager<User> userManager,
+        RoleManager<Role> roleManager) 
+        : base(contextFactory)
     {
         this.userManager = userManager;
         this.roleManager = roleManager;

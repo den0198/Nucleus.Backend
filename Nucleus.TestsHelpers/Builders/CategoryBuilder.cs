@@ -2,11 +2,11 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class CategoryBuilder : CoreBuilder<Category>
+public sealed class CategoryBuilder : IBuilder<Category>
 {
-    public CategoryBuilder()
+    public Category Build()
     {
-        Entity = new Category
+        return new Category
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString

@@ -2,10 +2,10 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class CreateCategoryParametersBuilder : CoreBuilder<CreateCategoryParameters>
+public sealed class CreateCategoryParametersBuilder : IBuilder<CreateCategoryParameters>
 {
-    public CreateCategoryParametersBuilder()
+    public CreateCategoryParameters Build()
     {
-        Entity = new CreateCategoryParameters(AnyValue.ShortString);
+        return new CreateCategoryParameters(AnyValue.ShortString);
     }
 }

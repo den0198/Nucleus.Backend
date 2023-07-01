@@ -1,5 +1,4 @@
-﻿using Mapster;
-using Nucleus.BLL.Logic.Services.InitialsParams;
+﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
@@ -17,13 +16,16 @@ public sealed class AddOnService : IAddOnService
     
     public async Task CreateRangeAsync(CreateAddOnsParameters parameters)
     {
-        var addOns = new List<AddOn>();
-        foreach (var addOnsCommonDto in parameters.AddOns)
-        {
-            var addOn = addOnsCommonDto.Adapt<AddOn>();
-            addOn.ProductId = parameters.ProductId;
-            addOns.Add(addOn);
-        }
+        var addOns = parameters.AddOns
+            .Select(addOnsCommonDto => new AddOn
+            {
+                Name = addOnsCommonDto.Name, 
+                Price = addOnsCommonDto.Price, 
+                Quantity = addOnsCommonDto.Quantity,
+                ProductId = parameters.ProductId
+            })
+            .ToList();
+        
         await initialParams.Repository.CreateRangeAsync(addOns);
     }
 }

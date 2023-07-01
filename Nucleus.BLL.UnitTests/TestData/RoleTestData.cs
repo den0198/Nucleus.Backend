@@ -10,8 +10,8 @@ internal sealed class RoleTestData
 {
     public RoleTestData()
     {
-        IdentityResultSuccess = Builder.IdentityResultSuccess.Build();
-        IdentityResultFailed = Builder.IdentityResultFailed.Build();
+        IdentityResultSuccess = Builder.IdentityResult(true).Build();
+        IdentityResultFailed = Builder.IdentityResult(false).Build();
         User = Builder.User.Build();
         Roles = new[]
         {

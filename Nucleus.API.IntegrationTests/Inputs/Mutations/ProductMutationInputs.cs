@@ -7,8 +7,9 @@ namespace Nucleus.API.IntegrationTests.Inputs.Mutations;
 
 public sealed class ProductMutationInputs
 {
-    public CreateProductInput GetCreateProductInput(long categoryId) => new()
+    public CreateProductInput GetCreateProductInput(long storeId, long categoryId) => new()
     {
+        StoreId = storeId,
         CategoryId = categoryId,
         Name = AnyValue.ShortString,
         Parameters = new List<CreateParameterSubInput>

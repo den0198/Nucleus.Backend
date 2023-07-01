@@ -4,4 +4,4 @@ namespace Nucleus.ModelsLayer.Service.Parameters;
 
 public sealed record CreateParametersParameters(
     long ProductId,
-    IList<ParameterCommonDto> Parameters);
+    IEnumerable<ParameterCommonDto> Parameters);

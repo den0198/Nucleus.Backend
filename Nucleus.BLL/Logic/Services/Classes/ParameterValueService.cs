@@ -1,5 +1,4 @@
-﻿using Mapster;
-using Nucleus.BLL.Logic.Services.InitialsParams;
+﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
@@ -17,13 +16,14 @@ public sealed class ParameterValueService : IParameterValueService
 
     public async Task CreateRangeAsync(CreateParameterValuesParameters parameters)
     {
-        var parameterValues = new List<ParameterValue>();
-        foreach (var valueCommonDto in parameters.Values)
-        {
-            var value = valueCommonDto.Adapt<ParameterValue>();
-            value.ParameterId = parameters.ParameterId;
-            parameterValues.Add(value);
-        }
+        var parameterValues = parameters.Values
+            .Select(parameterCommonDto => new ParameterValue
+            {
+                Value = parameterCommonDto.Value,
+                ParameterId = parameters.ParameterId
+            })
+            .ToList();
+        
         await initialParams.Repository.CreateRangeAsync(parameterValues);
     }
 }

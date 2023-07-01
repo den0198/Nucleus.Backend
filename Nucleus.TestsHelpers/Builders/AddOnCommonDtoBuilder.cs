@@ -2,10 +2,10 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class AddOnCommonDtoBuilder : CoreBuilder<AddOnCommonDto>
+public sealed class AddOnCommonDtoBuilder : IBuilder<AddOnCommonDto>
 {
-    public AddOnCommonDtoBuilder()
+    public AddOnCommonDto Build()
     {
-        Entity = new AddOnCommonDto(AnyValue.ShortString, AnyValue.Decimal, AnyValue.Long);
+        return new AddOnCommonDto(AnyValue.ShortString, AnyValue.Decimal, AnyValue.Long);
     }
 }

@@ -37,6 +37,8 @@ public static class GraphQlServiceExtension
             .AddMutationType<CoreMutation>()
             .AddTypeExtension<UserMutation>()
             .AddTypeExtension<AuthMutation>()
+            .AddTypeExtension<SellerMutation>()
+            .AddTypeExtension<StoreMutation>()
             .AddTypeExtension<CategoryMutation>()
             .AddTypeExtension<ProductMutation>()
             .AddTypeExtension<SubProductMutation>();

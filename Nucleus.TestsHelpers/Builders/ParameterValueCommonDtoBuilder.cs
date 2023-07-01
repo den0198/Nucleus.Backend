@@ -2,10 +2,10 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class ParameterValueCommonDtoBuilder : CoreBuilder<ParameterValueCommonDto>
+public sealed class ParameterValueCommonDtoBuilder : IBuilder<ParameterValueCommonDto>
 {
-    public ParameterValueCommonDtoBuilder()
+    public ParameterValueCommonDto Build()
     {
-        Entity = new ParameterValueCommonDto(AnyValue.ShortString);
+        return new ParameterValueCommonDto(AnyValue.ShortString);
     }
 }

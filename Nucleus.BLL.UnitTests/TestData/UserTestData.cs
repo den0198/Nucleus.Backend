@@ -12,8 +12,8 @@ internal sealed class UserTestData
     {
         User = Builder.User.Build();
         CreateUserParameters = Builder.CreateUserParameters.Build();
-        IdentityResultSuccess = Builder.IdentityResultSuccess.Build();
-        IdentityResultFailed = Builder.IdentityResultFailed.Build();
+        IdentityResultSuccess = Builder.IdentityResult(true).Build();
+        IdentityResultFailed = Builder.IdentityResult(false).Build();
     }
 
     public User User { get; }

@@ -30,7 +30,8 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         var authClient = await getAuthClientAsync();
         var inputsData = new ProductMutationInputs();
         var category = await context.Categories.FirstAsync();
-        var input = inputsData.GetCreateProductInput(category.Id);
+        var store = await context.Stores.FirstAsync();
+        var input = inputsData.GetCreateProductInput(store.Id, category.Id);
         
         var productId = await sendAsync<CreateProductInput, long>(authClient, 
             GraphQlQueryTypesEnum.Mutation, create_product, input);
@@ -85,6 +86,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         }
     }
 
+    //TODO:Дописать тесты
     [Fact]
     public async Task CreateProduct_NonExistentCategoryId_ErrorResponseObjectNotFoundExceptionCode()
     {
@@ -98,7 +100,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
             nonExistentCategoryId = AnyValue.Long;
             category = await context.Categories.SingleOrDefaultAsync(c => c.Id == nonExistentCategoryId);
         }
-        var input = inputsData.GetCreateProductInput(nonExistentCategoryId);
+        var input = inputsData.GetCreateProductInput(AnyValue.Long, nonExistentCategoryId);
         
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () =>
             await sendAsync<CreateProductInput, long>(authClient,GraphQlQueryTypesEnum.Mutation,

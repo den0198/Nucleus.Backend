@@ -9,6 +9,8 @@ public static class InitialParamsServiceExtension
         serviceCollection.AddScoped<UserServiceInitialParams>();
         serviceCollection.AddScoped<AuthServiceInitialParams>();
         serviceCollection.AddScoped<RoleServiceInitialParams>();
+        serviceCollection.AddScoped<SellerServiceInitialParams>();
+        serviceCollection.AddScoped<StoreServiceInitialParams>();
         serviceCollection.AddScoped<CategoryServiceInitialParams>();
         serviceCollection.AddScoped<ProductServiceInitialParams>();
         serviceCollection.AddScoped<ParameterServiceInitialParams>();

@@ -1,5 +1,4 @@
-﻿using Mapster;
-using Nucleus.BLL.Logic.Services.InitialsParams;
+﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.DAL.Transaction;
 using Nucleus.ModelsLayer.Entities;
@@ -23,12 +22,15 @@ public sealed class ParameterService : IParameterService
         
         foreach (var parameterCommonDto in parameters.Parameters)
         {
-            var parameter = parameterCommonDto.Adapt<Parameter>();
-            parameter.ProductId = parameters.ProductId;
-            await initialParams.Repository.CreateAsync(parameter);
+            var newParameter = new Parameter
+            {
+                Name = parameterCommonDto.Name,
+                ProductId = parameters.ProductId
+            };
+            await initialParams.Repository.CreateAsync(newParameter);
 
-            var createParameterValuesParameters = new CreateParameterValuesParameters(parameterCommonDto.Values,
-                parameter.Id);
+            var createParameterValuesParameters = new CreateParameterValuesParameters(newParameter.Id, 
+                parameterCommonDto.Values);
             await initialParams.ParameterValueService.CreateRangeAsync(createParameterValuesParameters);
         }
         

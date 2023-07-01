@@ -2,27 +2,18 @@
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class ParameterBuilder : CoreBuilder<Parameter>
+public sealed class ParameterBuilder : IBuilder<Parameter>
 {
-    public ParameterBuilder(long productId)
+    public Parameter Build()
     {
         var id = AnyValue.Long;
-        Entity = new Parameter
+        
+        return new Parameter
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString,
-            ProductId = productId,
-            ParameterValues = getParameterValues(id)
+            ProductId = id,
+            ParameterValues = Builder.ParameterValue().BuildMany()
         };
-    }
-    
-    private List<ParameterValue> getParameterValues(long parameterId)
-    {
-        var result = new List<ParameterValue>();
-        for (var i = 0; i < AnyValue.Random(2, 5); i++)
-        {
-            result.Add(Builder.ParameterValue(parameterId).Build());
-        }
-        return result;
     }
 }

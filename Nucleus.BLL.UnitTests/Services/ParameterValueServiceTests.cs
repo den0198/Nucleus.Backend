@@ -39,7 +39,7 @@ public sealed class ParameterValueServiceTests : UnitTest
         await initialParams.Repository
             .Received(1)
             .CreateRangeAsync(Arg.Is<IList<ParameterValue>>(pvs => 
-                pvs.Count == values.Count
+                pvs.Count == values.Count()
                 && pvs.All(pv => values.Any(v => v.Value == pv.Value))));
     }
     

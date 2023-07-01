@@ -1,22 +1,11 @@
-﻿using Nucleus.ModelsLayer.Service.CommonDtos;
-using Nucleus.ModelsLayer.Service.Parameters;
+﻿using Nucleus.ModelsLayer.Service.Parameters;
 
 namespace Nucleus.TestsHelpers.Builders;
 
-public sealed class CreateAddOnsParametersBuilder : CoreBuilder<CreateAddOnsParameters>
+public sealed class CreateAddOnsParametersBuilder : IBuilder<CreateAddOnsParameters>
 {
-    public CreateAddOnsParametersBuilder()
+    public CreateAddOnsParameters Build()
     {
-        Entity = new CreateAddOnsParameters(AnyValue.Long, getAddOnCommonDtos());
-    }
-    
-    private List<AddOnCommonDto> getAddOnCommonDtos()
-    {
-        var result = new List<AddOnCommonDto>();
-        for (var i = 0; i < AnyValue.Random(2, 5); i++)
-        {
-            result.Add(Builder.AddOnCommonDto.Build());
-        }
-        return result;
+        return new CreateAddOnsParameters(AnyValue.Long, Builder.AddOnCommonDto.BuildMany());
     }
 }
