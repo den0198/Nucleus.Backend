@@ -45,13 +45,27 @@ public abstract class BaseIntegrationTests : IClassFixture<CustomWebApplicationF
         return await contextFactory.CreateDbContextAsync();
     }
     
-    protected async Task<GraphQLHttpClient> getAuthClientAsync()
+    protected async Task<GraphQLHttpClient> getAuthClientAsync(string role = DefaultSeeds.USER)
     {
+        var userName = DefaultSeeds.USER_USER_USERNAME;
+        var password = DefaultSeeds.USER_USER_PASSWORD;
+        switch (role)
+        {
+            case DefaultSeeds.SELLER:
+                userName = DefaultSeeds.USER_SELLER_USERNAME;
+                password = DefaultSeeds.USER_SELLER_PASSWORD;
+                break;
+            case DefaultSeeds.ADMIN:
+                userName = DefaultSeeds.USER_ADMIN_USERNAME;
+                password = DefaultSeeds.USER_ADMIN_PASSWORD;
+                break;
+        }
+        
         var client = getClient();
         var request = new SignInInput
         {
-            UserName = DefaultSeeds.USER_USER_USERNAME,
-            Password = DefaultSeeds.USER_USER_PASSWORD
+            UserName = userName,
+            Password = password
         };
         var response = await sendAsync<SignInInput, TokenData>(client, GraphQlQueryTypesEnum.Query,
             "signIn", request);

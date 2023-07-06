@@ -12,7 +12,7 @@ public sealed class SubProductRepository : Repository, ISubProductRepository
     {
     }
 
-    public async Task<IList<SubProduct>> FindAllByIds(IEnumerable<long> ids)
+    public async Task<IEnumerable<SubProduct>> FindAllByIds(IEnumerable<long> ids)
     {
         await using var context = await ContextFactory.CreateDbContextAsync();
 

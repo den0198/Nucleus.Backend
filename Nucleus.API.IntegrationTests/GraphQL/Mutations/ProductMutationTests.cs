@@ -6,6 +6,7 @@ using Nucleus.Common.GraphQl;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Nucleus.API.IntegrationTests.Inputs.Mutations;
+using Nucleus.Common.Constants.DataBase;
 using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Nucleus.TestsHelpers;
 using Xunit;
@@ -27,7 +28,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
     public async Task CreateProduct_CorrectRequest_CreateProduct()
     {
         var context = await getContext();
-        var authClient = await getAuthClientAsync();
+        var authClient = await getAuthClientAsync(DefaultSeeds.SELLER);
         var inputsData = new ProductMutationInputs();
         var category = await context.Categories.FirstAsync();
         var store = await context.Stores.FirstAsync();
@@ -91,7 +92,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
     public async Task CreateProduct_NonExistentCategoryId_ErrorResponseObjectNotFoundExceptionCode()
     {
         var context = await getContext();
-        var authClient = await getAuthClientAsync();
+        var authClient = await getAuthClientAsync(DefaultSeeds.SELLER);
         var inputsData = new ProductMutationInputs();
         var nonExistentCategoryId = AnyValue.Long;
         var category = await context.Categories.SingleOrDefaultAsync(c => c.Id == nonExistentCategoryId);

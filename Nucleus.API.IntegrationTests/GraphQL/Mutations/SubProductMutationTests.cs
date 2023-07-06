@@ -2,6 +2,7 @@
 using Nucleus.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using Nucleus.API.IntegrationTests.Inputs.Mutations;
+using Nucleus.Common.Constants.DataBase;
 using Nucleus.ModelsLayer.GraphQl.Data;
 using Nucleus.ModelsLayer.GraphQl.Inputs;
 using Xunit;
@@ -23,7 +24,7 @@ public sealed class SubProductMutationTests : BaseIntegrationTests
     public async Task UpdateSubProducts_CorrectRequest_UpdateSubProducts()
     {
         var context = await getContext();
-        var authClient = await getAuthClientAsync();
+        var authClient = await getAuthClientAsync(DefaultSeeds.SELLER);
         var inputsData = new SubProductMutationInputs();
         var product = await context.Products
             .Include(p => p.SubProducts)

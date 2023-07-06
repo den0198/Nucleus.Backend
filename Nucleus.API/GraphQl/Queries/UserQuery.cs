@@ -9,9 +9,9 @@ namespace Nucleus.API.GraphQl.Queries;
 public sealed class UserQuery : CoreQuery
 {
     [Authorize]
-    public async Task<UserData> GetUserByEmail(string email, [Service]IUserService service)
+    public async Task<UserData> GetUserById(long id, [Service]IUserService service)
     {
-        var serviceResult = await service.GetByEmailAsync(email);
+        var serviceResult = await service.GetByIdAsync(id);
 
         return serviceResult.Adapt<UserData>();
     }

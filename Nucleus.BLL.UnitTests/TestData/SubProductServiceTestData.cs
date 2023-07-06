@@ -10,21 +10,12 @@ public sealed class SubProductServiceTestData
     public SubProductServiceTestData()
     {
         Product = Builder.Product.Build();
+        SubProducts = Builder.SubProduct.BuildMany();
         UpdateSubProductsParameters = Builder.UpdateSubProductsParameters.Build();
-        SubProducts = getSubProducts();
     }
     
     public Product Product { get; }
+    public IEnumerable<SubProduct> SubProducts { get; }
     public UpdateSubProductsParameters UpdateSubProductsParameters { get; }
-    public List<SubProduct> SubProducts { get; }
-    
-    private List<SubProduct> getSubProducts()
-    {
-        var result = new List<SubProduct>();
-        for (var i = 0; i < AnyValue.Random(2, 5); i++)
-        {
-            result.Add(Builder.SubProduct.Build());
-        }
-        return result;
-    }
+
 }

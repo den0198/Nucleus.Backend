@@ -15,21 +15,21 @@ public class UserQueryTests : BaseIntegrationTests
     {
     }
 
-    #region GetUserByEmail
+    #region GetUserById
     
-    private const string get_user_by_email = "userByEmail";
+    private const string get_user_by_id = "userById";
 
     [Fact]
-    public async Task GetUsersByEmail_UserFound_UserData()
+    public async Task GetUserById_UserFound_UserData()
     {
         var context = await getContext();
         var authClient = await getAuthClientAsync();
         var expectedUser = await context.Users
             .FirstAsync();
-        var email = expectedUser.Email!;
+        var id = expectedUser.Id;
 
-        var response = await sendAsync<string, UserData>(authClient,
-            GraphQlQueryTypesEnum.Query, get_user_by_email, email, "email");
+        var response = await sendAsync<long, UserData>(authClient,
+            GraphQlQueryTypesEnum.Query, get_user_by_id, id, "id");
         
         Assert.Equal(expectedUser.Id, response.UserId);
         Assert.Equal(expectedUser.UserName, response.UserName);
@@ -40,14 +40,14 @@ public class UserQueryTests : BaseIntegrationTests
     }
 
     [Fact]
-    public async Task GetUserByEmail_UserNotFound_ResponseWithExceptionCodeObjectNotFound()
+    public async Task GetUserById_UserNotFound_ResponseWithExceptionCodeObjectNotFound()
     {
         var authClient = await getAuthClientAsync();
-        var email = AnyValue.Email;
+        var id = AnyValue.Long;
 
         var exception = await Assert.ThrowsAsync<GraphQlException>(async () => 
-            await sendAsync<string, UserData>(authClient, GraphQlQueryTypesEnum.Query,
-                get_user_by_email, email, "email"));
+            await sendAsync<long, UserData>(authClient, GraphQlQueryTypesEnum.Query,
+                get_user_by_id, id, "id"));
 
         assertExceptionCode(ExceptionCodesEnum.ObjectNotFoundExceptionCode, exception.Code);
     }

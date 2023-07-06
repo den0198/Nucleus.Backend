@@ -10,5 +10,5 @@ public interface ISubProductRepository : ICreateEntity<SubProduct>, IUpdateRange
     /// </summary>
     /// <param name="ids">Идентификаторы</param>
     /// <returns>Под-продукты</returns>
-    Task<IList<SubProduct>> FindAllByIds(IEnumerable<long> ids);
+    Task<IEnumerable<SubProduct>> FindAllByIds(IEnumerable<long> ids);
 }
