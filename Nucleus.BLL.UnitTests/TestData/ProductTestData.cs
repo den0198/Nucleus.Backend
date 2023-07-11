@@ -11,14 +11,14 @@ public sealed class ProductTestData
     {
         CreateProductParameters = Builder.CreateProductParameters.Build();
         Store = Builder.Store.Build();
-        Category = Builder.Category.Build();
+        SubCategory = Builder.SubCategory.Build();
         Product = Builder.Product.Build();
         Products = getProducts();
     }
 
     public CreateProductParameters CreateProductParameters { get; }
     public Store Store { get; }
-    public Category Category { get; }
+    public SubCategory SubCategory { get; }
     public Product Product { get; }
     public ICollection<Product> Products { get; }
     

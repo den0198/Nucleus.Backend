@@ -4,24 +4,25 @@ namespace Nucleus.TestsHelpers.MocksData;
 
 public static class ProductMockData
 {
-    public static IEnumerable<Product> GetMany(long subCategoryId, int count)
+    public static IEnumerable<Product> GetMany(long storeId, long subCategoryId, int count)
     {
         var products = new List<Product>();
         for (var i = 0; i < count; i++)
         {
-            var product = getOne(subCategoryId);
+            var product = getOne(storeId, subCategoryId);
             products.Add(product);
         }
 
         return products;
     }
     
-    private static Product getOne(long subCategoryId)
+    private static Product getOne(long storeId, long subCategoryId)
     {
         return new Product
         {
             Id = AnyValue.Long,
             Name = AnyValue.ShortString,
+            StoreId = storeId,
             SubCategoryId = subCategoryId
         };
     }

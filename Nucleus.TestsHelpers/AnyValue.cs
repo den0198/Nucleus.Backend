@@ -14,5 +14,5 @@ public static class AnyValue
     public static short Short => Math.Max((short)1, fixture.Create<short>());
     public static string Email => $"{ShortString}@{ShortString}.com";
     public static string Password => String + "123!@#";
-    public static int Random(int min, int max) => random.Next(min,max);
+    public static int Random(int min, int max) => random.Next(min, max);
 }

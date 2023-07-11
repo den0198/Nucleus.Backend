@@ -30,9 +30,9 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         var context = await getContext();
         var authClient = await getAuthClientAsync(DefaultSeeds.SELLER);
         var inputsData = new ProductMutationInputs();
-        var category = await context.Categories.FirstAsync();
+        var subCategory = await context.SubCategories.FirstAsync();
         var store = await context.Stores.FirstAsync();
-        var input = inputsData.GetCreateProductInput(store.Id, category.Id);
+        var input = inputsData.GetCreateProductInput(store.Id, subCategory.Id);
         
         var productId = await sendAsync<CreateProductInput, long>(authClient, 
             GraphQlQueryTypesEnum.Mutation, create_product, input);
