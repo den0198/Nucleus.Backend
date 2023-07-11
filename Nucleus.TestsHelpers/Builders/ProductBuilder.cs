@@ -11,7 +11,7 @@ public sealed class ProductBuilder : IBuilder<Product>
             Id = AnyValue.Long,
             Name = AnyValue.ShortString,
             StoreId = AnyValue.Long,
-            CategoryId = AnyValue.Long,
+            SubCategoryId = AnyValue.Long,
             Parameters = Builder.Parameter().BuildMany()
         };
     }

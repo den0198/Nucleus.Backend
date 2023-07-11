@@ -1,20 +1,20 @@
-﻿using Nucleus.Common.Constants.DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Nucleus.Common.Constants.DataBase;
 using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Configurations;
 
-public sealed class CatalogConfiguration : IEntityTypeConfiguration<Category>
+public sealed class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public void Configure(EntityTypeBuilder<SubCategory> builder)
     {
         builder
-            .ToTable(TablesNames.CATEGORIES);
+            .ToTable(TablesNames.SUB_CATEGORIES);
         
         builder
             .Property(c => c.Id)
-            .HasColumnName(ColumnNames.CATEGORY_ID);
+            .HasColumnName(ColumnNames.SUB_CATEGORY_ID);
         
         builder
             .Property(c => c.Name)
@@ -29,9 +29,13 @@ public sealed class CatalogConfiguration : IEntityTypeConfiguration<Category>
             .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
         
         builder
-            .HasMany(с => с.Products)
-            .WithOne(p => p.Category)
-            .HasForeignKey(p => p.CategoryId)
+            .Property(p => p.CategoryId)
+            .HasColumnName(ColumnNames.CATEGORY_ID);
+        
+        builder
+            .HasMany(sс => sс.Products)
+            .WithOne(p => p.SubCategory)
+            .HasForeignKey(p => p.SubCategoryId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

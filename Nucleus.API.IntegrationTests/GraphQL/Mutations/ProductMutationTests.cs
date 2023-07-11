@@ -46,7 +46,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
             .SingleAsync(p => p.Id == productId);
         
         Assert.Equal(input.Name, product.Name);
-        Assert.Equal(input.CategoryId, product.CategoryId);
+        Assert.Equal(input.SubCategoryId, product.SubCategoryId);
         Assert.False(product.IsSale);
         Assert.Equal(0, product.CountSale);
         Assert.Equal(0, product.CountLike);

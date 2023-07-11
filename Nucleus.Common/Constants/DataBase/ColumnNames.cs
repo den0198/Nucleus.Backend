@@ -78,6 +78,12 @@ public static class ColumnNames
 
     #endregion
     
+    #region SubCatalog
+    
+    public const string SUB_CATEGORY_ID = "sub_category_id";
+
+    #endregion
+    
     #region Product
 
     public const string PRODUCT_ID = "product_id";

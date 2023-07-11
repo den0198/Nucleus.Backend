@@ -44,7 +44,7 @@ public class ProductQueryTests : BaseIntegrationTests
         
         Assert.Equal(product.Id, productData.Id);
         Assert.Equal(product.Name, productData.Name);
-        Assert.Equal(product.CategoryId, productData.CategoryId);
+        Assert.Equal(product.SubCategoryId, productData.SubCategoryId);
 
         foreach (var parameterSubData in productData.Parameters)
         {

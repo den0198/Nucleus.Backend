@@ -23,7 +23,7 @@ public static partial class MapperConfiguration
         TypeAdapterConfig<Product, ProductData>.NewConfig()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.CategoryId, src => src.CategoryId)
+            .Map(dest => dest.SubCategoryId, src => src.SubCategoryId)
             .Map(dest => dest.Parameters, src => src.Parameters
                 .Select(p => p.Adapt<ParameterSubData>()))
             .Map(dest => dest.SubProducts, src => src.SubProducts

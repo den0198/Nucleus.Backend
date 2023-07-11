@@ -19,7 +19,7 @@ public interface ICategoryService
     Task<IEnumerable<Category>> GetAllAsync();
     
     /// <summary>
-    /// Создаёт новый каталог
+    /// Создаёт новую категорию
     /// </summary>
     /// <param name="parameters">Параметры для создания новой категории</param>
     /// <returns>Идентификатор новой категории</returns>

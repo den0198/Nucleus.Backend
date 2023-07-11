@@ -13,6 +13,7 @@ public static class ServicesServiceExtension
         serviceCollection.AddScoped<ISellerService, SellerService>();
         serviceCollection.AddScoped<IStoreService, StoreService>();
         serviceCollection.AddScoped<ICategoryService, CategoryService>();
+        serviceCollection.AddScoped<ISubCategoryService, SubCategoryService>();
         serviceCollection.AddScoped<IProductService, ProductService>();
         serviceCollection.AddScoped<IParameterService, ParameterService>();
         serviceCollection.AddScoped<IParameterValueService, ParameterValueService>();

@@ -10,6 +10,7 @@ public interface IUnitOfWork
     ISellerRepository SellerRepository { get; }
     IStoreRepository StoreRepository { get; }
     ICategoryRepository CategoryRepository { get; }
+    ISubCategoryRepository SubCategoryRepository { get; }
     IProductRepository ProductRepository { get; }
     IParameterRepository ParameterRepository { get; }
     IParameterValueRepository ParameterValueRepository { get; }

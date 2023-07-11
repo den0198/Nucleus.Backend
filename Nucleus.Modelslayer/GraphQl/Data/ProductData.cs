@@ -11,8 +11,8 @@ public sealed class ProductData
     [JsonPropertyName("name")]
     public string Name { get; init; }
 
-    [JsonPropertyName("categoryId")]
-    public long CategoryId { get; init; }
+    [JsonPropertyName("subCategoryId")]
+    public long SubCategoryId { get; init; }
     
     [JsonPropertyName("parameters")] 
     public List<ParameterSubData> Parameters { get; init; }

@@ -12,7 +12,7 @@ public sealed class CreateProductInput
     public long StoreId { get; init; }
     
     [Required]
-    public long CategoryId { get; init; }
+    public long SubCategoryId { get; init; }
 
     [Required]
     public IList<CreateParameterSubInput> Parameters { get; init; }
