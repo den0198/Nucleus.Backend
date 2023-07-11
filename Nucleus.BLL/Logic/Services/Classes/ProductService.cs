@@ -45,7 +45,7 @@ public sealed class ProductService : IProductService
         bool isExistTransaction = false)
     {
         var store = await initialParams.StoreService.GetByIdAsync(parameters.StoreId);
-        var category = await initialParams.CategoryService.GetByIdAsync(parameters.SubCategoryId);
+        var subCategory = await initialParams.SubCategoryService.GetByIdAsync(parameters.SubCategoryId);
         
         using var transaction = isExistTransaction ? null : TransactionHelp.GetTransactionScope();
         
@@ -57,7 +57,7 @@ public sealed class ProductService : IProductService
             CountDislike = 0,
             IsSale = false,
             StoreId = store.Id,
-            SubCategoryId = category.Id
+            SubCategoryId = subCategory.Id
         };
         await initialParams.Repository.CreateAsync(product);
 

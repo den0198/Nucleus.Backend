@@ -28,6 +28,7 @@ public static class GraphQlServiceExtension
             .AddTypeExtension<AuthQuery>()
             .AddTypeExtension<CategoryQuery>()
             .AddTypeExtension<ProductQuery>()
+            .AddTypeExtension<CatalogQuery>()
             .AddTypeExtension<EnumQuery>();
     }
 

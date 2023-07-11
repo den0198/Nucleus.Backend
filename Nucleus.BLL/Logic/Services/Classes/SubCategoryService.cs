@@ -1,4 +1,5 @@
-﻿using Nucleus.BLL.Logic.Services.InitialsParams;
+﻿using Nucleus.BLL.Exceptions;
+using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.Service.Parameters;
@@ -13,7 +14,13 @@ public sealed class SubCategoryService : ISubCategoryService
     {
         this.initialParams = initialParams;
     }
-    
+
+    public async Task<SubCategory> GetByIdAsync(long id)
+    {
+        return await initialParams.Repository.FindByIdAsync(id) 
+               ?? throw new ObjectNotFoundException($"SubCategory with subCategoryId: {id} not found");
+    }
+
     public async Task<long> CreateAsync(CreateSubCategoryParameters parameters)
     {
         var category = await initialParams.CategoryService.GetByIdAsync(parameters.CategoryId);
