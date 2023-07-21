@@ -17,4 +17,5 @@ public interface IUnitOfWork
     IAddOnRepository AddOnRepository { get; }
     ISubProductRepository SubProductRepository { get; }
     ISubProductParameterValueRepository SubProductParameterValueRepository { get; }
+    ICatalogRepository CatalogRepository { get; }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Nucleus.ModelsLayer.GraphQl.Data.SubData;
+namespace Nucleus.ModelsLayer.GraphQl.Data.SubData.Product;
 
-public sealed class SubProductParameterValueSubData
+public sealed class SubProductParameterValueProductSubProductSubData
 {
     [JsonPropertyName("id")] 
     public long Id { get; init; }

@@ -1,7 +1,7 @@
 ﻿using Nucleus.BLL.Logic.Services.InitialsParams;
 using Nucleus.BLL.Logic.Services.Interfaces;
 using Nucleus.ModelsLayer.Service.Parameters;
-using Nucleus.ModelsLayer.Service.Results;
+using Nucleus.ModelsLayer.StoredProcedures;
 
 namespace Nucleus.BLL.Logic.Services.Classes;
 
@@ -14,8 +14,8 @@ public sealed class CatalogService: ICatalogService
         this.initialParams = initialParams;
     }
 
-    public Task<CatalogResult> GetCatalog(GetCatalogParameters parameters)
+    public async Task<Catalog> GetCatalogAsync(GetCatalogParameters parameters)
     {
-        throw new Exception();
+        return await initialParams.Repository.GetCatalogAsync();
     }
 }

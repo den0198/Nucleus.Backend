@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Nucleus.ModelsLayer.GraphQl.Data.SubData;
+using Nucleus.ModelsLayer.GraphQl.Data.SubData.Product;
 
 namespace Nucleus.ModelsLayer.GraphQl.Data;
 
@@ -15,11 +16,11 @@ public sealed class ProductData
     public long SubCategoryId { get; init; }
     
     [JsonPropertyName("parameters")] 
-    public List<ParameterSubData> Parameters { get; init; }
+    public List<ParameterProductSubData> Parameters { get; init; }
 
     [JsonPropertyName("subProducts")] 
-    public List<SubProductSubData> SubProducts { get; init; }
+    public List<SubProductProductSubData> SubProducts { get; init; }
     
     [JsonPropertyName("addOns")] 
-    public List<AddOnSubData> AddOns { get; init; }
+    public List<AddOnProductSubData> AddOns { get; init; }
 }

@@ -1,5 +1,5 @@
 ﻿using Nucleus.ModelsLayer.Service.Parameters;
-using Nucleus.ModelsLayer.Service.Results;
+using Nucleus.ModelsLayer.StoredProcedures;
 
 namespace Nucleus.BLL.Logic.Services.Interfaces;
 
@@ -10,5 +10,5 @@ public interface ICatalogService
     /// </summary>
     /// <param name="parameters">Параметры для получения каталога</param>
     /// <returns>Каталог</returns>
-    public Task<CatalogResult> GetCatalog(GetCatalogParameters parameters);
+    public Task<Catalog> GetCatalogAsync(GetCatalogParameters parameters);
 }

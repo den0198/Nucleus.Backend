@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.GraphQl.Data;
-using Nucleus.ModelsLayer.GraphQl.Data.SubData;
+using Nucleus.ModelsLayer.GraphQl.Data.SubData.Product;
 using Nucleus.ModelsLayer.Service.Results;
 
 namespace Nucleus.Common.MapperConfigurations;
@@ -25,37 +25,37 @@ public static partial class MapperConfiguration
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.SubCategoryId, src => src.SubCategoryId)
             .Map(dest => dest.Parameters, src => src.Parameters
-                .Select(p => p.Adapt<ParameterSubData>()))
+                .Select(p => p.Adapt<ParameterProductSubData>()))
             .Map(dest => dest.SubProducts, src => src.SubProducts
-                .Select(sp => sp.Adapt<SubProductSubData>()))
+                .Select(sp => sp.Adapt<SubProductProductSubData>()))
             .Map(dest => dest.AddOns, src => src.AddOns
-                .Select(ao => ao.Adapt<AddOnSubData>()));
+                .Select(ao => ao.Adapt<AddOnProductSubData>()));
         
-        TypeAdapterConfig<Parameter, ParameterSubData>.NewConfig()
+        TypeAdapterConfig<Parameter, ParameterProductSubData>.NewConfig()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.ParameterValues, src => src.ParameterValues
-                .Select(pv => pv.Adapt<ParameterValueSubData>()));
+                .Select(pv => pv.Adapt<ParameterValueProductParameterSubData>()));
         
-        TypeAdapterConfig<ParameterValue, ParameterValueSubData>.NewConfig()
+        TypeAdapterConfig<ParameterValue, ParameterValueProductParameterSubData>.NewConfig()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Value, src => src.Value);
         
-        TypeAdapterConfig<SubProduct, SubProductSubData>.NewConfig()
+        TypeAdapterConfig<SubProduct, SubProductProductSubData>.NewConfig()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Price, src => src.Price)
             .Map(dest => dest.Quantity, src => src.Quantity)
             .Map(dest => dest.SubProductParameterValues, src => src.SubProductParameterValues
-                .Select(sppv => sppv.Adapt<SubProductParameterValueSubData>()));
+                .Select(sppv => sppv.Adapt<SubProductParameterValueProductSubProductSubData>()));
         
-        TypeAdapterConfig<SubProductParameterValue, SubProductParameterValueSubData>.NewConfig()
+        TypeAdapterConfig<SubProductParameterValue, SubProductParameterValueProductSubProductSubData>.NewConfig()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.ParameterId, src => src.ParameterId)
             .Map(dest => dest.ParameterName, src => src.Parameter.Name)
             .Map(dest => dest.ParameterValueId, src => src.ParameterValueId)
             .Map(dest => dest.ParameterValueValue, src => src.ParameterValue.Value);
         
-        TypeAdapterConfig<AddOn, AddOnSubData>.NewConfig()
+        TypeAdapterConfig<AddOn, AddOnProductSubData>.NewConfig()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.Price, src => src.Price)

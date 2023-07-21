@@ -25,6 +25,7 @@ public class UnitOfWork : IUnitOfWork
         AddOnRepository = new AddOnRepository(contextFactory);
         SubProductRepository = new SubProductRepository(contextFactory);
         SubProductParameterValueRepository = new SubProductParameterValueRepository(contextFactory);
+        CatalogRepository = new CatalogRepository(contextFactory);
     }
 
     public IUserRepository UserRepository { get; }
@@ -40,4 +41,5 @@ public class UnitOfWork : IUnitOfWork
     public IAddOnRepository AddOnRepository { get; }
     public ISubProductRepository SubProductRepository { get; }
     public ISubProductParameterValueRepository SubProductParameterValueRepository { get; }
+    public ICatalogRepository CatalogRepository { get; }
 }
