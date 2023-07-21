@@ -1,8 +1,6 @@
 ﻿using Nucleus.BLL.Logic.Services.Interfaces;
 using Mapster;
-using Nucleus.ModelsLayer.Entities;
 using Nucleus.ModelsLayer.GraphQl.Data;
-using Nucleus.ModelsLayer.GraphQl.Inputs;
 
 namespace Nucleus.API.GraphQl.Queries;
 
@@ -15,14 +13,5 @@ public sealed class ProductQuery : CoreQuery
         var serviceResult = await productService.GetByIdAsync(productId);
 
         return serviceResult.Adapt<ProductData>();
-    }
-    
-    //TODO:Доделать метод
-    public async Task<IEnumerable<Product>> GetProducts(GetProductsInput input, 
-        [Service]IProductService productService)
-    { 
-        var serviceResult = await productService.GetAllWithIsSellByParametersAsync();
-
-        return serviceResult;
     }
 }

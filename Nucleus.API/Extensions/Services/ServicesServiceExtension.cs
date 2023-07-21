@@ -20,5 +20,6 @@ public static class ServicesServiceExtension
         serviceCollection.AddScoped<IAddOnService, AddOnService>();
         serviceCollection.AddScoped<ISubProductService, SubProductService>();
         serviceCollection.AddScoped<ISubProductParameterValueService, SubProductParameterValueService>();
+        serviceCollection.AddScoped<ICatalogService, CatalogService>();
     }
 }
