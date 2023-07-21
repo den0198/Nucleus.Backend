@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nucleus.Jobs", "Nucleus.Jobs\Nucleus.Jobs.csproj", "{8E510669-C99B-4208-BB98-7E7B0202CFDE}"
 EndProject
 
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5F5323C0-0402-459E-9516-9A55D62DC377}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.TestsHelpers", "Nucleus.TestsHelpers\Nucleus.TestsHelpers.csproj", "{96DCF620-2F4E-4335-B902-5D611957DA28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nucleus.API.IntegrationTests", "Nucleus.API.IntegrationTests\Nucleus.API.IntegrationTests.csproj", "{0F11FC1A-322C-4EF3-A348-34CA4333DC80}"
@@ -66,5 +68,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {69AE37B6-79F9-45D1-B870-C0B148B3A2E8}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3FC1F9E-B901-49EF-B86C-D582A41578FA} = {5F5323C0-0402-459E-9516-9A55D62DC377}
+		{96DCF620-2F4E-4335-B902-5D611957DA28} = {5F5323C0-0402-459E-9516-9A55D62DC377}
+		{0F11FC1A-322C-4EF3-A348-34CA4333DC80} = {5F5323C0-0402-459E-9516-9A55D62DC377}
 	EndGlobalSection
 EndGlobal
