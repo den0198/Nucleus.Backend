@@ -1,4 +1,4 @@
-﻿using Nucleus.ModelsLayer.StoredProcedures;
+﻿using Nucleus.ModelsLayer.SqlQueryResults;
 
 namespace Nucleus.DAL.Repositories.Interfaces;
 
@@ -8,5 +8,5 @@ public interface ICatalogRepository
     /// Делает SQL запрос для получения каталога
     /// </summary>
     /// <returns>Каталог</returns>
-    Task<Catalog> GetCatalogAsync();
+    Task<List<ProductInCatalog>> GetCatalogAsync();
 }

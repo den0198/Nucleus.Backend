@@ -5,7 +5,7 @@ using Nucleus.ModelsLayer.Entities;
 
 namespace Nucleus.DAL.Configurations;
 
-public sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
+public sealed class CategoriesConfiguration : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {

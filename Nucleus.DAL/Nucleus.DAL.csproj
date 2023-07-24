@@ -26,5 +26,12 @@
       <ProjectReference Include="..\Nucleus.Common\Nucleus.Common.csproj" />
       <ProjectReference Include="..\Nucleus.ModelsLayer\Nucleus.ModelsLayer.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SqlQueries\GetProductInCatalogs.sql" />
+      <Content Include="SqlQueries\GetProductInCatalogs.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
     
 </Project>

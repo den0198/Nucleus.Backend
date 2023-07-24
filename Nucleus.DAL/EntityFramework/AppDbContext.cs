@@ -21,6 +21,7 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
     public DbSet<Parameter> Parameters { get; set; } = null!;
     public DbSet<ParameterValue> ParameterValues { get; set; } = null!;
     public DbSet<SubProductParameterValue> SubProductParameterValues { get; set; } = null!;
+    
 
     public override int SaveChanges()
     {
@@ -33,11 +34,18 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
         AddTimestamps();
         return await base.SaveChangesAsync(cancellationToken);
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        var applicationContextAssembly = typeof(AppDbContext).Assembly;
+        modelBuilder.ApplyConfigurationsFromAssembly(applicationContextAssembly);
+    }
 
     private void AddTimestamps()
     {
         var entities = ChangeTracker.Entries()
-            .Where(x => x.Entity is IEntity && x.State is EntityState.Added or EntityState.Modified);
+            .Where(x => x is { Entity: IEntity, State: EntityState.Added or EntityState.Modified });
 
         foreach (var entity in entities)
         {
@@ -50,11 +58,5 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
 
             ((IEntity)entity.Entity).DateTimeModified = now;
         }
-    }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        var applicationContextAssembly = typeof(AppDbContext).Assembly;
-        modelBuilder.ApplyConfigurationsFromAssembly(applicationContextAssembly);
     }
 }
