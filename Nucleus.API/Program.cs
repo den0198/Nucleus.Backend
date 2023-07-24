@@ -3,6 +3,7 @@ using NLog.Web;
 using Nucleus.API.Extensions.Middlewares;
 using Nucleus.API.Extensions.Services;
 using Nucleus.API.Initialization;
+using Nucleus.Common.Managers;
 using Nucleus.Common.MapperConfigurations;
 using Nucleus.Jobs;
 
@@ -34,7 +35,6 @@ public class Program
             services.AddAppEntityFramework(configuration);
             services.AddAppUnitOfWork();
             services.AddAppOptions(configuration);
-            services.AddAppInitialParams();
             services.AddAppServices();
             services.AddAppFilters();
             services.AddMemoryCache();
@@ -45,9 +45,9 @@ public class Program
             app.UseCors("MyAllowAllHeadersPolicy");
             app.MapGraphQL("/");
             app.UseRouting();
-            app.UseAuth();
-            
-            await Seeds.InitialSeeds(app);
+            app.UseAppAuth();
+
+            await app.AppInit();
 
             if (environmentName != "Test")
             {

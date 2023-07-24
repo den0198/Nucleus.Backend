@@ -2,7 +2,7 @@
 
 public static class AuthMiddlewareExtension
 {
-    public static void UseAuth(this IApplicationBuilder applicationBuilder)
+    public static void UseAppAuth(this IApplicationBuilder applicationBuilder)
     {
         applicationBuilder.UseAuthentication();
         applicationBuilder.UseAuthorization();
