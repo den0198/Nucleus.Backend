@@ -40,20 +40,14 @@ public class Program
             services.AddMemoryCache();
 
             var app = builder.Build();
-            var environmentName = app.Environment.EnvironmentName;
-        
+            
             app.UseCors("MyAllowAllHeadersPolicy");
             app.MapGraphQL("/");
             app.UseRouting();
             app.UseAppAuth();
 
-            await app.AppInit();
-
-            if (environmentName != "Test")
-            {
-                await JobsRun.Start(app.Services);
-            }
-
+            await initialization(app);
+            
             await app.RunAsync();
         }
         catch (Exception exception)
@@ -65,5 +59,18 @@ public class Program
         {
             LogManager.Shutdown();
         }
+    }
+
+    private static async Task initialization(WebApplication webApplication)
+    {
+        var environmentName = webApplication.Environment.EnvironmentName;
+        
+        await Seeds.InitialSeeds(webApplication);
+        await SqlQueryManager.Init();
+        
+        if (environmentName == "Test")
+            return;
+        
+        await JobsRun.Start(webApplication.Services);
     }
 }
