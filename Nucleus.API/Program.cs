@@ -39,16 +39,22 @@ public class Program
             services.AddAppFilters();
             services.AddMemoryCache();
 
-            var app = builder.Build();
+            var applicationBuilder = builder.Build();
             
-            app.UseCors("MyAllowAllHeadersPolicy");
-            app.MapGraphQL("/");
-            app.UseRouting();
-            app.UseAppAuth();
+            applicationBuilder.UseCors("MyAllowAllHeadersPolicy");
+            applicationBuilder.MapGraphQL("/");
+            applicationBuilder.UseRouting();
+            applicationBuilder.UseAppAuth();
 
-            await initialization(app);
+            await initialization(applicationBuilder);
+
+            var environmentName = applicationBuilder.Environment.EnvironmentName;
+            if (environmentName != "Test")
+            {
+                await JobsRun.Start(applicationBuilder.Services);
+            }
             
-            await app.RunAsync();
+            await applicationBuilder.RunAsync();
         }
         catch (Exception exception)
         {
@@ -61,16 +67,9 @@ public class Program
         }
     }
 
-    private static async Task initialization(WebApplication webApplication)
+    private static async Task initialization(IApplicationBuilder applicationBuilder)
     {
-        var environmentName = webApplication.Environment.EnvironmentName;
-        
-        await Seeds.InitialSeeds(webApplication);
+        await Seeds.InitialSeeds(applicationBuilder);
         await SqlQueryManager.Init();
-        
-        if (environmentName == "Test")
-            return;
-        
-        await JobsRun.Start(webApplication.Services);
     }
 }
