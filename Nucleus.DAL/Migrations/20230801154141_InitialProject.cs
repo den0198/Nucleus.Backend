@@ -372,17 +372,15 @@ namespace Nucleus.DAL.Migrations
                 name: "sub_product_parameter_values",
                 columns: table => new
                 {
-                    sub_product_parameter_value = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     sub_product_id = table.Column<long>(type: "bigint", nullable: false),
                     parameter_id = table.Column<long>(type: "bigint", nullable: false),
-                    parameter_value_id = table.Column<long>(type: "bigint", nullable: false)
+                    parameter_value_id = table.Column<long>(type: "bigint", nullable: false),
+                    date_time_created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_time_modified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_sub_product_parameter_values", x => x.sub_product_parameter_value);
+                    table.PrimaryKey("PK_sub_product_parameter_values", x => new { x.sub_product_id, x.parameter_id, x.parameter_value_id });
                     table.ForeignKey(
                         name: "FK_sub_product_parameter_values_parameter_values_parameter_value_id",
                         column: x => x.parameter_value_id,
@@ -462,11 +460,6 @@ namespace Nucleus.DAL.Migrations
                 name: "IX_sub_product_parameter_values_parameter_value_id",
                 table: "sub_product_parameter_values",
                 column: "parameter_value_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_sub_product_parameter_values_sub_product_id",
-                table: "sub_product_parameter_values",
-                column: "sub_product_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sub_products_product_id",

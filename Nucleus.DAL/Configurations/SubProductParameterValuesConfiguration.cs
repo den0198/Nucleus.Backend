@@ -12,17 +12,8 @@ public sealed class SubProductParameterValuesConfiguration : IEntityTypeConfigur
         builder
             .ToTable(TablesNames.SUB_PRODUCT_PARAMETER_VALUES);
         
-        builder
-            .Property(sppv => sppv.Id)
-            .HasColumnName(ColumnNames.SUB_PRODUCT_PARAMETER_VALUE_ID);
-        
-        builder
-            .Property(sppv => sppv.DateTimeCreated)
-            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
-        
-        builder
-            .Property(sppv => sppv.DateTimeModified)
-            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
+        builder.HasKey(sppv => 
+            new { sppv.SubProductId, sppv.ParameterId, sppv.ParameterValueId });
         
         builder
             .Property(sppv => sppv.SubProductId)
@@ -35,5 +26,13 @@ public sealed class SubProductParameterValuesConfiguration : IEntityTypeConfigur
         builder
             .Property(sppv => sppv.ParameterValueId)
             .HasColumnName(ColumnNames.PARAMETER_VALUE_ID);
+        
+        builder
+            .Property(sppv => sppv.DateTimeCreated)
+            .HasColumnName(ColumnNames.DATE_TIME_CREATED);
+        
+        builder
+            .Property(sppv => sppv.DateTimeModified)
+            .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
     }
 }

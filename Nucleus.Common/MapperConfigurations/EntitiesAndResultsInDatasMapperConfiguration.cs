@@ -49,7 +49,6 @@ public static partial class MapperConfiguration
                 .Select(sppv => sppv.Adapt<SubProductParameterValueProductSubProductSubData>()));
         
         TypeAdapterConfig<SubProductParameterValue, SubProductParameterValueProductSubProductSubData>.NewConfig()
-            .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.ParameterId, src => src.ParameterId)
             .Map(dest => dest.ParameterName, src => src.Parameter.Name)
             .Map(dest => dest.ParameterValueId, src => src.ParameterValueId)

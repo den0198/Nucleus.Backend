@@ -117,10 +117,4 @@ public static class ColumnNames
     public const string PARAMETER_VALUE_ID = "parameter_value_id";
 
     #endregion
-
-    #region SubProductParameterValue
-
-    public const string SUB_PRODUCT_PARAMETER_VALUE_ID = "sub_product_parameter_value";
-
-    #endregion
 }

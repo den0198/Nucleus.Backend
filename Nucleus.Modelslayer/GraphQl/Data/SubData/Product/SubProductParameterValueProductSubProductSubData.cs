@@ -4,9 +4,6 @@ namespace Nucleus.ModelsLayer.GraphQl.Data.SubData.Product;
 
 public sealed class SubProductParameterValueProductSubProductSubData
 {
-    [JsonPropertyName("id")] 
-    public long Id { get; init; }
-    
     [JsonPropertyName("parameterId")] 
     public long ParameterId { get; init; }
     

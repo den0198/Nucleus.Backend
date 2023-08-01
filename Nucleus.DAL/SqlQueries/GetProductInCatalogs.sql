@@ -1,3 +1,4 @@
-﻿SELECT user_id
+﻿SELECT 
+    user_id
 FROM users
 WHERE user_id = 1

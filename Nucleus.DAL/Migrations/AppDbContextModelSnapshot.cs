@@ -500,20 +500,9 @@ namespace Nucleus.DAL.Migrations
 
             modelBuilder.Entity("Nucleus.ModelsLayer.Entities.SubProductParameterValue", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("SubProductId")
                         .HasColumnType("bigint")
-                        .HasColumnName("sub_product_parameter_value");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("DateTimeCreated")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("date_time_created");
-
-                    b.Property<DateTime>("DateTimeModified")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("date_time_modified");
+                        .HasColumnName("sub_product_id");
 
                     b.Property<long>("ParameterId")
                         .HasColumnType("bigint")
@@ -523,17 +512,19 @@ namespace Nucleus.DAL.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("parameter_value_id");
 
-                    b.Property<long>("SubProductId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("sub_product_id");
+                    b.Property<DateTime>("DateTimeCreated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_created");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("DateTimeModified")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_time_modified");
+
+                    b.HasKey("SubProductId", "ParameterId", "ParameterValueId");
 
                     b.HasIndex("ParameterId");
 
                     b.HasIndex("ParameterValueId");
-
-                    b.HasIndex("SubProductId");
 
                     b.ToTable("sub_product_parameter_values", (string)null);
                 });
@@ -641,6 +632,16 @@ namespace Nucleus.DAL.Migrations
                         .HasFilter("[normalized_username] IS NOT NULL");
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("Nucleus.ModelsLayer.SqlQueryResults.ProductInCatalog", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
