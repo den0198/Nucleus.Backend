@@ -70,13 +70,12 @@ public class ProductQueryTests : BaseIntegrationTests
             foreach (var subProductParameterValueSubData in subProductSubData.SubProductParameterValues)
             {
                 var subProductParameterValue = subProduct.SubProductParameterValues
-                    .First(sppv => sppv.Id == subProductParameterValueSubData.Id);
-                Assert.Equal(subProductParameterValue.ParameterId, 
-                    subProductParameterValueSubData.ParameterId);
+                    .First(sppv => 
+                        sppv.SubProductId == subProduct.Id
+                        && sppv.ParameterId == subProductParameterValueSubData.ParameterId
+                        && sppv.ParameterValueId == subProductParameterValueSubData.ParameterValueId);
                 Assert.Equal(subProductParameterValue.Parameter.Name,
                     subProductParameterValueSubData.ParameterName);
-                Assert.Equal(subProductParameterValue.ParameterValueId, 
-                    subProductParameterValueSubData.ParameterValueId);
                 Assert.Equal(subProductParameterValue.ParameterValue.Value, 
                     subProductParameterValueSubData.ParameterValueValue);
             }

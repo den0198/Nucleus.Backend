@@ -28,8 +28,7 @@ public static class SeedForTest
         var parameterValues = new List<ParameterValue>();
         var addOns = new List<AddOn>();
         var subProducts = new List<SubProduct>();
-        var subProductParameterValues = new List<SubProductParameterValue>();
-        
+
         sellers.AddRange(SellerMockData.GetMany( getRandomNumber(1, 3)));
         foreach (var seller in sellers)
         {
@@ -39,10 +38,10 @@ public static class SeedForTest
             {
                 subCategories.AddRange(SubCategoryMockData.GetMany(category.Id, getRandomNumber()));
                 var storeId = stores.Select(s => s.Id).ToArray()[getRandomNumber(0, stores.Count - 1)];
-                products.AddRange(ProductMockData.GetMany(storeId, category.Id, getRandomNumber()));
+                products.AddRange(ProductMockData.GetMany(storeId, category.Id, getRandomNumber(1, 2)));
                 foreach (var product in products)
                 {
-                    parameters.AddRange(ParameterMockData.GetMany(product.Id, getRandomNumber()));
+                    parameters.AddRange(ParameterMockData.GetMany(product.Id, getRandomNumber(1, 2)));
                     foreach (var parameter in parameters)
                     {
                         parameterValues.AddRange(ParameterValueMockData.GetMany(parameter.Id, 
@@ -51,19 +50,21 @@ public static class SeedForTest
                 
                     addOns.AddRange(AddOnMockData.GetMany(product.Id, getRandomNumber()));
                 
-                    subProducts.AddRange(SubProductMockData.GetMany(product.Id, getRandomNumber()));
-                    foreach (var subProduct in subProducts)
-                    {
-                        var parameter = parameters.First();
-                        var parameterId = parameter.Id;
-                        var parameterValueId = parameterValues.First().Id;
-                        subProductParameterValues.AddRange(SubProductParameterValueMockData.GetMany(subProduct.Id, 
-                            parameterId, parameterValueId, getRandomNumber()));
-                    }
+                    subProducts.AddRange(SubProductMockData.GetMany(product.Id, getRandomNumber(1, 2)));
                 }
             }
         }
-        
+
+        var subProductParameterValues = (
+            from subProduct 
+                in subProducts 
+            from parameter 
+                in parameters.Where(p => p.ProductId == subProduct.ProductId) 
+            from parameterValue 
+                in parameterValues.Where(pv => pv.ParameterId == parameter.Id) 
+            select SubProductParameterValueMockData.GetOne(subProduct.Id, parameter.Id, parameterValue.Id)
+        ).ToList();
+
         #endregion
         
         appContext.AddRange(sellers);
