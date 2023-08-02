@@ -2,5 +2,13 @@
 
 public sealed class ProductInCatalog
 {
-    public long Id { get; set; }
+    public long ProductId { get; set; }
+    public string ProductName { get; set; }
+    public ProductPriceInCatalog Price { get; set; }
+}
+
+public sealed class ProductPriceInCatalog
+{
+    public decimal MinPrice { get; set; }
+    public decimal MaxPrice { get; set; }
 }

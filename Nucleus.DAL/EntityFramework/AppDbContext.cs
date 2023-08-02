@@ -22,7 +22,6 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
     public DbSet<ParameterValue> ParameterValues { get; set; } = null!;
     public DbSet<SubProductParameterValue> SubProductParameterValues { get; set; } = null!;
     
-
     public override int SaveChanges()
     {
         AddTimestamps();
