@@ -1,4 +1,6 @@
-﻿namespace Nucleus.ModelsLayer.SqlQueryResults;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Nucleus.ModelsLayer.SqlQueryResults;
 
 public sealed class ProductInCatalog
 {
@@ -7,6 +9,7 @@ public sealed class ProductInCatalog
     public ProductPriceInCatalog Price { get; set; }
 }
 
+[Owned]
 public sealed class ProductPriceInCatalog
 {
     public decimal MinPrice { get; set; }
