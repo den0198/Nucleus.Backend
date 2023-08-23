@@ -4,7 +4,7 @@ using Quartz;
 
 namespace Nucleus.Jobs.Jobs;
 
-public class UpdateCacheSalableProductsJob : IJob
+public sealed class UpdateCacheSalableProductsJob : IJob
 {
     public async Task Execute(IJobExecutionContext context)
     {
