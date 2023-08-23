@@ -49,8 +49,8 @@ public sealed class ProductsConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnName(ColumnNames.STORE_ID);
         
         builder
-            .Property(p => p.SubCategoryId)
-            .HasColumnName(ColumnNames.SUB_CATEGORY_ID);
+            .Property(p => p.CategoryId)
+            .HasColumnName(ColumnNames.CATEGORY_ID);
 
         builder
             .HasMany(p => p.Parameters)

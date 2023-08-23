@@ -29,7 +29,17 @@ public sealed class CategoriesConfiguration : IEntityTypeConfiguration<Category>
             .HasColumnName(ColumnNames.DATE_TIME_MODIFIED);
         
         builder
-            .HasMany(с => с.SubCategories)
+            .Property(c => c.RootCategoryId)
+            .IsRequired(false)
+            .HasColumnName(ColumnNames.ROOT_CATEGORY_ID);
+
+        builder
+            .HasMany(c => c.SubCategories)
+            .WithOne(c => c.RootCategory)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        builder
+            .HasMany(с => с.Products)
             .WithOne(p => p.Category)
             .HasForeignKey(p => p.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);

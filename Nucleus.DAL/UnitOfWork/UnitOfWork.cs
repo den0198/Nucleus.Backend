@@ -18,7 +18,6 @@ public class UnitOfWork : IUnitOfWork
         SellerRepository = new SellerRepository(contextFactory);
         StoreRepository = new StoreRepository(contextFactory);
         CategoryRepository = new CategoryRepository(contextFactory);
-        SubCategoryRepository = new SubCategoryRepository(contextFactory);
         ProductRepository = new ProductRepository(contextFactory);
         ParameterRepository = new ParameterRepository(contextFactory);
         ParameterValueRepository = new ParameterValueRepository(contextFactory);
@@ -34,7 +33,6 @@ public class UnitOfWork : IUnitOfWork
     public ISellerRepository SellerRepository { get; }
     public IStoreRepository StoreRepository { get; }
     public ICategoryRepository CategoryRepository { get; }
-    public ISubCategoryRepository SubCategoryRepository { get; }
     public IProductRepository ProductRepository { get; }
     public IParameterRepository ParameterRepository { get; }
     public IParameterValueRepository ParameterValueRepository { get; }

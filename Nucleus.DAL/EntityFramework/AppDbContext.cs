@@ -14,7 +14,6 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, long>
     public DbSet<Seller> Sellers { get; set; } = null!;
     public DbSet<Store> Stores { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
-    public DbSet<SubCategory> SubCategories { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
     public DbSet<AddOn> AddOns { get; set; } = null!;
     public DbSet<SubProduct> SubProducts { get; set; } = null!;

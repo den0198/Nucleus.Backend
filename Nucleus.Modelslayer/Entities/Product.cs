@@ -13,8 +13,8 @@ public sealed class Product : IEntity
 
     public long StoreId { get; set; }
     public Store Store { get; set; }
-    public long SubCategoryId { get; set; }
-    public SubCategory SubCategory { get; set; }
+    public long CategoryId { get; set; }
+    public Category Category { get; set; }
     public IEnumerable<Parameter> Parameters { get; set; }
     public IEnumerable<SubProduct> SubProducts { get; set; }
     public ICollection<AddOn> AddOns { get; set; }

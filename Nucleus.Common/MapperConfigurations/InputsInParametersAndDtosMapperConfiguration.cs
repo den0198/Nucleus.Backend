@@ -74,7 +74,7 @@ public static partial class MapperConfiguration
         TypeAdapterConfig<CreateProductInput, CreateProductParameters>.NewConfig()
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.StoreId, src => src.StoreId)
-            .Map(dest => dest.SubCategoryId, src => src.SubCategoryId)
+            .Map(dest => dest.CategoryId, src => src.SubCategoryId)
             .Map(dest => dest.Parameters,
                 src => src.Parameters.Select(p => p.Adapt<ParameterCommonDto>()))
             .Map(dest => dest.AddOns,

@@ -20,7 +20,6 @@ public static class ServicesServiceExtension
         serviceCollection.AddScoped<ISellerService, SellerService>();
         serviceCollection.AddScoped<IStoreService, StoreService>();
         serviceCollection.AddScoped<ICategoryService, CategoryService>();
-        serviceCollection.AddScoped<ISubCategoryService, SubCategoryService>();
         serviceCollection.AddScoped<IProductService, ProductService>();
         serviceCollection.AddScoped<IParameterService, ParameterService>();
         serviceCollection.AddScoped<IParameterValueService, ParameterValueService>();
@@ -38,7 +37,6 @@ public static class ServicesServiceExtension
         serviceCollection.AddScoped<SellerServiceInitialParams>();
         serviceCollection.AddScoped<StoreServiceInitialParams>();
         serviceCollection.AddScoped<CategoryServiceInitialParams>();
-        serviceCollection.AddScoped<SubCategoryServiceInitialParams>();
         serviceCollection.AddScoped<ProductServiceInitialParams>();
         serviceCollection.AddScoped<ParameterServiceInitialParams>();
         serviceCollection.AddScoped<ParameterValueServiceInitialParams>();
