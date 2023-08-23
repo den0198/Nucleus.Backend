@@ -18,15 +18,18 @@ public sealed class RolesConfiguration : IEntityTypeConfiguration<Role>
 
         builder
             .Property(r => r.Name)
-            .HasColumnName(ColumnNames.NAME);
+            .HasColumnName(ColumnNames.NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
 
         builder
             .Property(r => r.NormalizedName)
-            .HasColumnName(ColumnNames.NORMALIZED_NAME);
+            .HasColumnName(ColumnNames.NORMALIZED_NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
 
         builder
             .Property(r => r.ConcurrencyStamp)
-            .HasColumnName(ColumnNames.CONCURRENCY_STAMP);
+            .HasColumnName(ColumnNames.CONCURRENCY_STAMP)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(r => r.DateTimeCreated)

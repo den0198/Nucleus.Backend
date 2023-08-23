@@ -18,7 +18,8 @@ public sealed class ParameterValuesConfiguration : IEntityTypeConfiguration<Para
         
         builder
             .Property(pv => pv.Value)
-            .HasColumnName(ColumnNames.VALUE);
+            .HasColumnName(ColumnNames.VALUE)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(pv => pv.DateTimeCreated)

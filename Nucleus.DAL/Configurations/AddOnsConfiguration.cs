@@ -18,7 +18,8 @@ public sealed class AddOnsConfiguration : IEntityTypeConfiguration<AddOn>
         
         builder
             .Property(ao => ao.Name)
-            .HasColumnName(ColumnNames.NAME);
+            .HasColumnName(ColumnNames.NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(ao => ao.Quantity)

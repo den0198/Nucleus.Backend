@@ -18,7 +18,8 @@ public sealed class ProductsConfiguration : IEntityTypeConfiguration<Product>
 
         builder
             .Property(p => p.Name)
-            .HasColumnName(ColumnNames.NAME);
+            .HasColumnName(ColumnNames.NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(p => p.IsSale)

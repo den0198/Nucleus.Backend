@@ -18,7 +18,8 @@ public sealed class StoresConfiguration : IEntityTypeConfiguration<Store>
         
         builder
             .Property(s => s.Name)
-            .HasColumnName(ColumnNames.NAME);
+            .HasColumnName(ColumnNames.NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(s => s.DateTimeCreated)

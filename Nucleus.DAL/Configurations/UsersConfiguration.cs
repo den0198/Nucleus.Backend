@@ -19,20 +19,24 @@ public sealed class UsersConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(u => u.UserName)
             .HasColumnName(ColumnNames.USERNAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256)
             .IsRequired();
 
         builder
             .Property(u => u.NormalizedUserName)
-            .HasColumnName( ColumnNames.NORMALIZED_USERNAME);
+            .HasColumnName( ColumnNames.NORMALIZED_USERNAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
 
         builder
             .Property(u => u.Email)
             .HasColumnName(ColumnNames.EMAIL)
+            .HasColumnType(ColumnTypes.NVARCHAR_256)
             .IsRequired();
         
         builder
             .Property(u => u.NormalizedEmail)
-            .HasColumnName(ColumnNames.NORMALIZED_EMAIL);
+            .HasColumnName(ColumnNames.NORMALIZED_EMAIL)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(u => u.EmailConfirmed)
@@ -52,7 +56,8 @@ public sealed class UsersConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .Property(u => u.PhoneNumber)
-            .HasColumnName(ColumnNames.PHONE_NUMBER);
+            .HasColumnName(ColumnNames.PHONE_NUMBER)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
 
         builder
             .Property(u => u.PhoneNumberConfirmed)
@@ -76,15 +81,18 @@ public sealed class UsersConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .Property(u => u.FirstName)
-            .HasColumnName(ColumnNames.FIRST_NAME);
+            .HasColumnName(ColumnNames.FIRST_NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(u => u.LastName)
-            .HasColumnName(ColumnNames.LAST_NAME);
+            .HasColumnName(ColumnNames.LAST_NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(u => u.MiddleName)
-            .HasColumnName(ColumnNames.MIDDLE_NAME);
+            .HasColumnName(ColumnNames.MIDDLE_NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(u => u.DateTimeCreated)

@@ -18,7 +18,8 @@ public sealed class CategoriesConfiguration : IEntityTypeConfiguration<Category>
         
         builder
             .Property(c => c.Name)
-            .HasColumnName(ColumnNames.NAME);
+            .HasColumnName(ColumnNames.NAME)
+            .HasColumnType(ColumnTypes.NVARCHAR_256);
         
         builder
             .Property(c => c.DateTimeCreated)
