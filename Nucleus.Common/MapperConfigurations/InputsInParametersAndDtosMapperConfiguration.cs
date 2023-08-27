@@ -104,7 +104,6 @@ public static partial class MapperConfiguration
 
         TypeAdapterConfig<GetCatalogInput, GetCatalogParameters>.NewConfig()
             .Map(dest => dest.CategoryId, src => src.CategoryId)
-            .Map(dest => dest.SubCategoryId, src => src.SubCategoryId)
             .Map(dest => dest.StoreId, src => src.StoreId)
             .Map(dest => dest.ProductSortId, src => src.ProductSortId)
             .Map(dest => dest.FirstProduct, src => src.FirstProduct)

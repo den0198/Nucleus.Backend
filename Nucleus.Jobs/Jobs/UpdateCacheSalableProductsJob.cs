@@ -10,8 +10,8 @@ public sealed class UpdateCacheSalableProductsJob : IJob
     {
         var serviceProvider = (IServiceProvider)context.JobDetail.JobDataMap["ServiceProvider"];
         await using var scope = serviceProvider.CreateAsyncScope();
-        var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
+        var catalogService = scope.ServiceProvider.GetRequiredService<ICatalogService>();
         
-        await productService.GetAllWithIsSellAsync(true);
+        await catalogService.GetProductInCategoryListAsync(true);
     }
 }

@@ -29,14 +29,4 @@ public sealed class ProductRepository : Repository, IProductRepository
             .Include(p => p.AddOns)
             .SingleOrDefaultAsync(p => p.Id == productId);
     }
-
-    //TODO:Дописать условия когда додавлю условия продажи
-    public async Task<ICollection<Product>> GetAllWithIsSaleAsync()
-    {
-        await using var context = await ContextFactory
-            .CreateDbContextAsync();
-
-        return await context.Products
-            .ToListAsync();
-    }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoNSubstitute;
-using FluentAssertions;
 using NSubstitute;
 using Nucleus.BLL.Logic.Services.Classes;
 using Nucleus.BLL.Logic.Services.InitialsParams;
@@ -40,58 +39,6 @@ public sealed class ProductServiceTests : UnitTest
             .GetByIdAsync(product.Id);
         
         Assert.Equal(product, result);
-    }
-
-    #endregion
-
-    #region GetAllWithIsSell
-    
-    [Fact]
-    public async Task GetAllWithIsSell_isUpdatedCacheWithValueFalse_AllProductsWithIsSellFromCache()
-    {
-        var service = getService(out var initialParams);
-        var testData = new ProductTestData();
-        var products = testData.Products;
-
-        initialParams.MemoryCache
-            .TryGetValue(Arg.Any<string>(), out _)
-            .Returns(x =>
-            {
-                x[1] = products;
-                return true;
-            });
-
-        var result = await service
-            .GetAllWithIsSellAsync();
-        
-        products
-            .Should()
-            .BeEquivalentTo(result);
-        initialParams.MemoryCache
-            .Received(1)
-            .TryGetValue(Arg.Any<string>(), out _);
-    }
-
-    [Fact]
-    public async Task GetAllWithIsSell_isUpdatedCacheWithValueTrue_AllProductsWithIsSellFromDB()
-    {
-        var service = getService(out var initialParams);
-        var testData = new ProductTestData();
-        var products = testData.Products;
-
-        initialParams.Repository
-            .GetAllWithIsSaleAsync()
-            .Returns(testData.Products);
-
-        var result = await service
-            .GetAllWithIsSellAsync(true);
-
-        products
-            .Should()
-            .BeEquivalentTo(result);
-        initialParams.MemoryCache
-            .Received(0)
-            .TryGetValue(Arg.Any<string>(), out _);
     }
 
     #endregion

@@ -4,8 +4,6 @@ public sealed class GetCatalogInput
 {
     public long? CategoryId { get; init; }
     
-    public long? SubCategoryId { get; init; }
-
     public long? StoreId { get; init; }
 
     public int? ProductSortId { get; init; }
