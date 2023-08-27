@@ -111,9 +111,9 @@ public sealed class ProductServiceTests : UnitTest
         initialParams.StoreService
             .GetByIdAsync(parameters.StoreId)
             .Returns(testData.Store);
-        initialParams.SubCategoryService
+        initialParams.CategoryService
             .GetByIdAsync(parameters.CategoryId)
-            .Returns(testData.SubCategory);
+            .Returns(testData.Category);
         initialParams.Repository
             .FindByIdAsync(Arg.Any<long>())
             .Returns(product);

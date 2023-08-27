@@ -10,7 +10,7 @@ public sealed class ProductMutationInputs
     public CreateProductInput GetCreateProductInput(long storeId, long subCategoryId) => new()
     {
         StoreId = storeId,
-        SubCategoryId = subCategoryId,
+        CategoryId = subCategoryId,
         Name = AnyValue.ShortString,
         Parameters = new List<CreateParameterSubInput>
         {

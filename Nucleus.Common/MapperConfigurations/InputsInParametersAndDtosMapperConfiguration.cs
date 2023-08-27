@@ -61,20 +61,12 @@ public static partial class MapperConfiguration
 
         #endregion
         
-        #region CreateSubCategoryInput
-
-        TypeAdapterConfig<CreateSubCategoryInput, CreateSubCategoryParameters>.NewConfig()
-            .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.CategoryId, src => src.CategoryId);
-
-        #endregion
-        
         #region CreateProductInput
 
         TypeAdapterConfig<CreateProductInput, CreateProductParameters>.NewConfig()
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.StoreId, src => src.StoreId)
-            .Map(dest => dest.CategoryId, src => src.SubCategoryId)
+            .Map(dest => dest.CategoryId, src => src.CategoryId)
             .Map(dest => dest.Parameters,
                 src => src.Parameters.Select(p => p.Adapt<ParameterCommonDto>()))
             .Map(dest => dest.AddOns,

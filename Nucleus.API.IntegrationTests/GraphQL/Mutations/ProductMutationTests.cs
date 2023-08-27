@@ -30,9 +30,9 @@ public sealed class ProductMutationTests : BaseIntegrationTests
         var context = await getContext();
         var authClient = await getAuthClientAsync(DefaultSeeds.SELLER);
         var inputsData = new ProductMutationInputs();
-        var subCategory = await context.SubCategories.FirstAsync();
+        var сategory = await context.Categories.FirstAsync();
         var store = await context.Stores.FirstAsync();
-        var input = inputsData.GetCreateProductInput(store.Id, subCategory.Id);
+        var input = inputsData.GetCreateProductInput(store.Id, сategory.Id);
         
         var productId = await sendAsync<CreateProductInput, long>(authClient, 
             GraphQlQueryTypesEnum.Mutation, create_product, input);
@@ -46,7 +46,7 @@ public sealed class ProductMutationTests : BaseIntegrationTests
             .SingleAsync(p => p.Id == productId);
         
         Assert.Equal(input.Name, product.Name);
-        Assert.Equal(input.SubCategoryId, product.SubCategoryId);
+        Assert.Equal(input.CategoryId, product.CategoryId);
         Assert.False(product.IsSale);
         Assert.Equal(0, product.CountSale);
         Assert.Equal(0, product.CountLike);

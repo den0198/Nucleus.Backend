@@ -22,7 +22,6 @@ public static class SeedForTest
         var sellers = new List<Seller>();
         var stores = new List<Store>();
         var categories = new List<Category>();
-        var subCategories = new List<SubCategory>();
         var products = new List<Product>();
         var parameters = new List<Parameter>();
         var parameterValues = new List<ParameterValue>();
@@ -36,7 +35,6 @@ public static class SeedForTest
             categories.AddRange(CategoryMockData.GetMany(getRandomNumber()));
             foreach (var category in categories)
             {
-                subCategories.AddRange(SubCategoryMockData.GetMany(category.Id, getRandomNumber()));
                 var storeId = stores.Select(s => s.Id).ToArray()[getRandomNumber(0, stores.Count - 1)];
                 products.AddRange(ProductMockData.GetMany(storeId, category.Id, getRandomNumber(1, 2)));
                 foreach (var product in products)
@@ -70,7 +68,6 @@ public static class SeedForTest
         appContext.AddRange(sellers);
         appContext.AddRange(stores);
         appContext.AddRange(categories);
-        appContext.AddRange(subCategories);
         appContext.AddRange(products);
         appContext.AddRange(parameters);
         appContext.AddRange(parameterValues);

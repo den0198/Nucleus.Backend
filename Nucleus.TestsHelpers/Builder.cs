@@ -34,7 +34,6 @@ public static class Builder
     public static IBuilder<AddOnCommonDto> AddOnCommonDto => new AddOnCommonDtoBuilder();
     public static IBuilder<CreateProductParameters> CreateProductParameters => new CreateProductParametersBuilder();
     public static IBuilder<Category> Category => new CategoryBuilder();
-    public static IBuilder<SubCategory> SubCategory => new SubCategoryBuilder();
     public static IBuilder<CreateCategoryParameters> CreateCategoryParameters => new CreateCategoryParametersBuilder();
     
 }
